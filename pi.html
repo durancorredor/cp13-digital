@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Fe Pública Digital para Propiedad Industrial. Cotejo digital, fe de hechos de infracción en línea y certificación de envíos. Corredor Público Número 13, CDMX.">
+<title>PI Digital · CP13.digital — Propiedad Industrial con Fe Pública</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --navy-mid:  #0C447C;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --blue-mid:  #185FA5;
+  --blue-light:#4A90D9;
+  --blue-pale: #A8CDEF;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-main);background:var(--navy);color:var(--white);overflow-x:hidden;}
+
+/* ── NAVBAR ── */
+.navbar{background:var(--navy-dark);border-bottom:1px solid rgba(29,158,117,.2);padding:.75rem 0;position:sticky;top:0;z-index:1000;backdrop-filter:blur(10px);}
+.navbar-brand{display:flex;align-items:center;gap:2px;text-decoration:none;}
+.brand-cp13{font-weight:700;font-size:1.4rem;color:var(--white);letter-spacing:-.5px;}
+.brand-dot{font-weight:700;font-size:1.4rem;color:var(--teal);}
+.brand-sub{font-family:var(--font-mono);font-size:.75rem;color:var(--teal-pale);margin-left:.5rem;border-left:1px solid rgba(93,202,165,.3);padding-left:.5rem;align-self:center;}
+.nav-link{color:rgba(255,255,255,.75)!important;font-size:.875rem;font-weight:500;padding:.5rem 1rem!important;transition:color .2s;position:relative;}
+.nav-link::after{content:'';position:absolute;bottom:0;left:1rem;right:1rem;height:2px;background:var(--teal);transform:scaleX(0);transition:transform .2s;}
+.nav-link:hover{color:var(--teal-light)!important;}
+.nav-link:hover::after{transform:scaleX(1);}
+.navbar-toggler{border-color:rgba(93,202,165,.4);}
+.navbar-toggler-icon{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");}
+.btn-nav-cta{background:var(--teal);color:var(--white)!important;font-weight:600;font-size:.8rem;padding:.45rem 1.1rem;border-radius:4px;text-decoration:none;white-space:nowrap;transition:background .2s;}
+.btn-nav-cta:hover{background:var(--teal-light);color:var(--navy-dark)!important;}
+
+/* ── HERO ── */
+#hero{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--navy);}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;}
+#hero::before{content:'';position:absolute;bottom:0;left:0;right:0;height:90px;background:linear-gradient(to bottom right,transparent 49.5%,#fff 50%);z-index:1;}
+.hero-content{position:relative;z-index:2;text-align:center;padding:2rem;max-width:820px;margin:0 auto;}
+.hero-pill{display:inline-block;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(29,158,117,.4);border-radius:20px;padding:.3rem .9rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp .6s ease forwards .2s;background:rgba(29,158,117,.07);}
+.hero-logo{font-weight:700;font-size:clamp(2.2rem,6vw,4.5rem);letter-spacing:-1px;opacity:0;animation:fadeUp .8s ease forwards .4s;line-height:1.1;}
+.hero-logo span{color:var(--teal);}
+.hero-tagline{font-size:clamp(1rem,2.2vw,1.25rem);font-weight:300;color:var(--teal-pale);margin:1.25rem 0 .5rem;opacity:0;animation:fadeUp .8s ease forwards .7s;}
+.hero-tagline strong{font-weight:700;color:var(--white);}
+.hero-sub{font-size:.85rem;color:var(--gray-text);margin-bottom:2rem;opacity:0;animation:fadeUp .8s ease forwards 1s;font-family:var(--font-mono);}
+.hero-btns{opacity:0;animation:fadeUp .8s ease forwards 1.2s;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;}
+.hero-scroll{position:absolute;bottom:6rem;left:50%;transform:translateX(-50%);opacity:0;animation:fadeUp .8s ease forwards 1.5s;z-index:2;}
+.scroll-dot{width:5px;height:5px;background:var(--teal);border-radius:50%;margin:3px auto;animation:bounce 1.5s infinite;}
+.scroll-dot:nth-child(2){animation-delay:.2s;}
+.scroll-dot:nth-child(3){animation-delay:.4s;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+
+/* ── BOTONES ── */
+.btn-cta{display:inline-block;background:var(--teal);color:var(--white);font-weight:600;font-size:1rem;padding:.875rem 2.5rem;border-radius:4px;text-decoration:none;transition:background .2s,transform .15s;}
+.btn-cta:hover{background:var(--teal-light);color:var(--navy-dark);transform:translateY(-2px);}
+.btn-ghost{display:inline-block;background:transparent;color:var(--teal-light);font-weight:500;font-size:.9rem;padding:.75rem 2rem;border-radius:4px;text-decoration:none;border:1.5px solid rgba(29,158,117,.5);transition:all .2s;}
+.btn-ghost:hover{background:rgba(29,158,117,.1);color:var(--white);border-color:var(--teal);}
+
+/* ── REFORMA ── */
+#reforma{background:#fff;padding:3.5rem 0;border-bottom:3px solid var(--navy);}
+.reforma-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:var(--white);font-family:var(--font-mono);font-size:.7rem;padding:.4rem .9rem;border-radius:3px;margin-bottom:1.25rem;border-left:3px solid var(--teal);}
+.reforma-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.reforma-title{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
+.reforma-text{font-size:.875rem;color:#444;line-height:1.65;}
+.art-card{background:#f4f8fc;border-radius:6px;padding:1.25rem;height:100%;}
+.art-card-label{font-family:var(--font-mono);font-size:.68rem;margin-bottom:.5rem;font-weight:600;}
+.art-card-body{font-size:.875rem;color:var(--navy);font-weight:600;line-height:1.4;}
+
+/* ── SECCIONES ── */
+.section-navy{background:var(--navy);padding:5rem 0;}
+.section-white{background:#fff;padding:5rem 0;}
+.section-dark{background:var(--navy-dark);padding:5rem 0;}
+.sec-label{font-family:var(--font-mono);font-size:.72rem;color:var(--teal);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem;}
+.sec-title{font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:var(--white);margin-bottom:.5rem;}
+.sec-title-dark{color:var(--navy);}
+.sec-sub{font-size:1rem;color:var(--teal-pale);margin-bottom:3rem;font-weight:300;}
+.sec-sub-dark{color:#555;}
+.grp-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;padding-left:.25rem;margin-top:2rem;display:block;}
+
+/* ── DIVISOR ENTRE GRUPOS DE FE PÚBLICA Y PERITAJE ── */
+.grp-divider{border:none;border-top:1px solid rgba(255,255,255,.07);margin:3rem 0 0;}
+
+/* ── BLOQUE PERITAJE ── */
+.peritaje-block{background:rgba(24,95,165,.08);border:1px solid rgba(24,95,165,.2);border-radius:8px;padding:2rem 2rem 2.5rem;margin-top:.5rem;}
+.peritaje-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--font-mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-pale);background:rgba(24,95,165,.18);border:1px solid rgba(74,144,217,.3);border-radius:3px;padding:.3rem .75rem;margin-bottom:1rem;}
+.peritaje-badge::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--blue-light);}
+.peritaje-nota{font-size:.78rem;color:var(--gray-text);line-height:1.6;margin-bottom:1.5rem;padding-left:.25rem;border-left:2px solid rgba(74,144,217,.35);padding-left:.75rem;}
+.peritaje-nota strong{color:var(--blue-pale);}
+
+/* ── CARDS DE SERVICIO ── */
+.svc-card{background:var(--navy-card);border-radius:6px;padding:1.75rem 1.5rem;border-top:3px solid var(--teal);height:100%;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.svc-card::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at top right,rgba(29,158,117,.15),transparent 70%);}
+.svc-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.35);}
+.svc-card.hi{border-top-color:var(--teal-light);}
+
+/* Variante peritaje — acento azul, sin el before verde */
+.svc-card.per{border-top-color:var(--blue-mid);background:#0B3560;}
+.svc-card.per::before{background:radial-gradient(circle at top right,rgba(74,144,217,.15),transparent 70%);}
+.svc-card.per:hover{box-shadow:0 16px 40px rgba(24,95,165,.3);}
+.svc-card.per .svc-num{color:var(--blue-light);}
+.svc-card.per .svc-icon svg{stroke:var(--blue-pale);}
+.svc-card.per .svc-ref{color:rgba(168,205,239,.5);}
+.svc-card.per .svc-tag{background:rgba(74,144,217,.12);color:var(--blue-pale);border-color:rgba(74,144,217,.3);}
+
+.svc-num{font-family:var(--font-mono);font-size:.7rem;color:var(--teal);margin-bottom:.75rem;letter-spacing:.1em;}
+.svc-icon{margin-bottom:.75rem;}
+.svc-icon svg{width:28px;height:28px;stroke:var(--teal-light);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
+.svc-name{font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:.5rem;}
+.svc-card.hi .svc-name{color:var(--teal-pale);}
+.svc-card.per .svc-name{color:var(--blue-pale);}
+.svc-desc{font-size:.825rem;color:var(--gray-text);line-height:1.6;margin-bottom:.75rem;}
+.svc-ref{font-family:var(--font-mono);font-size:.65rem;color:rgba(93,202,165,.6);}
+.svc-tag{position:absolute;top:.75rem;right:.75rem;font-family:var(--font-mono);font-size:.6rem;background:rgba(93,202,165,.15);color:var(--teal-light);border:1px solid rgba(93,202,165,.3);border-radius:20px;padding:.15rem .5rem;}
+
+/* Método-pills dentro de cards peritaje */
+.met-pill{display:inline-block;font-family:var(--font-mono);font-size:.6rem;background:rgba(74,144,217,.1);color:var(--blue-pale);border:1px solid rgba(74,144,217,.25);border-radius:3px;padding:.12rem .45rem;margin:.12rem .08rem;white-space:nowrap;}
+
+/* ── PROCESO ── */
+.flow-step{text-align:center;padding:1.5rem 1rem;}
+.flow-num{width:48px;height:48px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;}
+.flow-name{font-size:.9rem;font-weight:600;color:var(--navy);line-height:1.35;}
+.flow-sub{font-size:.78rem;color:#666;margin-top:.25rem;}
+.flow-arrow{display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:1.5rem;padding-bottom:2rem;}
+@media(max-width:768px){.flow-arrow{transform:rotate(90deg);}}
+
+/* ── TABLA COMPARATIVA ── */
+.cmp-table{width:100%;border-collapse:separate;border-spacing:0;}
+.cmp-table th{background:var(--navy);color:var(--teal-pale);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;padding:.9rem 1rem;text-transform:uppercase;}
+.cmp-table th:first-child{border-radius:6px 0 0 0;color:#fff;}
+.cmp-table th:last-child{border-radius:0 6px 0 0;}
+.cmp-table td{background:#fff;padding:.85rem 1rem;font-size:.875rem;color:#333;border-bottom:1px solid #e8e8e8;vertical-align:middle;}
+.cmp-table tr:last-child td:first-child{border-radius:0 0 0 6px;}
+.cmp-table tr:last-child td:last-child{border-radius:0 0 6px 0;}
+.cmp-table td:first-child{font-weight:600;color:var(--navy);background:#f4f8fc;}
+.ok{color:var(--teal);font-size:1.1rem;}
+.no{color:#ccc;font-size:1.1rem;}
+
+/* ── MARCO LEGAL ── */
+.law-q{background:var(--navy-card);border-radius:6px;padding:1.75rem;border-left:4px solid var(--teal);height:100%;font-size:.875rem;line-height:1.7;color:var(--teal-pale);font-style:italic;}
+.law-q strong{color:#fff;font-style:normal;font-family:var(--font-mono);font-size:.7rem;display:block;margin-bottom:.5rem;letter-spacing:.08em;}
+.art-pill{display:inline-block;font-family:var(--font-mono);font-size:.65rem;background:rgba(29,158,117,.12);color:var(--teal);border:1px solid rgba(29,158,117,.3);border-radius:3px;padding:.15rem .5rem;margin:.15rem .1rem;white-space:nowrap;}
+.ml-label{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-text);margin-bottom:.75rem;margin-top:2.5rem;display:block;}
+
+/* ── CTA Y FOOTER ── */
+#cta{background:var(--navy-dark);padding:5rem 0;text-align:center;border-top:1px solid rgba(29,158,117,.2);}
+footer{background:var(--navy-dark);border-top:3px solid var(--teal);padding:3rem 0 1.5rem;}
+.footer-brand{font-weight:700;font-size:1.5rem;}
+.footer-brand span{color:var(--teal);}
+.footer-tag{font-size:.85rem;color:var(--gray-text);margin-top:.25rem;font-style:italic;}
+.flinks{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;}
+.flinks a{color:var(--gray-text);font-size:.8rem;text-decoration:none;transition:color .2s;}
+.flinks a:hover{color:var(--teal-light);}
+.footer-copy{font-size:.75rem;color:rgba(160,184,200,.5);margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.05);}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}.d4{transition-delay:.4s;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ NAVBAR ══ -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+      <span class="brand-sub">Propiedad Industrial</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1 align-items-center">
+        <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#como">Proceso</a></li>
+        <li class="nav-item"><a class="nav-link" href="#marco-legal">Marco legal</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://honorarios.cp13.digital">Honorarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar acta</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital">← cp13.digital</a></li>
+        <li class="nav-item ms-2"><a href="https://clientes.cp13.digital" class="btn-nav-cta">Acceso a clientes →</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ HERO ══ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-pill">✦ LFPPI · Decreto 3 de abril de 2026 · DOF</div>
+    <div class="hero-logo">Propiedad Industrial <span>con Fe Pública Digital</span></div>
+    <div class="hero-tagline">Sus derechos: <strong>Detectar. Documentar. Demostrar.</strong></div>
+    <div class="hero-sub">Cotejo digital · Fe de hechos en línea · Certificación de envíos · Peritaje valuador · Art. 344 VII LFPPI</div>
+    <div class="hero-btns">
+      <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar constancia →</a>
+      <a href="#servicios" class="btn-ghost">Ver servicios</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-dot"></div>
+    <div class="scroll-dot"></div>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ REFORMA ══ -->
+<section id="reforma">
+  <div class="container">
+    <div class="row align-items-start gy-4">
+      <div class="col-12 col-md-4">
+        <div class="reforma-badge"><span class="reforma-dot"></span>DOF 3-ABR-2026 · LFPPI</div>
+        <div class="reforma-title">La reforma que abre el enforcement digital</div>
+        <div class="reforma-text">Las nuevas disposiciones de la LFPPI crean por primera vez obligaciones de retiro, suspensión y bloqueo de contenidos infractores en medios digitales — y exigen evidencia con valor probatorio pleno para activarlas.</div>
+      </div>
+      <div class="col-12 col-md-8">
+        <div class="row g-2">
+          <div class="col-12 col-sm-6">
+            <div class="art-card" style="border-left:3px solid var(--teal)">
+              <div class="art-card-label" style="color:var(--teal)">ART. 344 FR. VII · NUEVO</div>
+              <div class="art-card-body">"Ordenar la suspensión, bloqueo, remoción de contenidos o cese de los actos que constituyan una violación a través de cualquier medio virtual, digital o electrónico…"</div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="art-card" style="border-left:3px solid var(--teal)">
+              <div class="art-card-label" style="color:var(--teal)">ART. 409 · REFORZADO</div>
+              <div class="art-card-body">"…o por algún otro medio haber manifestado o hecho del conocimiento público que los productos o servicios se encuentran protegidos por un derecho de propiedad industrial."</div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="art-card" style="border-left:3px solid var(--blue-mid)">
+              <div class="art-card-label" style="color:var(--blue-mid)">ART. 343 · INCIDENTE DE DAÑOS</div>
+              <div class="art-card-body">IMPI puede condenar directamente al pago de daños dentro del procedimiento administrativo. Indemnización mínima: 40% del valor legítimo acreditado.</div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="art-card" style="border-left:3px solid var(--blue-mid)">
+              <div class="art-card-label" style="color:var(--blue-mid)">ART. 386 FR. II INC. E) · AMBUSH</div>
+              <div class="art-card-body">Primera regulación expresa de ambush marketing como infracción administrativa. Multa hasta $29.3 M + $117,310 pesos por cada día que continúe la infracción digital.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ SERVICIOS ══ -->
+<section id="servicios" class="section-navy">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="sec-label">Servicios</div>
+      <h2 class="sec-title">Fe pública y peritaje para cada etapa del enforcement</h2>
+      <p class="sec-sub">Doce instrumentos en cuatro grupos · LFPPI 2026 · LFPPI vigente · LFDA · LFCP</p>
+    </div>
+
+    <!-- ── GRUPO 1 · LFPPI 2026 ── -->
+    <span class="grp-label reveal" style="color:var(--teal)">★ Fe Pública · LFPPI · Decreto DOF 3-abr-2026</span>
+    <div class="row g-3 mb-2">
+      <div class="col-12 col-md-4 reveal d1">
+        <div class="svc-card hi">
+          <span class="svc-tag">Art. 344 VII</span>
+          <div class="svc-num">01 · NUEVO</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          <div class="svc-name">Fe de Hechos de Contenido Digital Infractor</div>
+          <div class="svc-desc">Documentación con fe pública de la existencia de contenido infractor en sitios web, marketplaces (Amazon, MercadoLibre), redes sociales y apps móviles. Incluye hash SHA-256, timestamp y constancia con NOM-151.</div>
+          <div class="svc-ref">Art. 344 Fr. VII · Art. 356 LFPPI · Prueba para bloqueo/remoción ante IMPI</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal d2">
+        <div class="svc-card hi">
+          <span class="svc-tag">Art. 409</span>
+          <div class="svc-num">02 · NUEVO</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="svc-name">Fe de Hechos de Envío de Correo con CC al Corredor</div>
+          <div class="svc-desc">El correo de carta protesta o aviso de derechos se envía con copia al Corredor. Acta de Fe de Hechos del contenido íntegro, destinatario, fecha y hora. Activa el Art. 409 y acredita mala fe del infractor si continúa.</div>
+          <div class="svc-ref">Art. 409 · Art. 56 LFPPI · Documentación de notificación fehaciente</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal d3">
+        <div class="svc-card hi">
+          <span class="svc-tag">Art. 386 II e)</span>
+          <div class="svc-num">03 · NUEVO</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg></div>
+          <div class="svc-name">Fe de Hechos de Ambush Marketing Digital</div>
+          <div class="svc-desc">Documenta con fe pública la existencia de una campaña digital que asocia indebidamente un signo distintivo a un evento masivo sin patrocinio oficial. Acredita el periodo de infracción continua para el cómputo de la multa diaria.</div>
+          <div class="svc-ref">Art. 386 Fr. II inciso e) · Art. 388 LFPPI · Multa hasta $29.3 M + $117,310/día</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GRUPO 2 · LFPPI vigente ── -->
+    <span class="grp-label reveal" style="color:var(--gray-text)">Fe Pública · LFPPI · Disposiciones vigentes</span>
+    <div class="row g-3 mb-2">
+      <div class="col-12 col-md-4 reveal d1">
+        <div class="svc-card">
+          <span class="svc-tag">Arts. 331, 356</span>
+          <div class="svc-num">04</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><polyline points="9,12 12,15 15,12"/></svg></div>
+          <div class="svc-name">Cotejo Digital de Documentos de PI</div>
+          <div class="svc-desc">Cotejo con fe pública de registros de marca extranjeros, contratos de licencia o franquicia digitalizados, catálogos con marca infringida y expedientes IMPI descargados. El original digital queda hash-certificado.</div>
+          <div class="svc-ref">Art. 331 · Art. 356 LFPPI · Pleno valor probatorio</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal d2">
+        <div class="svc-card">
+          <span class="svc-tag">Art. 27 III</span>
+          <div class="svc-num">05</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><polyline points="16,11 17,21 12,18 7,21 8,11"/></svg></div>
+          <div class="svc-name">Ratificación de Carta Poder para IMPI</div>
+          <div class="svc-desc">Formalización de carta poder de persona moral ante el Instituto Mexicano de la Propiedad Industrial. El Corredor Público está nombrado explícitamente en el Art. 27 Fr. III para este acto.</div>
+          <div class="svc-ref">Art. 27 Fr. III LFPPI · Obligatorio para personas morales</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal d3">
+        <div class="svc-card">
+          <span class="svc-tag">Art. 409</span>
+          <div class="svc-num">06</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <div class="svc-name">Constancia de Uso y Aviso de Derechos en Comercio Digital</div>
+          <div class="svc-desc">Certifica que el titular usa el símbolo ® o hace del conocimiento público su derecho en sitios web, marketplaces o publicaciones electrónicas — requisito previo del Art. 409 para poder reclamar daños y perjuicios.</div>
+          <div class="svc-ref">Art. 409 · Arts. 44, 89, 236, 302 LFPPI</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal d1">
+        <div class="svc-card">
+          <span class="svc-tag">Arts. 137, 245</span>
+          <div class="svc-num">07</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+          <div class="svc-name">Formalización de Licencias, Transmisiones y Franquicias</div>
+          <div class="svc-desc">Póliza mercantil para contratos de licencia de marca, transmisión de patentes o derechos de PI, y contratos de franquicia. Instrumento con fe pública para inscripción ante IMPI y oponibilidad a terceros.</div>
+          <div class="svc-ref">Arts. 137, 245, 249 LFPPI · Para inscripción en IMPI</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal d2">
+        <div class="svc-card">
+          <span class="svc-tag">Arts. 163–169</span>
+          <div class="svc-num">08</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg></div>
+          <div class="svc-name">Certificación de Secretos Industriales</div>
+          <div class="svc-desc">Certifica la existencia, contenido y carácter reservado de información confidencial en fecha determinada. Elemento crítico para demostrar que el secreto existía antes de su apropiación. Template activo en FPD.</div>
+          <div class="svc-ref">Arts. 163–169 LFPPI · Art. 6 Fr. V LFCP · Template SECRETOS_INDUSTRIALES en FPD</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal d3">
+        <div class="svc-card">
+          <span class="svc-tag">Arts. 245–249</span>
+          <div class="svc-num">11</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="svc-name">Constancia de Reunión Franquiciante-Franquiciatario</div>
+          <div class="svc-desc">Fe pública de reuniones de inicio, auditoría operativa, modificación contractual, resolución de controversias o terminación de la relación de franquicia. La constancia activa el Art. 249 LFPPI ante incumplimiento.</div>
+          <div class="svc-ref">Arts. 245–249 LFPPI · Art. 6 Fr. V LFCP · Art. 75 Fr. XIII CCom</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GRUPO 3 · LFDA ── -->
+    <span class="grp-label reveal" style="color:var(--gray-text)">Fe Pública · Ley Federal del Derecho de Autor</span>
+    <div class="row g-3 mb-2">
+      <div class="col-12 col-md-6 reveal d1">
+        <div class="svc-card">
+          <span class="svc-tag">Arts. 229, 232 Bis</span>
+          <div class="svc-num">09</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+          <div class="svc-name">Derechos de Autor en Entornos Digitales</div>
+          <div class="svc-desc">Fe de Hechos y constancia de fecha cierta para obras digitales, software, diseños y contenidos en línea. Documenta la infracción ante INDAUTOR o en sede judicial. Útil para logotipos, personajes y diseños de marca que también son obras de autor. Template DERECHOS_AUTOR activo en FPD.</div>
+          <div class="svc-ref">Arts. 229 y 232 Bis LFDA · Template DERECHOS_AUTOR en FPD · Procedimiento INDAUTOR</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 reveal d2">
+        <div class="svc-card" style="background:rgba(4,44,83,.5);border-top-color:rgba(93,202,165,.25);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:180px;">
+          <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem;">¿Aplica doble protección?</div>
+          <div style="font-size:.825rem;color:var(--gray-text);line-height:1.65;">Un logotipo, personaje o diseño de marca puede estar protegido simultáneamente como <strong style="color:var(--white)">marca registrada (LFPPI)</strong> y como <strong style="color:var(--white)">obra de arte gráfico (LFDA)</strong>. El Corredor documenta ambos fundamentos en un solo instrumento.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DIVISOR VISUAL ── -->
+    <hr class="grp-divider reveal">
+
+    <!-- ── GRUPO 4 · PERITAJE ── -->
+    <div class="peritaje-block reveal">
+      <div class="peritaje-badge">Peritaje valuador · Art. 6 Fr. VI LFCP</div>
+      <div class="row align-items-start mb-3">
+        <div class="col-12 col-md-8">
+          <p class="peritaje-nota">
+            Los servicios de esta sección son <strong>dictámenes periciales</strong>, no instrumentos de fe pública. La autoridad del Corredor es distinta: actúa como <strong>perito valuador</strong> con metodología técnica documentada (Art. 6 Fr. VI LFCP, ISO 10668, WIPO). El dictamen se presenta ante IMPI dentro del incidente de daños del Art. 343 LFPPI, o ante tribunales federales como prueba pericial en términos del CFPC. No sustituye a la fe pública — la complementa con el elemento económico que convierte la infracción en un reclamo cuantificado.
+          </p>
+        </div>
+        <div class="col-12 col-md-4 d-flex align-items-center justify-content-md-end">
+          <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--blue-pale);text-align:right;line-height:2;">
+            Art. 6 Fr. VI LFCP<br>
+            Art. 343 LFPPI · Incidente de daños<br>
+            Arts. 396–397 LFPPI<br>
+            ISO 10668:2010 · WIPO Guide
+          </div>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-12 col-md-6 reveal d1">
+          <div class="svc-card per">
+            <span class="svc-tag">Arts. 396–397</span>
+            <div class="svc-num">10 · PERITAJE</div>
+            <div class="svc-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="svc-name">Avalúo de Daños y Perjuicios de PI</div>
+            <div class="svc-desc">Dictamen pericial sobre el monto de la indemnización causada por una infracción específica. Aplica el indicador elegido por el titular y concluye una cifra que no puede ser inferior al 40% del valor legítimo. Presentable como incidente dentro del propio procedimiento ante IMPI — sin juicio separado.</div>
+            <div class="mt-2 mb-2">
+              <span class="met-pill">Utilidades dejadas de percibir</span>
+              <span class="met-pill">Utilidades del infractor</span>
+              <span class="met-pill">Licencia hipotética</span>
+            </div>
+            <div class="svc-ref">Art. 6 Fr. VI LFCP · Arts. 396–397 · Art. 343 LFPPI · Mínimo 40% valor legítimo · Cotización previa</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 reveal d2">
+          <div class="svc-card per">
+            <span class="svc-tag">ISO 10668 · WIPO</span>
+            <div class="svc-num">12 · PERITAJE</div>
+            <div class="svc-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div class="svc-name">Avalúo de Marca Notoria y/o Famosa</div>
+            <div class="svc-desc">Dictamen del valor intrínseco de la marca como activo intangible. Determina notoriedad o fama (Arts. 191–193 LFPPI) con evidencia documental y cuantifica el valor según estándares WIPO y OCDE. Útil para probar notoriedad ante IMPI, fusiones y adquisiciones, garantías crediticias y licencias.</div>
+            <div class="mt-2 mb-2">
+              <span class="met-pill">Royalty Relief (ISO 10668)</span>
+              <span class="met-pill">Precio de licencia hipotética</span>
+              <span class="met-pill">Método de costo</span>
+            </div>
+            <div class="svc-ref">Arts. 191–193 LFPPI · Art. 6 Fr. VI LFCP · ISO 10668:2010 · WIPO Guide on IP Valuation · Cotización previa</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5 reveal">
+      <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar constancia →</a>
+      <span style="display:inline-block;margin:0 1rem;color:var(--gray-text);font-size:.8rem;line-height:3;">·</span>
+      <a href="mailto:aduran@cp13.mx?subject=Consulta%20Avalúo%20PI" class="btn-ghost">Consultar avalúo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ PROCESO ══ -->
+<section id="como" class="section-white">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="sec-label" style="color:var(--teal)">Proceso</div>
+      <h2 class="sec-title sec-title-dark">De la infracción a la evidencia certificada</h2>
+      <p class="sec-sub sec-sub-dark">Cuatro pasos · Menos de 72 horas · la mayoría de los servicios 100% en línea</p>
+    </div>
+    <div class="row align-items-center g-2">
+      <div class="col-12 col-md reveal d1">
+        <div class="flow-step">
+          <div class="flow-num">01</div>
+          <div class="flow-name">Detecta la infracción</div>
+          <div class="flow-sub">Listado en marketplace, sitio web, red social o correo electrónico</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-auto flow-arrow d-none d-md-flex reveal">→</div>
+      <div class="col-12 col-md reveal d2">
+        <div class="flow-step">
+          <div class="flow-num">02</div>
+          <div class="flow-name">Solicita la constancia</div>
+          <div class="flow-sub">Carga la URL o documento en FPD, selecciona el instrumento y paga en línea</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-auto flow-arrow d-none d-md-flex reveal">→</div>
+      <div class="col-12 col-md reveal d3">
+        <div class="flow-step">
+          <div class="flow-num">03</div>
+          <div class="flow-name">El Corredor realiza la diligencia</div>
+          <div class="flow-sub">Captura del contenido, hash SHA-256, timestamp y firma con e.firma</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-auto flow-arrow d-none d-md-flex reveal">→</div>
+      <div class="col-12 col-md reveal d4">
+        <div class="flow-step">
+          <div class="flow-num">04</div>
+          <div class="flow-name">Recibe el instrumento certificado</div>
+          <div class="flow-sub">Acta con NOM-151 + CDEA verificable en verificar.cp13.digital</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ COMPARATIVA ══ -->
+<section class="section-navy">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="sec-label">Comparativa</div>
+      <h2 class="sec-title">¿Por qué fe pública del Corredor?</h2>
+      <p class="sec-sub">Medios probatorios de infracción digital — valor ante IMPI y tribunales federales</p>
+    </div>
+    <div class="reveal" style="overflow-x:auto;">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Medio probatorio</th>
+            <th>Fe pública</th>
+            <th>Hash SHA-256</th>
+            <th>Admisible IMPI</th>
+            <th>NOM-151</th>
+            <th>Art. 344 VII</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Captura propia (screenshot)</td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+          </tr>
+          <tr>
+            <td>Testigo presencial</td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+          </tr>
+          <tr>
+            <td>Empresa privada (e-Discovery)</td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+          </tr>
+          <tr>
+            <td>Notario Público</td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+            <td class="text-center"><span class="no">—</span></td>
+          </tr>
+          <tr>
+            <td><strong>Corredor Público CP13 · FPD</strong></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+            <td class="text-center"><span class="ok">✔</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ MARCO LEGAL ══ -->
+<section id="marco-legal" class="section-dark">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="sec-label">Marco legal</div>
+      <h2 class="sec-title">Los artículos que respaldan cada instrumento</h2>
+      <p class="sec-sub">LFPPI 2026 · LFPPI vigente · LFDA · LFCP · Código de Comercio</p>
+    </div>
+
+    <!-- LFPPI 2026 -->
+    <span class="ml-label reveal" style="margin-top:0">LFPPI · Decreto DOF 3 de abril de 2026</span>
+    <div class="row g-3 reveal">
+      <div class="col-12 col-md-6">
+        <div class="law-q">
+          <strong>ART. 344 FR. VII LFPPI · NUEVO · Medidas cautelares digitales</strong>
+          "Ordenar la suspensión, bloqueo, remoción de contenidos o cese de los actos que constituyan una violación a través de cualquier medio virtual, digital o electrónico, incluyendo el retiro de plataformas de comercio electrónico y redes sociales."
+          <div class="mt-2">
+            <span class="art-pill">Art. 344 Fr. VII</span>
+            <span class="art-pill">Art. 356</span>
+            <span class="art-pill">Servicios 01, 03</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="law-q">
+          <strong>ART. 386 FR. II INC. E) LFPPI · NUEVO · Ambush marketing digital</strong>
+          "Realizar actos de competencia desleal que causen confusión, error o engaño en el público respecto de la conexión de un signo distintivo con un evento masivo, a través de cualquier medio de comunicación electrónico o digital, sin contar con autorización del organizador o titular del evento."
+          <div class="mt-2">
+            <span class="art-pill">Art. 386 Fr. II e)</span>
+            <span class="art-pill">Art. 388</span>
+            <span class="art-pill">Multa $29.3 M</span>
+            <span class="art-pill">$117,310/día</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LFPPI vigente -->
+    <span class="ml-label reveal">LFPPI · Disposiciones vigentes</span>
+    <div class="row g-3 reveal">
+      <div class="col-12 col-md-6">
+        <div class="law-q">
+          <strong>ART. 409 LFPPI · Aviso de derechos y mala fe del infractor</strong>
+          "No se podrá reclamar el pago de daños y perjuicios cuando el infractor demuestre que, en la fecha en que inició la explotación, desconocía la existencia del derecho de propiedad industrial protegido o no tenía motivos razonables para conocerlo, a no ser que el titular hubiere señalado en los productos o servicios, o en algún otro medio, haber manifestado o hecho del conocimiento público que los productos o servicios se encuentran protegidos por un derecho de propiedad industrial."
+          <div class="mt-2">
+            <span class="art-pill">Art. 409</span>
+            <span class="art-pill">Art. 56</span>
+            <span class="art-pill">Servicios 02, 06</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="law-q">
+          <strong>ART. 343 LFPPI · Incidente de daños ante IMPI</strong>
+          "El Instituto, a solicitud de parte, podrá ordenar en la resolución definitiva que declare la existencia de una infracción, o mediante incidente posterior, la determinación de daños y perjuicios causados al titular del derecho de propiedad industrial afectado, que no podrán ser menores al cuarenta por ciento del valor de los productos o servicios que impliquen la violación."
+          <div class="mt-2">
+            <span class="art-pill">Art. 343</span>
+            <span class="art-pill">Art. 396</span>
+            <span class="art-pill">Art. 397</span>
+            <span class="art-pill">Mínimo 40%</span>
+            <span class="art-pill">Servicio 10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LFDA y LFCP -->
+    <span class="ml-label reveal">LFDA · LFCP · Código de Comercio</span>
+    <div class="row g-3 reveal">
+      <div class="col-12 col-md-6">
+        <div class="law-q">
+          <strong>ART. 229 Y 232 BIS LFDA · Infracción de derechos de autor en medios digitales</strong>
+          "Constituyen infracciones en materia de derechos de autor: reproducir, publicar, editar o fijar una obra, sin la autorización del autor o sus derechohabientes; así como cualquier acto de explotación de la obra realizado a través de redes digitales o en línea sin la autorización del titular."
+          <div class="mt-2">
+            <span class="art-pill">Art. 229 LFDA</span>
+            <span class="art-pill">Art. 232 Bis</span>
+            <span class="art-pill">Procedimiento INDAUTOR</span>
+            <span class="art-pill">Servicio 09</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="law-q">
+          <strong>ART. 6 FR. V Y VI LFCP · Facultades fedatarias y periciales del Corredor</strong>
+          "El Corredor Público está facultado para: actuar como fedatario público para hacer constar los hechos, actos jurídicos y contratos de naturaleza mercantil, así como para fungir como árbitro, mediador y perito valuador en materia mercantil, incluyendo la valuación de activos intangibles y propiedad industrial."
+          <div class="mt-2">
+            <span class="art-pill">Art. 6 Fr. V LFCP</span>
+            <span class="art-pill">Art. 6 Fr. VI LFCP</span>
+            <span class="art-pill">Art. 27 Fr. III LFPPI</span>
+            <span class="art-pill">Fe pública + Peritaje</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ CTA ══ -->
+<section id="cta">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label text-center" style="margin-bottom:1rem">Fe Pública Digital · pi.cp13.digital</div>
+      <h2 class="sec-title text-center mb-3">Proteja su propiedad industrial ahora</h2>
+      <p class="text-center mb-4" style="color:var(--teal-pale);font-size:1rem;font-weight:300;">Evidencia con valor probatorio pleno para IMPI y tribunales federales · Entrega en menos de 72 horas · 100% en línea</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar constancia →</a>
+        <a href="https://verificar.cp13.digital" class="btn-ghost">Verificar acta existente</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ FOOTER ══ -->
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tag">Propiedad Industrial con Fe Pública Mercantil</div>
+        <p style="font-size:.8rem;color:var(--gray-text);margin-top:.75rem;line-height:1.6;">Correduría Pública Número Trece · Ciudad de México<br>Corredor Público lic. Alejandro Durán Gómez<br>Secretaría de Economía · Cédula LFCP</p>
+      </div>
+      <div class="col-12 col-md-4">
+        <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;">Fe Pública · 10 servicios</div>
+        <div class="flinks flex-column" style="gap:.4rem;margin-bottom:1rem;">
+          <a href="#servicios">01 · Fe de Hechos Contenido Digital</a>
+          <a href="#servicios">02 · Fe de Hechos Envío Correo CC</a>
+          <a href="#servicios">03 · Fe de Hechos Ambush Marketing</a>
+          <a href="#servicios">04 · Cotejo Digital Documentos PI</a>
+          <a href="#servicios">05 · Ratificación Carta Poder IMPI</a>
+          <a href="#servicios">06 · Constancia Uso y Aviso ®</a>
+          <a href="#servicios">07 · Formalización Licencias/Franquicias</a>
+          <a href="#servicios">08 · Certificación Secretos Industriales</a>
+          <a href="#servicios">09 · Derechos de Autor Digital</a>
+          <a href="#servicios">11 · Constancia Reunión Franquicia</a>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--blue-light);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;">Peritaje · 2 dictámenes</div>
+        <div class="flinks flex-column" style="gap:.4rem;">
+          <a href="#servicios" style="color:var(--blue-pale)">10 · Avalúo de Daños y Perjuicios</a>
+          <a href="#servicios" style="color:var(--blue-pale)">12 · Avalúo de Marca Notoria/Famosa</a>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;">Ecosistema cp13.digital</div>
+        <div class="flinks flex-column" style="gap:.4rem;margin-bottom:1.5rem;">
+          <a href="https://cp13.digital">cp13.digital · Inicio</a>
+          <a href="https://fpd.cp13.digital">fpd.cp13.digital · Solicitar</a>
+          <a href="https://clientes.cp13.digital">clientes.cp13.digital · Portal</a>
+          <a href="https://verificar.cp13.digital">verificar.cp13.digital · Verificar acta</a>
+          <a href="https://hash.cp13.digital">hash.cp13.digital · SHA-256</a>
+          <a href="https://honorarios.cp13.digital">honorarios.cp13.digital · Tarifas</a>
+          <a href="https://cid.cp13.digital">cid.cp13.digital · Consentimiento</a>
+        </div>
+        <div class="flinks" style="gap:.5rem 1rem;">
+          <a href="https://correduria13.mx/terminos-y-condiciones">Términos</a>
+          <a href="https://correduria13.mx/politicas-de-privacidad">Privacidad</a>
+          <a href="https://correduria13.mx/privacidad-servicios-digitales">Aviso digital</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy">
+      © 2026 Correduría Pública Número Trece · Durán Abogados S.C. · Todos los derechos reservados · pi.cp13.digital
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════ SCRIPTS ══ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ── Particles canvas ── */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function randomParticle(){
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.5 + 0.3,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      alpha: Math.random() * 0.5 + 0.1
+    };
+  }
+
+  function init(){
+    resize();
+    particles = Array.from({length: 110}, randomParticle);
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    for(let i = 0; i < particles.length; i++){
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.x < 0) p.x = W;
+      if(p.x > W) p.x = 0;
+      if(p.y < 0) p.y = H;
+      if(p.y > H) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(29,158,117,${p.alpha})`;
+      ctx.fill();
+
+      for(let j = i + 1; j < particles.length; j++){
+        const q = particles[j];
+        const dx = p.x - q.x, dy = p.y - q.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 90){
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(29,158,117,${0.07 * (1 - dist/90)})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  init();
+  draw();
+})();
+
+/* ── Scroll reveal — threshold 0.05 (crítico per TechDoc) ── */
+(function(){
+  const observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.reveal').forEach(function(el){
+    observer.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

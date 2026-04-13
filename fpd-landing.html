@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cp13.digital — FPD · Durán Abogados SC</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#042C53;color:#fff}
+
+/* NAV */
+.nav{background:#042C53;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(29,158,117,0.25);position:sticky;top:0;z-index:100}
+.nav-brand{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px;text-decoration:none;transition:color 0.2s}
+.nav-brand:hover{color:#5DCAA5}
+.nav-brand span{color:#1D9E75}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s;position:relative;padding-bottom:4px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#1D9E75;transform:scaleX(0);transition:transform 0.2s}
+.nav-links a:hover{color:#5DCAA5}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{background:#1D9E75;color:#fff;padding:8px 20px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;transition:background 0.2s,transform 0.15s}
+.nav-cta:hover{background:#5DCAA5;color:#021E3A;transform:translateY(-1px)}
+
+/* HERO */
+.hero{background:#042C53;padding:80px 40px 60px;display:grid;grid-template-columns:1fr 380px;gap:60px;align-items:center;max-width:1200px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.4);border-radius:20px;padding:4px 14px;font-size:12px;color:#5DCAA5;margin-bottom:20px}
+.hero-tag-dot{width:6px;height:6px;background:#5DCAA5;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{font-size:42px;font-weight:700;line-height:1.15;color:#fff;margin-bottom:16px}
+.hero h1 em{color:#5DCAA5;font-style:normal}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:28px;max-width:480px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:#1D9E75;color:#fff;padding:12px 24px;border-radius:7px;text-decoration:none;font-size:15px;font-weight:600;display:inline-block;transition:background 0.2s,transform 0.15s}
+.btn-primary:hover{background:#5DCAA5;color:#021E3A;transform:translateY(-2px)}
+.btn-outline{background:transparent;color:#5DCAA5;padding:12px 24px;border-radius:7px;text-decoration:none;font-size:15px;font-weight:500;border:1px solid rgba(93,202,165,0.5);display:inline-block;transition:all 0.2s}
+.btn-outline:hover{background:rgba(29,158,117,0.1);border-color:#5DCAA5;color:#fff;transform:translateY(-2px)}
+
+/* STATUS CARD */
+.status-card{background:rgba(255,255,255,0.05);border:1px solid rgba(29,158,117,0.3);border-radius:12px;padding:24px;transition:border-color 0.2s}
+.status-card:hover{border-color:rgba(29,158,117,0.6)}
+.status-title{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.45);margin-bottom:16px}
+.status-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);transition:background 0.2s}
+.status-item:last-child{border-bottom:none}
+.status-label{font-size:13px;color:rgba(255,255,255,0.7)}
+.status-badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.badge-on{background:rgba(29,158,117,0.2);color:#5DCAA5;border:1px solid rgba(93,202,165,0.3)}
+.badge-soon{background:rgba(255,200,0,0.12);color:#FFCC00;border:1px solid rgba(255,200,0,0.25)}
+
+/* TRUST BAR */
+.trust-bar{background:#031E3A;padding:18px 40px;display:flex;gap:32px;justify-content:center;flex-wrap:wrap;border-top:1px solid rgba(29,158,117,0.15);border-bottom:1px solid rgba(29,158,117,0.15)}
+.trust-item{font-size:12px;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:6px;transition:color 0.2s}
+.trust-item:hover{color:rgba(255,255,255,0.85)}
+.trust-dot{width:5px;height:5px;background:#1D9E75;border-radius:50%;flex-shrink:0}
+
+/* SECTIONS */
+.section{padding:70px 40px;max-width:1200px;margin:0 auto}
+.section-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#1D9E75;margin-bottom:10px}
+.section-title{font-size:30px;font-weight:700;color:#fff;margin-bottom:12px}
+.section-sub{font-size:15px;color:rgba(255,255,255,0.55);max-width:540px;line-height:1.7;margin-bottom:48px}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.svc-card{background:rgba(255,255,255,0.04);border:1px solid rgba(29,158,117,0.2);border-radius:10px;padding:24px;transition:transform 0.2s,border-color 0.2s,background 0.2s}
+.svc-card:hover{transform:translateY(-4px);border-color:rgba(29,158,117,0.55);background:rgba(255,255,255,0.07)}
+.svc-icon{width:40px;height:40px;background:rgba(29,158,117,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:background 0.2s}
+.svc-card:hover .svc-icon{background:rgba(29,158,117,0.28)}
+.svc-card h3{font-size:15px;font-weight:600;color:#fff;margin-bottom:8px}
+.svc-card p{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6}
+.svc-tag{display:inline-block;margin-top:12px;font-size:10px;color:rgba(93,202,165,0.7);background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.2);border-radius:4px;padding:2px 8px}
+
+/* WHY */
+.why-section{background:#031E3A;padding:70px 40px}
+.why-inner{max-width:1200px;margin:0 auto}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.why-card{padding:28px;border-left:2px solid #1D9E75;transition:border-color 0.2s,background 0.2s,transform 0.2s;border-radius:0 8px 8px 0}
+.why-card:hover{border-left-color:#5DCAA5;background:rgba(29,158,117,0.06);transform:translateX(4px)}
+.why-card h3{font-size:16px;font-weight:600;color:#fff;margin-bottom:10px}
+.why-card p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.65}
+.why-law{font-size:11px;color:#1D9E75;margin-top:10px;font-weight:600}
+
+/* ECOSYSTEM */
+.sub-section{background:#031E3A;padding:70px 40px}
+.sub-inner{max-width:1200px;margin:0 auto}
+.sub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.sub-card{background:rgba(255,255,255,0.04);border:1px solid rgba(29,158,117,0.18);border-radius:10px;padding:20px;transition:transform 0.2s,border-color 0.2s,background 0.2s}
+.sub-card:hover{transform:translateY(-3px);border-color:rgba(29,158,117,0.45);background:rgba(255,255,255,0.07)}
+.sub-url{font-size:12px;font-family:monospace;color:#1D9E75;background:rgba(29,158,117,0.1);border-radius:4px;padding:3px 8px;display:inline-block;margin-bottom:10px}
+.sub-card h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}
+.sub-card p{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.55}
+
+/* NOSOTROS */
+.nosotros{padding:70px 40px;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.nos-loc{background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.2);border-radius:12px;padding:28px;transition:border-color 0.2s}
+.nos-loc:hover{border-color:rgba(29,158,117,0.45)}
+.nos-loc-title{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:#5DCAA5;margin-bottom:16px}
+.nos-loc p{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7}
+.nos-loc strong{color:#fff}
+.nos-stat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.stat-box{background:rgba(255,255,255,0.04);border-radius:8px;padding:14px;text-align:center;transition:background 0.2s,transform 0.2s}
+.stat-box:hover{background:rgba(29,158,117,0.1);transform:translateY(-2px)}
+.stat-num{font-size:24px;font-weight:700;color:#5DCAA5}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px}
+.nos-bullets{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.nos-bullets li{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.55;padding-left:16px;position:relative}
+.nos-bullets li::before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;background:#1D9E75;border-radius:50%}
+
+/* FOOTER */
+.footer-wrap{background:#020F1C;padding:48px 40px 24px}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.f-brand{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.f-brand span{color:#1D9E75}
+.f-desc{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.65;margin-top:8px}
+.f-links{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start}
+.f-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s}
+.f-links a:hover{color:#5DCAA5}
+.footer-bottom{max-width:1200px;margin:20px auto 0;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:11px;color:rgba(255,255,255,0.25)}
+.art75{font-size:11px;color:#1D9E75;opacity:0.7}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(29,158,117,0.3),transparent)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:48px 20px 40px}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:1fr}
+  .sub-grid{grid-template-columns:repeat(2,1fr)}
+  .nosotros{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .trust-bar{gap:16px;padding:16px 20px}
+}
+@media(max-width:600px){
+  .services-grid{grid-template-columns:1fr}
+  .sub-grid{grid-template-columns:1fr}
+  .hero h1{font-size:30px}
+  .section-title{font-size:24px}
+  .section,.nosotros,.why-section,.sub-section{padding:48px 20px}
+  .footer-wrap{padding:32px 20px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">cp13<span>.digital</span></a>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#verificar">Verificar</a>
+    <a href="#ecosistema">Ecosistema</a>
+    <a href="#nosotros">Nosotros</a>
+  </div>
+  <a href="https://fpd.cp13.digital" class="nav-cta">Iniciar trámite</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-tag"><span class="hero-tag-dot"></span>FPD · CDMX</div>
+    <h1>Sus derechos:<br><em>Detectar. Documentar.<br>Demostrar.</em></h1>
+    <p class="hero-sub">Constancias certificadas con valor probatorio pleno. Firma electrónica avanzada, huella SHA-256 y sello NOM-151 — todo ante Intermediario Digital y Corredor Público</p>
+    <div class="hero-btns">
+      <a href="https://fpd.cp13.digital" class="btn-primary">Iniciar trámite</a>
+      <a href="https://verificar.cp13.digital" class="btn-outline">Verificar instrumento</a>
+    </div>
+  </div>
+  <div class="status-card">
+    <div class="status-title">Estado del sistema</div>
+    <div class="status-item"><span class="status-label">Constancias Certificadas (FPD)</span><span class="status-badge badge-on">Activo</span></div>
+    <div class="status-item"><span class="status-label">Verificación de instrumentos</span><span class="status-badge badge-on">Activo</span></div>
+    <div class="status-item"><span class="status-label">Huella SHA-256</span><span class="status-badge badge-on">Activo</span></div>
+    <div class="status-item"><span class="status-label">Firma electrónica (FEA)</span><span class="status-badge badge-on">Activo</span></div>
+    <div class="status-item"><span class="status-label">Pagos en línea</span><span class="status-badge badge-soon">Próximo</span></div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-dot"></span>Protección de bienes intangibles</div>
+  <div class="trust-item"><span class="trust-dot"></span>Reducción de riesgos administrativos</div>
+  <div class="trust-item"><span class="trust-dot"></span>Disminución de contingencias fiscales</div>
+  <div class="trust-item"><span class="trust-dot"></span>Incremento del capital intelectual empresarial</div>
+  <div class="trust-item"><span class="trust-dot"></span>Control y velocidad de cierre</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICIOS -->
+<div class="section" id="servicios">
+  <div class="section-label">Servicios</div>
+  <div class="section-title">Cuatro capas de certeza jurídica</div>
+  <div class="section-sub">Nuestras constancias certificadas son documentos o instrumentos con plena eficacia probatoria ante cualquier autoridad judicial o administrativa.</div>
+  <div class="services-grid">
+
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="2" width="14" height="16" rx="2" stroke="#1D9E75" stroke-width="1.5"/>
+          <line x1="6" y1="7" x2="14" y2="7" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="6" y1="10" x2="14" y2="10" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="6" y1="13" x2="10" y2="13" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Actas de Fe de Hechos</h3>
+      <p>Fe de hechos digitales: capturas, transacciones, contenido en línea, correos electrónicos, detección de bienes intangibles.</p>
+      <span class="svc-tag">Art. 89 Bis CCom</span>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="9" cy="9" r="5.5" stroke="#1D9E75" stroke-width="1.5"/>
+          <line x1="13.5" y1="13.5" x2="17" y2="17" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="7" y1="9" x2="11" y2="9" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="9" y1="7" x2="9" y2="11" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Cotejo Digital</h3>
+      <p>Certificación de que una copia digital es fiel reproducción del documento original.</p>
+      <span class="svc-tag">Art. 6 Fr. V LFCP</span>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="2" y="8" width="16" height="10" rx="2" stroke="#1D9E75" stroke-width="1.5"/>
+          <path d="M6 8V6a4 4 0 018 0v2" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="10" cy="13" r="1.5" fill="#1D9E75"/>
+        </svg>
+      </div>
+      <h3>Protección de información confidencial</h3>
+      <p>Protección de secretos industriales sin revelar su contenido.</p>
+      <span class="svc-tag">Art. 6 Fr. V LFCP</span>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="9" r="6" stroke="#1D9E75" stroke-width="1.5"/>
+          <polyline points="7,9 9,11 13,7" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="10" y1="15" x2="10" y2="18" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="7" y1="18" x2="13" y2="18" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Constancias de Cumplimiento Legal</h3>
+      <p>Acreditar el cumplimiento legal, reglamentario o contractual comercial.</p>
+      <span class="svc-tag">LGSM · LFCP</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- POR QUÉ FUNCIONA -->
+<div class="why-section">
+  <div class="why-inner">
+    <div class="section-label">¿Por qué funciona?</div>
+    <div class="section-title">Las constancias certificadas y los instrumentos públicos expedidos por Corredor Público son las pruebas</div>
+    <div class="section-sub">No un contrato privado. No una cláusula. Un instrumento público con presunción legal de autenticidad.</div>
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>Presunción de autenticidad</h3>
+        <p>El instrumento público tiene valor probatorio pleno por ministerio de ley. No requiere ratificación adicional ante tribunal.</p>
+        <div class="why-law">Art. 202 CFPC</div>
+      </div>
+      <div class="why-card">
+        <h3>Fecha cierta</h3>
+        <p>El instrumento acredita el tiempo exacto de su creación. Contamos con evidencias tecnológicas adicionales para demostrar que el archivo no ha sido modificado después.</p>
+        <div class="why-law">NOM-151-SCFI-2016</div>
+      </div>
+      <div class="why-card">
+        <h3>Cadena de integridad SHA-256</h3>
+        <p>Un solo bit modificado en el archivo produce una huella completamente distinta. La alteración es matemáticamente detectable.</p>
+        <div class="why-law">LFEA · Art. 97</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ECOSISTEMA -->
+<div class="sub-section" id="ecosistema">
+  <div class="sub-inner">
+    <div class="section-label">Ecosistema</div>
+    <div class="section-title">Nuestros servicios</div>
+    <div class="sub-grid">
+      <div class="sub-card">
+        <div class="sub-url">fpd.cp13.digital</div>
+        <h4>Fe Pública Digital</h4>
+        <p>Portal principal de constancias certificadas. Acceso seguro para clientes registrados.</p>
+      </div>
+      <div class="sub-card">
+        <div class="sub-url">verificar.cp13.digital</div>
+        <h4>Verificación</h4>
+        <p>Confirma la autenticidad de la información confidencial. Destino de los códigos QR.</p>
+      </div>
+      <div class="sub-card">
+        <div class="sub-url">hash.cp13.digital</div>
+        <h4>Huella SHA-256</h4>
+        <p>Calculadora 100% cliente. Tu archivo confidencial nunca sale de tu dispositivo.</p>
+      </div>
+      <div class="sub-card">
+        <div class="sub-url">docs.cp13.digital</div>
+        <h4>Documentación</h4>
+        <p>Centro de conocimiento público, de clientes y de socios.</p>
+      </div>
+      <div class="sub-card">
+        <div class="sub-url">cid.cp13.digital</div>
+        <h4>Consentimiento</h4>
+        <p>Consentimiento Informado Digital con firma electrónica y SHA-256.</p>
+      </div>
+      <div class="sub-card">
+        <div class="sub-url">honorarios.cp13.digital</div>
+        <h4>Honorarios</h4>
+        <p>Catálogo de servicios, membresías y pago en línea. Transparente y sin sorpresas.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOSOTROS -->
+<div class="nosotros" id="nosotros">
+  <div>
+    <div class="section-label">Nosotros</div>
+    <div class="section-title">25 años de experiencia en México</div>
+    <p style="font-size:15px;color:rgba(255,255,255,0.75);font-weight:500;margin-bottom:16px">
+      Licenciados en Derecho<br>
+      Intermediario Comercial Digital y Corredor Público
+    </p>
+    <ul class="nos-bullets">
+      <li>Lic. Julio Alejandro Durán Gómez — Licenciado en Derecho</li>
+      <li>Lic. Adriana Lino Verduzco — Licenciada en Derecho</li>
+    </ul>
+  </div>
+  <div class="nos-loc">
+    <div class="nos-loc-title">Ubicación</div>
+    <p><strong>Paseo de los Tamarindos 400-B, Local 5</strong><br>Bosques de las Lomas<br>Ciudad de México, C.P. 05120</p>
+    <div class="nos-stat">
+      <div class="stat-box"><div class="stat-num">25+</div><div class="stat-lbl">Años de ejercicio</div></div>
+      <div class="stat-box"><div class="stat-num">150</div><div class="stat-lbl">Asuntos digitales</div></div>
+      <div class="stat-box"><div class="stat-num">60</div><div class="stat-lbl">Instrumentos / mes</div></div>
+      <div class="stat-box"><div class="stat-num">10k+</div><div class="stat-lbl">Instrumentos emitidos</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-wrap">
+  <div class="footer-inner">
+    <div>
+      <div class="f-brand">cp13<span>.digital</span></div>
+      <p class="f-desc">Durán Abogados SC · Ciudad de México<br>
+      Lic. Julio Alejandro Durán Gómez<br>
+      aduran@cp13.mx</p>
+    </div>
+    <div class="f-links">
+      <a href="https://cp13.mx">cp13.mx — Sitio institucional</a>
+      <a href="https://cp13.mx/terminos-y-condiciones">Términos y condiciones</a>
+      <a href="https://cp13.mx/politicas-de-privacidad">Política de privacidad</a>
+      <a href="https://cp13.mx/privacidad-servicios-digitales">Privacidad servicios digitales</a>
+      <a href="https://cp13.mx/politica-de-cookies">Política de cookies</a>
+      <a href="#">Ejercicio de derechos ARCO</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>D.R. Durán Abogados, S.C. México 2026.</p>
+    <p class="art75">Derecho Comercial · Intermediación Comercial Digital · Correduría Pública</p>
+  </div>
+</div>
+
+</body>
+</html>

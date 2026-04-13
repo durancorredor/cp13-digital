@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Aviso de privacidad y protección de datos personales — Correduría Pública No. 13, cp13.digital. LFPDPPP, derechos ARCO, excepciones fe pública.">
+<title>Política de privacidad · cp13.digital</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+.navbar { background: var(--navy-dark); border-bottom: 1px solid rgba(29,158,117,0.2); padding: 0.75rem 0; position: sticky; top: 0; z-index: 1000; }
+.navbar-brand { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.brand-cp13 { font-weight: 700; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.brand-dot  { font-weight: 700; font-size: 1.4rem; color: var(--teal); }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+.page-header { background: var(--navy-dark); border-bottom: 3px solid var(--teal); padding: 2.5rem 0 2rem; }
+.page-header .mono-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.page-header h1 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; }
+.page-header .update-date { font-size: 0.8rem; color: var(--gray-text); margin-top: 0.4rem; font-family: var(--font-mono); }
+
+.legal-wrap { flex: 1; padding: 3rem 0 5rem; }
+.legal-body { max-width: 740px; }
+
+.legal-body h2 { font-size: 1.1rem; font-weight: 700; color: var(--teal-light); margin: 2.25rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid rgba(29,158,117,0.2); }
+.legal-body h2:first-child { margin-top: 0; }
+.legal-body h3 { font-size: 0.92rem; font-weight: 600; color: var(--white); margin: 1.25rem 0 0.4rem; }
+.legal-body p { font-size: 0.9rem; color: rgba(255,255,255,0.82); line-height: 1.8; margin-bottom: 0.875rem; }
+.legal-body ul { margin: 0.5rem 0 0.875rem 1.25rem; }
+.legal-body ul li { font-size: 0.9rem; color: rgba(255,255,255,0.82); line-height: 1.75; margin-bottom: 0.3rem; }
+.legal-body a { color: var(--teal-light); text-decoration: underline; }
+.legal-body a:hover { color: var(--white); }
+.legal-body .mono { font-family: var(--font-mono); font-size: 0.82rem; }
+.legal-body strong { color: var(--white); font-weight: 600; }
+
+.info-card { background: var(--navy-card); border-radius: 8px; padding: 1.25rem 1.5rem; border-left: 4px solid var(--teal); margin: 1.5rem 0; }
+.info-card p { margin: 0; }
+
+.warning-card { background: rgba(201,139,32,0.08); border-radius: 8px; padding: 1.25rem 1.5rem; border-left: 4px solid #C98B20; margin: 1.5rem 0; }
+.warning-card p { margin: 0; color: rgba(255,255,255,0.82); font-size: 0.9rem; line-height: 1.75; }
+
+.ref-legal { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal-pale); background: rgba(0,0,0,0.25); border-radius: 4px; padding: 0.5rem 0.875rem; margin: 0.75rem 0 1rem; display: block; line-height: 1.6; }
+
+.toc { background: rgba(10,60,110,0.5); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; border: 1px solid rgba(29,158,117,0.15); }
+.toc-title { font-size: 0.72rem; font-family: var(--font-mono); color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+.toc ul { margin: 0; padding-left: 1rem; }
+.toc ul li { font-size: 0.82rem; color: var(--gray-text); margin-bottom: 0.25rem; }
+.toc ul li a { color: var(--gray-text); text-decoration: none; transition: color 0.2s; }
+.toc ul li a:hover { color: var(--teal-light); }
+
+footer { background: var(--navy-dark); border-top: 3px solid var(--teal); padding: 3rem 0 1.5rem; }
+.footer-brand { font-weight: 700; font-size: 1.5rem; }
+.footer-brand span { color: var(--teal); }
+.footer-tagline { font-size: 0.85rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-col-title { font-size: 0.72rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.4rem; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital#constancias">Constancias</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://fpd.cp13.digital">Solicitar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://hash.cp13.digital">SHA-256</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="mono-label">Aviso de privacidad · LFPDPPP</div>
+    <h1>Política de privacidad</h1>
+    <div class="update-date">Última actualización: 5 de abril de 2026</div>
+  </div>
+</div>
+
+<main class="legal-wrap">
+  <div class="container">
+    <div class="legal-body">
+
+<div class="toc">
+  <div class="toc-title">Contenido</div>
+  <ul>
+    <li><a href="#responsable">1. Responsable del tratamiento</a></li>
+    <li><a href="#datos">2. Datos personales recabados</a></li>
+    <li><a href="#operacion">3. Cómo operamos sus datos personales</a></li>
+    <li><a href="#finalidades">4. Finalidades del tratamiento</a></li>
+    <li><a href="#transferencias">5. Transferencias de datos</a></li>
+    <li><a href="#arco">6. Ejercicio de derechos ARCO</a></li>
+    <li><a href="#excepciones-instrumento">7. Excepciones ARCO — instrumentos públicos</a></li>
+    <li><a href="#excepciones-diligencia">8. Excepciones ARCO — fe de hechos y valuación</a></li>
+    <li><a href="#impedir">9. Cómo impedir el uso de su información</a></li>
+    <li><a href="#cambios">10. Cambios al aviso</a></li>
+  </ul>
+</div>
+
+<div class="info-card">
+  <p>El presente Aviso de Privacidad se emite en cumplimiento de la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP)</strong>, su Reglamento y los Lineamientos del INAI. La Correduría Pública Número Trece actúa como responsable del tratamiento de los datos personales que usted nos proporciona.</p>
+</div>
+
+<h2 id="responsable">1. Responsable del tratamiento</h2>
+<p><strong>Nombre:</strong> Lic. Alejandro Durán<br>
+<strong>Domicilio:</strong> Ciudad de México, México<br>
+<strong>Correo electrónico:</strong> <a href="mailto:aduran@cp13.mx">aduran@cp13.mx</a><br>
+<strong>Teléfonos:</strong> 55 5525 0913 · 55 5592 0713</p>
+
+<h2 id="datos">2. Datos personales recabados</h2>
+<p>Para la prestación de los servicios de Intermediación Digital, cumplimiento de las obligaciones legales y Fe Pública, podemos recabar las siguientes categorías de datos:</p>
+
+<h3>Datos de identificación</h3>
+<ul>
+  <li>Nombre completo, denominación o razón social</li>
+  <li>RFC y/o CURP</li>
+  <li>Identificación oficial vigente</li>
+  <li>Domicilio fiscal o convencional</li>
+</ul>
+
+<h3>Datos de contacto</h3>
+<ul>
+  <li>Correo electrónico y número telefónico</li>
+</ul>
+
+<h3>Datos financieros</h3>
+<ul>
+  <li>Información de pago para el cobro de honorarios (procesada por proveedores certificados; la Correduría no almacena datos de tarjeta)</li>
+</ul>
+
+<h3>Datos para cumplimiento de la LFPIORPI</h3>
+<ul>
+  <li>Información sobre origen y destino de recursos en supuestos de actividades vulnerables</li>
+  <li>Identificación del beneficiario controlador, cuando corresponda</li>
+</ul>
+
+<h2 id="operacion">3. Cómo operamos sus datos personales</h2>
+<p>Sus datos personales son manejados <strong>exclusivamente por el personal de nuestro Despacho y, en su caso, la Correduría Pública asignada</strong> para el desarrollo de nuestras actividades profesionales que usted nos ha encomendado, o que amablemente nos proporcionó cuando practicamos alguna diligencia en la que usted nos atendió.</p>
+<p>Sus datos personales y demás información que nos proporcione serán guardados en los archivos que en términos del Código de Comercio, en su caso,  la Ley Federal de Correduría Pública yu las disposiciones fiscales p de PLD sean aplicables, y se incorporarán en los testimonios, copias certificadas, condtancias digitales, dictámenes de valuación, opiniones jurídicas, laudos de arbitraje, convenios de mediación, transacción, remediación u otros que conforme a la ley sean necesarios, mismos que pueden ser inscritos ante una o más autoridades.</p>
+<p>Su información personal <strong>no se comunicará de manera alguna a ninguna persona ajena</strong> a usted y/o a sus operaciones comerciales y/o a los solicitantes de las diligencias encomendadas. Su información sí podrá comunicarse a las autoridades facultadas que sean necesarias, que así lo soliciten, o cuya comunicación sea obligatoria o legalmente necesaria.</p>
+
+<h2 id="finalidades">4. Finalidades del tratamiento</h2>
+<h3>Finalidades primarias (necesarias para la prestación del servicio)</h3>
+<ul>
+  <li>Identificar al compareciente y verificar su personalidad jurídica con los elementos digitales disponibles</li>
+  <li>Generar y certificar constancias digitales y eventualmente instrumentos de Fe Pública mercantil o dictamenes de valuación</li>
+  <li>Cumplir las obligaciones de Corredor Público conforme a la LFCP y su Reglamento cuando aplique</li>
+  <li>Dar cumplimiento a las obligaciones en materia de prevención de lavado de dinero (LFPIORPI)</li>
+  <li>Emitir comprobantes de honorarios y gestionar el cobro</li>
+</ul>
+<h3>Finalidades secundarias (requieren su consentimiento)</h3>
+<ul>
+  <li>Envío de comunicaciones informativas sobre nuevos servicios de intermediación digital, fe pública mercantil y servicios de valuación en general</li>
+  <li>Invitaciones a eventos o capacitaciones en materia legal y tecnológica</li>
+</ul>
+<p>Si no desea que sus datos sean tratados para finalidades secundarias, puede manifestarlo en cualquier momento a <a href="mailto:aduran@cp13.mx">aduran@cp13.mx</a>.</p>
+
+<h2 id="transferencias">5. Transferencias de datos</h2>
+<p>Sus datos personales podrán ser transferidos, sin requerir su consentimiento, únicamente cuando sea necesario para el cumplimiento de obligaciones legales:</p>
+<ul>
+  <li>Secretaría de Economía (registro de instrumentos y Archivo General de Correduría Pública)</li>
+  <li>Unidad de Inteligencia Financiera (UIF), conforme a la LFPIORPI</li>
+  <li>Autoridades judiciales o administrativas competentes, por mandato legal</li>
+</ul>
+<p>Durán Abogados, SC, sus socios o personal <strong>no licenciarán, cederán, venderán ni usarán</strong> su información personal de maneras distintas a las aquí descritas.</p>
+
+<h2 id="arco">6. Ejercicio de derechos ARCO<br><small style="font-size:0.75rem;font-weight:400;color:var(--gray-text)">(Acceso, Rectificación, Cancelación, Oposición)</small></h2>
+
+<div class="info-card">
+  <p>Es importante señalar que cuando se nos proporciona información y/o datos personales para el desahogo o realización de diligencias de fe pública y/o de valuación y/o las que legalmente resulten aplicables, de conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, los mismos se encuentran sujetos a lo dispuesto en las <strong>fracciones I y IV del artículo 10</strong> del citado ordenamiento, en relación con los <strong>artículos 5° y 6°</strong> de su Reglamento.</p>
+</div>
+
+<span class="ref-legal">LFPDPPP Art. 10 Fr. I y IV · Reglamento LFPDPPP Arts. 5° y 6°</span>
+
+<p>Para ejercer sus derechos ARCO en los casos en que procedan, envíe su solicitud a <a href="mailto:aduran@cp13.mx">aduran@cp13.mx</a>, confirmando el envío telefónicamente con los Licenciados Julio Alejandro Durán Gómez y/o Adriana Lino Verduzco a los teléfonos <strong>55 5525 0913</strong> o <strong>55 5592 0713</strong>.</p>
+<p>Responderemos dentro de los plazos establecidos en la LFPDPPP. Es posible que le solicitemos verificar su identidad antes de atender su solicitud.</p>
+
+<h2 id="excepciones-instrumento">7. Excepciones ARCO — instrumentos públicos</h2>
+
+<div class="warning-card">
+  <p>Cierta información personal puede estar exenta de solicitudes de derechos ARCO cuando la información forma parte de instrumentos públicos expedidos por el Corredor Público en ejercicio de sus facultades legales.</p>
+</div>
+
+<p>No será posible el ejercicio de los derechos ARCO cuando la información solicitada se encuentre contenida o forme parte de:</p>
+<ul>
+  <li>Actas, pólizas, testimonios, copias certificadas, cotejos, constancias, extractos, libros de registro e índices expedidos por el Corredor Público</li>
+  <li>Dictámenes de valuación expedidos por el Corredor Público</li>
+  <li>Registros necesarios para el control ordenados por las disposiciones legales aplicables</li>
+  <li>Avisos, informes y cualquier documento dirigido a autoridades y registros gubernamentales</li>
+  <li>Actuaciones realizadas en ejercicio de las funciones de intermediario comercial digital, mediador comercial, mediador para la solución pacífica de conflictos o árbitro</li>
+</ul>
+<p>En términos generales, esta excepción aplica a <strong>todos los documentos que en ejercicio de las facultades de Corredor Público hayan sido expedidos o llevados a cabo</strong>, ya que modificar o cancelar datos incorporados en instrumentos públicos afectaría su integridad e iría en contra de la función fedataria.</p>
+<p>Al concluir los plazos de custodia de sus archivos, el Corredor Público deberá entregarlos al <strong>Archivo General de Correduría Pública</strong>, dependiente de la Secretaría de Economía, que será en lo sucesivo la autoridad encargada de su custodia.</p>
+
+<h2 id="excepciones-diligencia">8. Excepciones ARCO — fe de hechos y dictámenes de valuación</h2>
+<p>Tampoco será posible el ejercicio de los derechos ARCO cuando usted haya formado parte de una diligencia de <strong>notificación</strong> (como notificado), <strong>fe de hechos</strong> (como persona presente en la diligencia) o <strong>dictamen de valuación</strong> (habiendo proporcionado información de mercado o referencias técnicas).</p>
+<p>En estos supuestos, la información proporcionada — incluyendo nombre, identificaciones oficiales, comentarios asentados e imágenes autorizadas — será transcrita exclusivamente en el Acta o Dictamen respectivo del Corredor Público, e incorporada al archivo del instrumento público correspondiente. Los testimonios y copias certificadas serán entregados al solicitante de la diligencia o presentados ante las autoridades competentes cuando sea legalmente necesario.</p>
+
+<span class="ref-legal">Fundamento: LFPDPPP Art. 10 Fr. I y IV · Reglamento LFPDPPP Arts. 5° y 6°</span>
+
+<h2 id="impedir">9. Cómo impedir el uso de su información personal</h2>
+<p>Es posible impedir el uso de su información personal <strong>antes del inicio del ejercicio de las facultades del Corredor Público</strong>, comunicándole que no desea proporcionar su información por cualquier motivo. En ese caso, es posible que el instrumento, dictamen o documento solicitado no pueda llevarse a cabo si depende de usted y/o de sus socios o representados.</p>
+<p>En los casos que no se encuentren en los supuestos de excepción descritos, puede solicitar la eliminación de su información personal enviando su solicitud a <a href="mailto:aduran@cp13.mx">aduran@cp13.mx</a> y confirmando el envío telefónicamente con los Licenciados Julio Alejandro Durán Gómez y/o Adriana Lino Verduzco a los teléfonos <strong>55 5525 0913</strong> o <strong>55 5592 0713</strong>. Consideraremos todas las solicitudes y proporcionaremos respuesta dentro de los plazos legales.</p>
+
+<h2 id="cambios">10. Cambios al aviso</h2>
+<p>El presente Aviso de Privacidad podrá ser modificado en cualquier momento. Los cambios serán notificados a través del sitio <span class="mono">cp13.digital</span>. El uso continuado de los servicios implica la aceptación del Aviso vigente.</p>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tagline">Sus derechos: Detectar. Documentar. Demostrar.</div>
+        <div class="mt-3" style="font-size:0.8rem;color:var(--gray-text)">
+          Durán Abogados SC<br>
+          Ciudad de México · aduran@cp13.mx
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links">
+          <a href="https://fpd.cp13.digital">Fe Pública Digital</a>
+          <a href="https://verificar.cp13.digital">Verificar constancia</a>
+          <a href="https://hash.cp13.digital">Calculadora SHA-256</a>
+          <a href="https://honorarios.cp13.digital">Honorarios</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links">
+          <a href="/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="/politica-de-privacidad">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales">Privacidad servicios digitales</a>
+          <a href="/politica-de-cookies">Política de cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy text-center">
+      © 2026 Durán Abogados SC · cp13.digital · Todos los derechos reservados
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

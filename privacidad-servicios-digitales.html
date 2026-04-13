@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tratamiento de datos en los servicios digitales FPD, SHA-256, CID — Durán Abogados SC.">
+<title>Privacidad en servicios digitales · cp13.digital</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+.navbar { background: var(--navy-dark); border-bottom: 1px solid rgba(29,158,117,0.2); padding: 0.75rem 0; position: sticky; top: 0; z-index: 1000; }
+.navbar-brand { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.brand-cp13 { font-weight: 700; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.brand-dot  { font-weight: 700; font-size: 1.4rem; color: var(--teal); }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+.page-header { background: var(--navy-dark); border-bottom: 3px solid var(--teal); padding: 2.5rem 0 2rem; }
+.page-header .mono-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.page-header h1 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; }
+.page-header .update-date { font-size: 0.8rem; color: var(--gray-text); margin-top: 0.4rem; font-family: var(--font-mono); }
+
+.legal-wrap { flex: 1; padding: 3rem 0 5rem; }
+.legal-body { max-width: 740px; }
+
+.legal-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--teal-light); margin: 2.25rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid rgba(29,158,117,0.2); }
+.legal-body h2:first-child { margin-top: 0; }
+.legal-body h3 { font-size: 0.95rem; font-weight: 600; color: var(--white); margin: 1.25rem 0 0.4rem; }
+.legal-body p { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.75; margin-bottom: 0.875rem; }
+.legal-body ul { margin: 0.5rem 0 0.875rem 1.25rem; }
+.legal-body ul li { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 0.25rem; }
+.legal-body a { color: var(--teal-light); text-decoration: underline; }
+.legal-body a:hover { color: var(--white); }
+.legal-body .mono { font-family: var(--font-mono); font-size: 0.82rem; }
+.legal-body strong { color: var(--white); font-weight: 600; }
+
+.info-card { background: var(--navy-card); border-radius: 8px; padding: 1.25rem 1.5rem; border-left: 4px solid var(--teal); margin: 1.5rem 0; }
+.info-card p { margin: 0; }
+
+.toc { background: rgba(10,60,110,0.5); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; border: 1px solid rgba(29,158,117,0.15); }
+.toc-title { font-size: 0.75rem; font-family: var(--font-mono); color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+.toc ul { margin: 0; padding-left: 1rem; }
+.toc ul li { font-size: 0.82rem; color: var(--gray-text); margin-bottom: 0.2rem; }
+.toc ul li a { color: var(--gray-text); text-decoration: none; transition: color 0.2s; }
+.toc ul li a:hover { color: var(--teal-light); }
+
+footer { background: var(--navy-dark); border-top: 3px solid var(--teal); padding: 3rem 0 1.5rem; }
+.footer-brand { font-weight: 700; font-size: 1.5rem; }
+.footer-brand span { color: var(--teal); }
+.footer-tagline { font-size: 0.85rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-col-title { font-size: 0.72rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.4rem; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital#constancias">Constancias</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://fpd.cp13.digital">Solicitar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://hash.cp13.digital">SHA-256</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="page-header">
+  <div class="container">
+    <div class="mono-label">Aviso de privacidad digital · cp13.digital</div>
+    <h1>Privacidad en servicios digitales</h1>
+    <div class="update-date">Última actualización: 5 de abril de 2026</div>
+  </div>
+</div>
+<main class="legal-wrap">
+  <div class="container">
+    <div class="legal-body">
+
+<div class="info-card">
+  <p>Este aviso complementa la <a href="/politica-de-privacidad">Política de Privacidad General</a> y se refiere específicamente al tratamiento de datos en los servicios digitales de la plataforma <strong>cp13.digital</strong>: Intermediación y certificación digital (FPD), Calculadora SHA-256, Verificador de constancias y Consentimiento Informado Digital (CID).</p>
+</div>
+
+<h2 id="fpd">Intermediación, certificación digital y valuación— fpd.cp13.digital</h2>
+<h3>Datos recabados</h3>
+<ul>
+  <li>Nombre, correo electrónico y número telefónico para el registro de cuenta</li>
+  <li>Documentos digitales subidos para certificación (almacenados en Google Drive bajo control exclusivo de la Correduría)</li>
+  <li>Metadatos de las solicitudes: fecha, hora, tipo de constancia, estado del trámite</li>
+  <li>Huella SHA-256 de los documentos certificados</li>
+  <li>Datos de identificación y KYC (Know Your Customer) conforme a la LFPIORPI</li>
+</ul>
+<h3>Infraestructura y seguridad</h3>
+<p>La plataforma FPD opera sobre tecnología Google bajo la cuenta corporativa conferida al operador del manejo de datos otorgada por Durán Abogados SC. Los datos se almacenan en Google Drive con acceso restringido al personal autorizado. Las comunicaciones se realizan mediante Gmail corporativo con cifrado TLS en tránsito.</p>
+<p>Las constancias generadas incluyen sello SHA-256, sellado de tiempo conforme a la NOM-151-SCFI-2016 y código QR de verificación. El Corredor Público firma cada instrumento conforme a la LFCP.</p>
+<h3>Retención de datos</h3>
+<p>Los instrumentos y datos asociados se conservan por el tiempo que establezca la normativa aplicable y, en su caso, las excepciones aplicables a los instrumentos o avalúos de Correduría Pública, con un mínimo de 10 (DIEZ) años después de cerrado el libro de registro aplivcables y enviándose posteriormente al Archivo General de Correduría Pública dependiente de la Secretaría de Economía conforme a las disposiciones aplicables.</p>
+
+<h2 id="hash">Calculadora SHA-256 — hash.cp13.digital</h2>
+<p>Esta herramienta <strong>no recaba, procesa ni almacena datos personales en ningún servidor</strong>. El cálculo de la huella digital ocurre íntegramente en el navegador del usuario mediante la Web Crypto API (<span class="mono">crypto.subtle.digest</span>). El archivo seleccionado nunca abandona el dispositivo del usuario.</p>
+<p>El historial de hashes calculados existe únicamente en memoria del navegador durante la sesión activa y se elimina al cerrarlo.</p>
+
+<h2 id="verificar">Verificador de constancias — verificar.cp13.digital</h2>
+<p>La consulta de verificación transmite únicamente el hash SHA-256 y la fecha del instrumento al endpoint público de la Correduría. La respuesta expone exclusivamente el tipo de constancia y el nombre de referencia registrado por el solicitante original. No se exponen datos personales, documentos originales ni información confidencial del expediente.</p>
+
+<h2 id="cid">Consentimiento Informado Digital — cid.cp13.digital</h2>
+<p>El módulo CID recaba el nombre, correo electrónico y firma electrónica de los participantes (firmante y testigo digital). Los documentos firmados se almacenan en formato PDF con hash SHA-256 en los sistemas de la Correduría. El tratamiento se realiza exclusivamente para dar fe del consentimiento otorgado conforme a la LFCP.</p>
+
+<h2 id="cookies-ref">Cookies y tecnologías de seguimiento</h2>
+<p>Para el detalle completo sobre el uso de cookies en la plataforma, consulte nuestra <a href="/politica-de-cookies">Política de Cookies</a>.</p>
+
+<h2 id="terceros">Proveedores de servicios tecnológicos</h2>
+<p>La plataforma utiliza los siguientes servicios de terceros, sujetos a sus propias políticas de privacidad:</p>
+<ul>
+  <li><strong>JS sobre Google Workspace</strong> — Infraestructura de almacenamiento, correo y autenticación</li>
+  <li><strong>JS sobre Google Apps Script</strong> — Lógica de la aplicación FPD</li>
+  <li><strong>PayPal / Stripe / Banamex</strong> — Procesamiento de pagos (los datos de tarjeta son tratados directamente por el procesador; la Correduría no los almacena)</li>
+  <li><strong>PSC World / Doc2Sign</strong> — Firma electrónica avanzada</li>
+</ul>
+<p>Ninguno de estos proveedores tiene autorización para utilizar los datos de los usuarios de cp13.digital para fines distintos a la prestación del servicio contratado.</p>
+
+<h2 id="contacto-digital">Contacto</h2>
+<p>Para consultas sobre el tratamiento de sus datos en los servicios digitales: <a href="/cdn-cgi/l/email-protection#7b1a1f0e091a153b180b4a48551603"><span class="__cf_email__" data-cfemail="94f5f0e1e6f5fad4f7e4a5a7baf9ec"> aduran@cp13.mx</span></a></p>
+
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tagline">Sus derechos: Detectar. Documentar. Demostrar.</div>
+        <div class="mt-3" style="font-size:0.8rem;color:var(--gray-text)">
+          Lic. Alejandro Durán<br>
+          Durán Abogados SC<br>
+          Ciudad de México · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3253564740535c72514203011c5f4a">email aduran@cp13.digital</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links flex-column">
+          <a href="https://fpd.cp13.digital">Intermediación, certificación digital y valuación</a>
+          <a href="https://verificar.cp13.digital">Verificar constancia</a>
+          <a href="https://hash.cp13.digital">Calculadora SHA-256</a>
+          <a href="https://honorarios.cp13.digital">Honorarios</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links flex-column">
+          <a href="/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="/politica-de-privacidad">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales">Privacidad servicios digitales</a>
+          <a href="/politica-de-cookies">Política de cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy text-cent

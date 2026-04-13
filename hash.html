@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calculadora SHA-256 para clientes FPD · CP13.digital — Calcule la huella digital de su documento antes de solicitar su constancia. El archivo nunca sale de su dispositivo.">
+<title>Calcular huella SHA-256 · confidencial · CP13.digital</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+/* ── NAVBAR ── */
+.navbar { background: var(--navy-dark); border-bottom: 1px solid rgba(29,158,117,0.2); padding: 0.75rem 0; position: sticky; top: 0; z-index: 1000; }
+.navbar-brand { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.brand-cp13 { font-weight: 700; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.brand-dot  { font-weight: 700; font-size: 1.4rem; color: var(--teal); }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+/* ── HERO ── */
+#hero { position: relative; height: clamp(220px, 32vh, 360px); display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--navy); border-bottom: 3px solid var(--teal); }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 1.5rem; }
+.hero-mono  { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.75rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s; }
+.hero-title { font-size: clamp(1.6rem, 4vw, 2.75rem); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 0.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.4s; }
+.hero-title span { color: var(--teal); }
+.hero-sub   { font-size: 0.875rem; color: var(--gray-text); font-weight: 300; line-height: 1.65; opacity: 0; animation: fadeUp 0.7s ease forwards 0.65s; max-width: 500px; margin: 0 auto; }
+.hero-sub strong { color: var(--teal-pale); font-weight: 500; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── MAIN ── */
+.main-wrap { flex: 1; padding: 3rem 0 5rem; }
+
+/* ── STEPS BAR ── */
+.steps-bar { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 3rem; flex-wrap: nowrap; }
+.step-item { display: flex; align-items: center; gap: 0.6rem; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+.step-num.active { background: var(--teal); color: var(--white); }
+.step-num.done   { background: rgba(29,158,117,0.25); color: var(--teal-light); }
+.step-num.pending{ background: rgba(255,255,255,0.06); color: var(--gray-text); }
+.step-label { font-size: 0.78rem; font-weight: 500; white-space: nowrap; }
+.step-label.active  { color: var(--white); }
+.step-label.pending { color: var(--gray-text); }
+.step-label.done    { color: var(--teal-light); }
+.step-sep { width: 32px; height: 1px; background: rgba(255,255,255,0.12); margin: 0 0.5rem; flex-shrink: 0; }
+@media (max-width: 480px) {
+  .step-label { display: none; }
+  .step-sep { width: 20px; }
+}
+
+/* ── CALC CARD ── */
+.calc-card {
+  background: var(--navy-card);
+  border-radius: 12px;
+  padding: 2.5rem;
+  border: 1px solid rgba(29,158,117,0.25);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ── DROP ZONE ── */
+.drop-zone {
+  border: 2px dashed rgba(29,158,117,0.4);
+  border-radius: 10px;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: rgba(4,44,83,0.5);
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+.drop-zone:hover, .drop-zone.drag-over { border-color: var(--teal); background: rgba(29,158,117,0.07); }
+.drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.drop-icon { margin-bottom: 1rem; }
+.drop-icon svg { stroke: var(--teal); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.drop-title { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+.drop-sub   { font-size: 0.82rem; color: var(--gray-text); }
+.drop-note  { font-family: var(--font-mono); font-size: 0.68rem; color: rgba(160,184,200,0.4); margin-top: 0.6rem; }
+
+/* ── FILE INFO ── */
+.file-info { display: none; background: rgba(29,158,117,0.08); border: 1px solid rgba(29,158,117,0.25); border-radius: 8px; padding: 0.875rem 1.1rem; margin-top: 1rem; align-items: center; gap: 0.875rem; }
+.file-info.visible { display: flex; }
+.file-info svg { stroke: var(--teal); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.file-name { font-weight: 600; font-size: 0.9rem; flex: 1; word-break: break-all; }
+.file-size { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal-pale); white-space: nowrap; }
+
+/* ── PROGRESS ── */
+.progress-wrap { display: none; margin-top: 1.25rem; }
+.progress-wrap.visible { display: block; }
+.progress-label { font-size: 0.78rem; color: var(--gray-text); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+.progress-bar-track { background: rgba(255,255,255,0.06); border-radius: 4px; height: 5px; overflow: hidden; }
+.progress-bar-fill  { height: 100%; background: var(--teal); border-radius: 4px; transition: width 0.12s linear; }
+
+/* ── RESULT ── */
+.result-wrap { display: none; background: var(--navy-dark); border-radius: 10px; border: 1.5px solid rgba(29,158,117,0.4); padding: 1.75rem; margin-top: 1.5rem; }
+.result-wrap.visible { display: block; }
+.result-label { font-family: var(--font-mono); font-size: 0.68rem; color: var(--teal); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.result-hash { font-family: var(--font-mono); font-size: 0.82rem; color: var(--teal-pale); word-break: break-all; line-height: 1.75; background: rgba(0,0,0,0.25); border-radius: 6px; padding: 0.875rem 1rem; letter-spacing: 0.04em; margin-bottom: 1.25rem; position: relative; }
+
+/* ── BUTTONS ── */
+.btn-copy {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  background: var(--teal); color: var(--white);
+  font-family: var(--font-main); font-weight: 600; font-size: 0.875rem;
+  padding: 0.65rem 1.35rem; border-radius: 6px; border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-copy:hover { background: var(--teal-light); color: var(--navy-dark); transform: translateY(-1px); }
+
+.btn-outline-sm {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: transparent; color: var(--teal-light);
+  font-family: var(--font-main); font-weight: 500; font-size: 0.875rem;
+  padding: 0.65rem 1.35rem; border-radius: 6px;
+  border: 1.5px solid rgba(29,158,117,0.4); cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-outline-sm:hover { background: rgba(29,158,117,0.1); border-color: var(--teal); color: var(--white); }
+
+.btn-reset {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: transparent; color: var(--gray-text);
+  font-family: var(--font-main); font-weight: 500; font-size: 0.8rem;
+  padding: 0.5rem 1rem; border-radius: 6px;
+  border: 1px solid rgba(160,184,200,0.2); cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-reset:hover { color: var(--white); border-color: rgba(160,184,200,0.4); }
+
+/* ── CTA FPD ── */
+.cta-fpd {
+  background: rgba(29,158,117,0.1);
+  border: 1.5px solid rgba(29,158,117,0.35);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.cta-fpd-icon { flex-shrink: 0; }
+.cta-fpd-icon svg { stroke: var(--teal); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.cta-fpd-text { flex: 1; min-width: 180px; }
+.cta-fpd-title { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
+.cta-fpd-sub { font-size: 0.78rem; color: var(--gray-text); line-height: 1.5; }
+.btn-fpd {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--teal); color: var(--white);
+  font-family: var(--font-main); font-weight: 700; font-size: 0.9rem;
+  padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none;
+  transition: background 0.2s, transform 0.15s; white-space: nowrap;
+  border: none; cursor: pointer;
+}
+.btn-fpd:hover { background: var(--teal-light); color: var(--navy-dark); transform: translateY(-2px); }
+
+/* ── HISTORY ── */
+.history-wrap { margin-top: 2.5rem; max-width: 680px; margin-left: auto; margin-right: auto; }
+.history-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+.history-title { font-family: var(--font-mono); font-size: 0.7rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.12em; }
+.history-empty { font-size: 0.78rem; color: rgba(160,184,200,0.4); font-style: italic; }
+.history-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.history-table thead th { color: var(--gray-text); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; padding: 0.4rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.07); text-align: left; font-weight: 500; }
+.history-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
+.history-table tbody tr:hover { background: rgba(29,158,117,0.04); }
+.history-table tbody td { padding: 0.55rem 0.6rem; vertical-align: middle; }
+.h-file  { color: var(--white); font-weight: 500; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.h-hash  { font-family: var(--font-mono); color: var(--teal-pale); font-size: 0.7rem; }
+.h-time  { color: var(--gray-text); font-size: 0.7rem; white-space: nowrap; }
+.btn-copy-mini { background: none; border: none; cursor: pointer; padding: 3px 6px; display: inline-flex; align-items: center; opacity: 0.55; transition: opacity 0.2s; }
+.btn-copy-mini:hover { opacity: 1; }
+.btn-copy-mini svg { stroke: var(--teal-light); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── INFO BOX ── */
+.info-box { display: flex; gap: 0.875rem; background: rgba(29,158,117,0.06); border: 1px solid rgba(29,158,117,0.15); border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1.5rem; max-width: 680px; margin-left: auto; margin-right: auto; }
+.info-box svg { stroke: var(--teal); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 2px; }
+.info-box-body { flex: 1; }
+.info-box-title { font-size: 0.8rem; font-weight: 600; color: var(--teal-pale); margin-bottom: 0.2rem; }
+.info-box-text  { font-size: 0.78rem; color: var(--gray-text); line-height: 1.6; }
+
+/* ── TOAST ── */
+.toast-cp { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999; background: var(--navy-dark); border: 1.5px solid var(--teal); border-radius: 6px; padding: 0.75rem 1.25rem; font-size: 0.85rem; color: var(--teal-light); display: flex; align-items: center; gap: 0.5rem; transform: translateY(20px); opacity: 0; pointer-events: none; transition: transform 0.25s, opacity 0.25s; }
+.toast-cp.show { transform: translateY(0); opacity: 1; }
+
+/* ── FOOTER ── */
+footer { background: var(--navy-dark); border-top: 3px solid var(--teal); padding: 3rem 0 1.5rem; margin-top: auto; }
+.footer-brand { font-weight: 700; font-size: 1.5rem; }
+.footer-brand span { color: var(--teal); }
+.footer-tagline { font-size: 0.82rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-col-title { font-size: 0.72rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.4rem; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://fpd.cp13.digital">Solicitar constancia</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar constancia</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-mono">Paso 1 de 3 · Preparar su documento · hash.cp13.digital</div>
+    <div class="hero-title">Calcular huella <span>SHA-256</span></div>
+    <div class="hero-sub">
+      <strong>El archivo nunca sale de su dispositivo.</strong><br>
+      Procesamiento 100% local · De manera nativa en su propio navegador · Gestión Confidencial.
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main-wrap">
+  <div class="container">
+
+    <!-- STEPS BAR -->
+    <div class="steps-bar reveal">
+      <div class="step-item">
+        <div class="step-num active" id="s1n">1</div>
+        <span class="step-label active" id="s1l">Calcular SHA-256</span>
+      </div>
+      <div class="step-sep"></div>
+      <div class="step-item">
+        <div class="step-num pending" id="s2n">2</div>
+        <span class="step-label pending" id="s2l">Copiar huella</span>
+      </div>
+      <div class="step-sep"></div>
+      <div class="step-item">
+        <div class="step-num pending" id="s3n">3</div>
+        <span class="step-label pending" id="s3l">Solicitar de constancia</span>
+      </div>
+    </div>
+
+    <!-- CALCULADORA -->
+    <div class="calc-card reveal">
+
+      <!-- DROP ZONE -->
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" onchange="handleFile(this.files[0])">
+        <div class="drop-icon">
+          <svg width="52" height="52" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="12" x2="12" y2="18"/>
+            <polyline points="9 15 12 18 15 15"/>
+          </svg>
+        </div>
+        <div class="drop-title">Arrastre su archivo aquí</div>
+        <div class="drop-sub">o haga clic para seleccionarlo</div>
+        <div class="drop-note">Cualquier tipo de archivo · Sin límite de tamaño · Sin transmisión</div>
+      </div>
+
+      <!-- FILE INFO -->
+      <div class="file-info" id="fileInfo">
+        <svg width="20" height="20" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <span class="file-name" id="fileName">—</span>
+        <span class="file-size" id="fileSize">—</span>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-label">
+          <span class="spinner-sm"></span>
+          <span id="progressLabel">Calculando huella digital…</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="result-wrap" id="resultWrap">
+        <div class="result-label">SHA-256 · Huella digital de su documento.- NOTA IMPORTANTE: Por favor coteje muy bien que el hash generado es idéntico al que se colocará en nuestra solicitud, porque cualquier cambio, por pequeño que sea, implicará que su archivo ya no corresponderá precisamente a la  huella hash de su documento. En caso de duda, por favor realice una solicitud adicional </div>
+        <div class="result-hash" id="resultHash">—</div>
+
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <button class="btn-copy" onclick="copyHash()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copiar huella
+          </button>
+          <button class="btn-outline-sm" onclick="resetCalc()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 .49-4.5"/>
+            </svg>
+            Otro archivo
+          </button>
+        </div>
+
+        <!-- CTA FPD -->
+        <div class="cta-fpd" id="ctaFpd">
+          <div class="cta-fpd-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="cta-fpd-text">
+            <div class="cta-fpd-title">Paso 2 — Solicitar su diligencia y constancia</div>
+            <div class="cta-fpd-sub">La huella ya fue copiada. Ábrela en FPD para continuar su solicitud de diligencia y constancia.</div>
+          </div>
+          <a href="https://fpd.cp13.digital" class="btn-fpd" id="btnFpd" target="_blank">
+            Ir a FPD
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- HISTORIAL DE SESIÓN -->
+    <div class="history-wrap reveal">
+      <div class="history-header">
+        <span class="history-title">Historial de sesión</span>
+        <button class="btn-reset" id="btnClearHistory" onclick="clearHistory()" style="display:none">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          </svg>
+          Limpiar
+        </button>
+      </div>
+      <div id="historyEmpty" class="history-empty">Ningún archivo calculado en esta sesión.</div>
+      <div id="historyTableWrap" style="display:none; overflow-x:auto;">
+        <table class="history-table">
+          <thead>
+            <tr><th>#</th><th>Archivo</th><th>SHA-256</th><th>Hora</th><th></th></tr>
+          </thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PRIVACY NOTE -->
+    <div class="info-box reveal">
+      <svg width="20" height="20" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <div class="info-box-body">
+        <div class="info-box-title">Privacidad total — el archivo nunca sale de su dispositivo</div>
+        <div class="info-box-text">El cálculo ocurre íntegramente en su navegador usando <code style="font-family:var(--font-mono);font-size:0.75rem;color:var(--teal-pale)">crypto.subtle.digest</code> — la Web Crypto API nativa. Ningún byte de su archivo se transmite a ningún servidor.</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tagline">Sus derechos: Detectar. Documentar. Demostrar.</div>
+        <div class="mt-3" style="font-size:0.8rem;color:var(--gray-text);">
+          CP13 DIGITAL<br>
+          Ciudad de México · aduran@cp13.mx<br>
+         </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links">
+          <a href="https://fpd.cp13.digital">Solicitar constancia</a>
+          <a href="https://verificar.cp13.digital">Verificar constancia</a>
+          <a href="https://cp13.digital">cp13.digital</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links">
+          <a href="/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="/politica-de-privacidad">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales">Privacidad digital</a>
+          <a href="/politica-de-cookies">Política de Cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy text-center">
+      © 2026 Durán Abogados SC · cp13.digital · Todos los derechos reservados
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast-cp" id="toast">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── ESTADO ────────────────────────────────────────────────────
+let currentHash = '';
+let sessionHistory = [];
+let progressInterval = null;
+
+// ── DRAG & DROP ───────────────────────────────────────────────
+const dropZone = document.getElementById('dropZone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f) handleFile(f);
+});
+
+// ── MANEJAR ARCHIVO ───────────────────────────────────────────
+function handleFile(file) {
+  if (!file) return;
+
+  // Mostrar info del archivo
+  document.getElementById('fileInfo').className = 'file-info visible';
+  document.getElementById('fileName').textContent = file.name;
+  document.getElementById('fileSize').textContent = formatBytes(file.size);
+
+  // Ocultar resultado anterior
+  document.getElementById('resultWrap').className = 'result-wrap';
+  currentHash = '';
+
+  // Progress
+  const pw = document.getElementById('progressWrap');
+  pw.className = 'progress-wrap visible';
+  document.getElementById('progressLabel').textContent = 'Calculando huella digital…';
+  animateProgress();
+
+  // Calcular SHA-256
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const buffer = await crypto.subtle.digest('SHA-256', e.target.result);
+      const hash = Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, '0')).join('');
+
+      clearInterval(progressInterval);
+      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('progressLabel').textContent = '✓ Listo';
+      setTimeout(() => { pw.className = 'progress-wrap'; }, 500);
+
+      showResult(hash, file.name);
+    } catch(err) {
+      clearInterval(progressInterval);
+      pw.className = 'progress-wrap';
+      showToast('Error al calcular: ' + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function animateProgress() {
+  let w = 0;
+  document.getElementById('progressBar').style.width = '0%';
+  clearInterval(progressInterval);
+  progressInterval = setInterval(() => {
+    w = Math.min(w + Math.random() * 9, 88);
+    document.getElementById('progressBar').style.width = w + '%';
+  }, 90);
+}
+
+// ── MOSTRAR RESULTADO ─────────────────────────────────────────
+function showResult(hash, fileName) {
+  currentHash = hash;
+  document.getElementById('resultHash').textContent = hash;
+  document.getElementById('resultWrap').className = 'result-wrap visible';
+
+  // Actualizar link FPD con hash
+  document.getElementById('btnFpd').href =
+    'https://fpd.cp13.digital?hash=' + hash;
+
+  // Steps: marcar paso 2 como activo
+  setStep(2);
+
+  // Agregar al historial
+  addHistory(hash, fileName);
+}
+
+// ── STEPS ─────────────────────────────────────────────────────
+function setStep(active) {
+  for (let i = 1; i <= 3; i++) {
+    const n = document.getElementById('s' + i + 'n');
+    const l = document.getElementById('s' + i + 'l');
+    if (i < active) {
+      n.className = 'step-num done';
+      l.className = 'step-label done';
+      n.innerHTML = '✓';
+    } else if (i === active) {
+      n.className = 'step-num active';
+      l.className = 'step-label active';
+      n.textContent = i;
+    } else {
+      n.className = 'step-num pending';
+      l.className = 'step-label pending';
+      n.textContent = i;
+    }
+  }
+}
+
+// ── COPIAR HASH ───────────────────────────────────────────────
+function copyHash() {
+  if (!currentHash) return;
+  _copiarAlPortapapeles(currentHash, function() {
+    showToast('Huella copiada al portapapeles');
+    setStep(3);
+    document.getElementById('ctaFpd').style.borderColor = 'rgba(29,158,117,0.7)';
+  });
+}
+
+function copyFromHistory(hash) {
+  _copiarAlPortapapeles(hash, function() { showToast('Huella copiada'); });
+}
+
+function _copiarAlPortapapeles(texto, onExito) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(texto)
+      .then(onExito)
+      .catch(function() { _fallbackCopiar(texto, onExito); });
+  } else {
+    _fallbackCopiar(texto, onExito);
+  }
+}
+
+function _fallbackCopiar(texto, onExito) {
+  var ta = document.createElement('textarea');
+  ta.value = texto;
+  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); onExito(); } catch(e) {}
+  document.body.removeChild(ta);
+}
+
+// ── RESET ─────────────────────────────────────────────────────
+function resetCalc() {
+  currentHash = '';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('fileInfo').className = 'file-info';
+  document.getElementById('resultWrap').className = 'result-wrap';
+  document.getElementById('progressWrap').className = 'progress-wrap';
+  setStep(1);
+}
+
+// ── HISTORIAL ─────────────────────────────────────────────────
+function addHistory(hash, fileName) {
+  const time = new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  sessionHistory.unshift({ hash, fileName, time });
+  renderHistory();
+}
+
+function renderHistory() {
+  const empty = document.getElementById('historyEmpty');
+  const wrap  = document.getElementById('historyTableWrap');
+  const body  = document.getElementById('historyBody');
+  const btn   = document.getElementById('btnClearHistory');
+
+  if (sessionHistory.length === 0) {
+    empty.style.display = '';
+    wrap.style.display  = 'none';
+    btn.style.display   = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  wrap.style.display  = '';
+  btn.style.display   = '';
+
+  body.innerHTML = sessionHistory.map((h, i) => `
+    <tr>
+      <td style="color:var(--gray-text);font-family:var(--font-mono);font-size:0.7rem">${sessionHistory.length - i}</td>
+      <td class="h-file" title="${esc(h.fileName)}">${esc(h.fileName)}</td>
+      <td class="h-hash">${h.hash.substring(0,16)}…${h.hash.substring(56)}</td>
+      <td class="h-time">${h.time}</td>
+      <td>
+        <button class="btn-copy-mini" title="Copiar hash" onclick="copyFromHistory('${h.hash}')">
+          <svg width="14" height="14" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function clearHistory() {
+  sessionHistory = [];
+  renderHistory();
+}
+
+// ── UTILS ─────────────────────────────────────────────────────
+function formatBytes(b) {
+  if (b === 0) return '0 B';
+  const k = 1024, s = ['B','KB','MB','GB','TB'];
+  const i = Math.floor(Math.log(b) / Math.log(k));
+  return parseFloat((b / Math.pow(k, i)).toFixed(1)) + ' ' + s[i];
+}
+
+function esc(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── HERO CANVAS ───────────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; init(); }
+  function init() {
+    particles = [];
+    const n = Math.floor((W * H) / 7500);
+    for (let i = 0; i < n; i++) {
+      const t = Math.random() > 0.3;
+      particles.push({
+        x: Math.random()*W, y: Math.random()*H,
+        r: Math.random()*2+0.4,
+        dx: (Math.random()-.5)*.28, dy: (Math.random()-.5)*.2,
+        color: t
+          ? `rgba(${29+(Math.random()*55|0)},${158+(Math.random()*40|0)},${117+(Math.random()*45|0)},${.4+Math.random()*.55})`
+          : `rgba(93,202,165,${.2+Math.random()*.45})`
+      });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    for (const p of particles) {
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = p.color; ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+// ── REVEAL ────────────────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => {
+    if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+  });
+}, 100);
+</script>
+</body>
+</html>

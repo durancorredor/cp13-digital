@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Verificador público de constancias digitales · CP13.digital — Ingrese la huella SHA-256 de su documento para confirmar la autenticidad de un instrumento expedido por la Correduría Pública No. 13.">
+<title>Verificar Constancia Digital · CP13.digital</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --navy-mid:  #0C447C;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --red-err:   #C94040;
+  --amber:     #C98B20;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+/* ── NAVBAR ── */
+.navbar { background: var(--navy-dark); border-bottom: 1px solid rgba(29,158,117,0.2); padding: 0.75rem 0; position: sticky; top: 0; z-index: 1000; }
+.navbar-brand { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.brand-cp13 { font-weight: 700; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.brand-dot  { font-weight: 700; font-size: 1.4rem; color: var(--teal); }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+/* ── HERO ── */
+#hero { position: relative; height: clamp(220px, 32vh, 360px); display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--navy); border-bottom: 3px solid var(--teal); }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 1.5rem; }
+.hero-mono  { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.75rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s; }
+.hero-title { font-size: clamp(1.6rem, 4vw, 2.75rem); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 0.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.4s; }
+.hero-title span { color: var(--teal); }
+.hero-sub   { font-size: 0.875rem; color: var(--gray-text); font-weight: 300; line-height: 1.6; opacity: 0; animation: fadeUp 0.7s ease forwards 0.65s; max-width: 520px; margin: 0 auto; }
+.hero-sub strong { color: var(--teal-pale); font-weight: 500; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── MAIN ── */
+.main-wrap { flex: 1; padding: 3rem 0 5rem; }
+
+/* ── VERIFY CARD ── */
+.verify-card {
+  background: var(--navy-card);
+  border-radius: 12px;
+  padding: 2.5rem;
+  border: 1px solid rgba(29,158,117,0.25);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ── FORM ── */
+.form-label-cp { font-family: var(--font-mono); font-size: 0.7rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem; display: block; }
+.form-hint { font-size: 0.75rem; color: var(--gray-text); margin-top: 0.35rem; }
+.form-hint.error { color: var(--red-err); }
+.form-control-cp {
+  width: 100%;
+  background: var(--navy-dark);
+  border: 1.5px solid rgba(29,158,117,0.2);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  transition: border-color 0.2s;
+  letter-spacing: 0.04em;
+}
+.form-control-cp::placeholder { color: rgba(160,184,200,0.3); letter-spacing: 0; }
+.form-control-cp:focus { outline: none; border-color: var(--teal); }
+.form-control-cp.valid   { border-color: var(--teal); }
+.form-control-cp.invalid { border-color: var(--red-err); }
+.form-control-date {
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  color-scheme: dark;
+  letter-spacing: 0;
+}
+
+/* PASTE BUTTON */
+.input-wrap { position: relative; }
+.btn-paste {
+  position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%);
+  background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.3);
+  color: var(--teal-pale); font-family: var(--font-mono); font-size: 0.6rem;
+  padding: 3px 10px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap;
+}
+.btn-paste:hover { background: rgba(29,158,117,0.25); color: var(--teal-light); }
+
+/* ── VERIFY BUTTON ── */
+.btn-verify {
+  width: 100%;
+  background: var(--teal);
+  color: var(--white);
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  margin-top: 1.75rem;
+}
+.btn-verify:hover { background: var(--teal-light); color: var(--navy-dark); transform: translateY(-2px); }
+.btn-verify:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ── SPINNER ── */
+.spinner { display: inline-block; width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: var(--white); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── DIVIDER ── */
+.form-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.75rem 0; }
+
+/* ── RESULT ── */
+.result-wrap { display: none; margin-top: 2rem; border-radius: 10px; padding: 1.75rem; }
+.result-wrap.visible { display: block; }
+.result-wrap.found     { background: rgba(29,158,117,0.09); border: 1.5px solid rgba(29,158,117,0.5); }
+.result-wrap.not-found { background: rgba(201,64,64,0.07);  border: 1.5px solid rgba(201,64,64,0.35); }
+.result-wrap.error-st  { background: rgba(201,139,32,0.07); border: 1.5px solid rgba(201,139,32,0.4); }
+
+.result-icon  { margin-bottom: 0.875rem; }
+.result-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.35rem; }
+.result-sub   { font-size: 0.875rem; color: var(--gray-text); line-height: 1.65; }
+
+.result-meta {
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal-pale);
+  background: rgba(0,0,0,0.2); border-radius: 6px; padding: 0.65rem 0.9rem;
+  margin-top: 1rem; line-height: 1.75;
+}
+.result-legal {
+  font-size: 0.75rem; color: rgba(160,184,200,0.55); margin-top: 1rem;
+  padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06);
+  line-height: 1.6; font-style: italic;
+}
+.result-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+.btn-action-outline {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: transparent; color: var(--teal-light);
+  font-family: var(--font-main); font-weight: 500; font-size: 0.85rem;
+  padding: 0.6rem 1.25rem; border-radius: 6px; border: 1.5px solid rgba(29,158,117,0.4);
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+}
+.btn-action-outline:hover { background: rgba(29,158,117,0.1); border-color: var(--teal); color: var(--white); }
+
+/* ── INFO BOX ── */
+.info-box { display: flex; gap: 0.875rem; background: rgba(29,158,117,0.06); border: 1px solid rgba(29,158,117,0.15); border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1.5rem; }
+.info-box-icon { flex-shrink: 0; margin-top: 2px; }
+.info-box-icon svg { stroke: var(--teal); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.info-box-body { flex: 1; }
+.info-box-title { font-size: 0.8rem; font-weight: 600; color: var(--teal-pale); margin-bottom: 0.2rem; }
+.info-box-text  { font-size: 0.78rem; color: var(--gray-text); line-height: 1.6; }
+
+/* ── HOW IT WORKS ── */
+.how-section { background: var(--navy-dark); padding: 4rem 0; border-top: 1px solid rgba(29,158,117,0.12); }
+.how-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.how-title { font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+.how-sub   { font-size: 0.875rem; color: var(--teal-pale); font-weight: 300; margin-bottom: 2.5rem; }
+.how-step { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.how-step:last-child { border-bottom: none; }
+.how-num { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: rgba(29,158,117,0.35); line-height: 1; flex-shrink: 0; width: 2rem; }
+.how-step-title { font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem; }
+.how-step-desc  { font-size: 0.8rem; color: var(--gray-text); line-height: 1.6; }
+
+/* ── QR NOTE ── */
+.qr-note { background: rgba(29,158,117,0.07); border: 1px solid rgba(29,158,117,0.2); border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 2rem; display: flex; gap: 1rem; align-items: flex-start; }
+.qr-note-icon { flex-shrink: 0; margin-top: 2px; }
+.qr-note p { font-size: 0.82rem; color: rgba(255,255,255,0.8); line-height: 1.65; }
+.qr-note strong { color: var(--teal-pale); }
+
+/* ── TOAST ── */
+.toast-cp { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999; background: var(--navy-dark); border: 1.5px solid var(--teal); border-radius: 6px; padding: 0.75rem 1.25rem; font-size: 0.85rem; color: var(--teal-light); display: flex; align-items: center; gap: 0.625rem; transform: translateY(20px); opacity: 0; pointer-events: none; transition: transform 0.25s, opacity 0.25s; }
+.toast-cp.show { transform: translateY(0); opacity: 1; }
+
+/* ── FOOTER ── */
+footer { background: var(--navy-dark); border-top: 3px solid var(--teal); padding: 3rem 0 1.5rem; margin-top: auto; }
+.footer-brand { font-weight: 700; font-size: 1.5rem; }
+.footer-brand span { color: var(--teal); }
+.footer-tagline { font-size: 0.82rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-col-title { font-size: 0.72rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.4rem; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://fpd.cp13.digital">Solicitar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://hash.cp13.digital">Calcular SHA-256</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-mono">Verificación pública · verificar.cp13.digital</div>
+    <div class="hero-title">Verificar <span>constancia</span></div>
+    <div class="hero-sub">
+      Confirme la autenticidad de una constancia digital expedida  por nosotros.<br>
+      <strong>Ingrese la huella SHA-256 del documento original.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main-wrap">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+
+        <!-- FORMULARIO -->
+        <div class="verify-card reveal">
+
+          <div class="mb-4">
+            <label class="form-label-cp" for="inputHash">
+              Huella SHA-256 del documento
+            </label>
+            <div class="input-wrap">
+              <input
+                type="text"
+                id="inputHash"
+                class="form-control-cp"
+                placeholder="a3f5c2d1e4b8… (64 caracteres hexadecimales)"
+                maxlength="64"
+                autocomplete="off"
+                spellcheck="false"
+                oninput="onHashInput(this)"
+              >
+              <button class="btn-paste" onclick="pasteHash()" title="Pegar desde portapapeles">Pegar</button>
+            </div>
+            <div class="form-hint" id="hashHint">64 caracteres · solo a–f y 0–9</div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div class="mb-1">
+            <label class="form-label-cp" for="inputFecha">
+              Fecha aproximada de la constancia digital <span style="color:var(--gray-text);font-weight:400">(opcional)</span>
+            </label>
+            <input
+              type="date"
+              id="inputFecha"
+              class="form-control-cp form-control-date"
+            >
+            <div class="form-hint">Si no la conoce, déjela en blanco — la búsqueda es por hash.</div>
+          </div>
+
+          <button class="btn-verify" id="btnVerify" onclick="runVerification()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+            </svg>
+            Verificar constancia
+          </button>
+
+          <!-- RESULTADO -->
+          <div class="result-wrap" id="resultWrap">
+            <div class="result-icon" id="resultIcon"></div>
+            <div class="result-title" id="resultTitle"></div>
+            <div class="result-sub"   id="resultSub"></div>
+            <div class="result-meta"  id="resultMeta" style="display:none"></div>
+            <div class="result-legal" id="resultLegal" style="display:none">
+              La verificación expone únicamente el tipo de constancia y el nombre de referencia del registro. Ningún dato personal, documento original ni información confidencial es accesible a través de esta herramienta. Para obtener copia certificada del instrumento, previa acreditación de identidad e interés jurídico, contacte a la Correduría, o hacer su solicitud en nuestra sección de compras.
+            </div>
+            <div class="result-actions" id="resultActions"></div>
+          </div>
+
+          <!-- AVISO PRIVACIDAD -->
+          <div class="info-box" style="margin-top:1.75rem;">
+            <div class="info-box-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="info-box-body">
+              <div class="info-box-title">Consulta pública · Sin datos personales</div>
+              <div class="info-box-text">Solo se transmite la huella SHA-256 que usted ingresa. El sistema no devuelve datos del titular del documento ni información confidencial del expediente.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- QR NOTE -->
+        <div class="qr-note reveal" style="max-width:680px;margin:1.5rem auto 0;">
+          <div class="qr-note-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+              <line x1="14" y1="14" x2="14" y2="14.01"/><line x1="17" y1="14" x2="17" y2="14.01"/>
+              <line x1="20" y1="14" x2="20" y2="14.01"/><line x1="20" y1="17" x2="20" y2="17.01"/>
+              <line x1="17" y1="20" x2="20" y2="20"/><line x1="14" y1="17" x2="14" y2="20"/>
+            </svg>
+          </div>
+          <p>
+            <strong>¿Tiene el instrumento impreso?</strong> Cada constancia CP13 incluye un código QR que lo trae directamente aquí con el hash precargado. Escanéelo con su cámara para verificar en segundos.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══ CÓMO FUNCIONA ═══ -->
+<section class="how-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="how-label reveal">Cómo funciona</div>
+        <div class="how-title reveal">¿Qué verifica esta herramienta?</div>
+        <div class="how-sub reveal">La verificación confirma que el documento existe en los registros de la Correduría.</div>
+
+        <div class="how-step reveal">
+          <div class="how-num">01</div>
+          <div>
+            <div class="how-step-title">Calcule la huella SHA-256 de su documento</div>
+            <div class="how-step-desc">Use la herramienta en <a href="https://hash.cp13.digital" style="color:var(--teal-light)">hash.cp13.digital</a> — el cálculo es 100% local, el archivo nunca sale de su dispositivo. O escanee el QR del instrumento impreso para venir directamente aquí con el hash precargado.</div>
+          </div>
+        </div>
+
+        <div class="how-step reveal">
+          <div class="how-num">02</div>
+          <div>
+            <div class="how-step-title">Ingrese el hash en esta página</div>
+            <div class="how-step-desc">Pegue los 64 caracteres hexadecimales en el campo de arriba. Si tiene la fecha aproximada del instrumento, ingrésela también para acotar la búsqueda.</div>
+          </div>
+        </div>
+
+        <div class="how-step reveal">
+          <div class="how-num">03</div>
+          <div>
+            <div class="how-step-title">El sistema consulta el registro de la Correduría</div>
+            <div class="how-step-desc">Se consulta la base de instrumentos autorizados por el Corredor Público. Si el hash coincide, se devuelve el tipo de instrumento y el nombre de referencia del acta.</div>
+          </div>
+        </div>
+
+        <div class="how-step reveal">
+          <div class="how-num">04</div>
+          <div>
+            <div class="how-step-title">Resultado con valor probatorio</div>
+            <div class="how-step-desc">Un resultado positivo confirma que el documento no ha sido modificado desde que el Corredor Público lo certificó — un solo bit alterado produce un hash completamente distinto.</div>
+          </div>
+        </div>
+
+        <div class="info-box reveal" style="margin-top:2rem;">
+          <div class="info-box-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="8.01"/>
+              <line x1="12" y1="12" x2="12" y2="16"/>
+            </svg>
+          </div>
+          <div class="info-box-body">
+            <div class="info-box-title">¿Necesita calcular la huella de su documento primero?</div>
+            <div class="info-box-text">Si aún no tiene el SHA-256 de su archivo, vaya primero a <a href="https://hash.cp13.digital" style="color:var(--teal-light)">hash.cp13.digital</a>. Es una herramienta pública, gratuita y completamente privada — el archivo nunca se transmite.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tagline">Sus derechos: Detectar. Documentar. Demostrar.</div>
+        <div class="mt-3" style="font-size:0.8rem;color:var(--gray-text);">
+          Correduría Pública Número Trece<br>
+          Lic. Julio Alejandro Durán Gómez<br>
+          Ciudad de México · aduran@cp13.mx
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links">
+          <a href="https://fpd.cp13.digital">Fe Pública Digital</a>
+          <a href="https://hash.cp13.digital">Calcular SHA-256</a>
+          <a href="https://cp13.digital">cp13.digital</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links">
+          <a href="/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="/politica-de-privacidad">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales">Privacidad digital</a>
+          <a href="/politica-de-cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy text-center">
+      © 2026 Correduría Pública No. 13 · cp13.digital · Todos los derechos reservados
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast-cp" id="toast">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+// Actualizar este endpoint cuando esté desplegado el verificador en GAS
+const VERIFY_ENDPOINT = 'https://script.google.com/macros/s/PENDIENTE_ENDPOINT_VERIFICAR/exec';
+const FPD_URL = 'https://fpd.cp13.digital';
+
+// ── URL PARAMS — precarga hash desde QR ──────────────────────
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const h = params.get('hash') || params.get('h');
+  const f = params.get('fecha') || params.get('f');
+  if (h && /^[a-f0-9]{64}$/i.test(h)) {
+    const input = document.getElementById('inputHash');
+    input.value = h.toLowerCase();
+    input.classList.add('valid');
+    document.getElementById('hashHint').textContent = '✓ Hash precargado desde QR · 64 caracteres';
+  }
+  if (f) {
+    document.getElementById('inputFecha').value = f;
+  }
+})();
+
+// ── HASH INPUT VALIDATION ─────────────────────────────────────
+function onHashInput(input) {
+  const val = input.value.trim().toLowerCase();
+  const hint = document.getElementById('hashHint');
+  if (val.length === 0) {
+    input.className = 'form-control-cp';
+    hint.className = 'form-hint';
+    hint.textContent = '64 caracteres · solo a–f y 0–9';
+  } else if (/^[a-f0-9]{64}$/.test(val)) {
+    input.className = 'form-control-cp valid';
+    hint.className = 'form-hint';
+    hint.textContent = '✓ Formato válido';
+  } else {
+    input.className = 'form-control-cp' + (val.length > 0 ? ' invalid' : '');
+    hint.className = 'form-hint error';
+    hint.textContent = val.length + '/64 · solo caracteres a–f y 0–9';
+  }
+  // Ocultar resultado anterior si el usuario edita
+  document.getElementById('resultWrap').className = 'result-wrap';
+}
+
+// ── PEGAR DESDE PORTAPAPELES ──────────────────────────────────
+async function pasteHash() {
+  try {
+    const text = await navigator.clipboard.readText();
+    const clean = text.trim().toLowerCase();
+    const input = document.getElementById('inputHash');
+    input.value = clean.substring(0, 64);
+    onHashInput(input);
+    showToast('Hash pegado');
+  } catch(e) {
+    showToast('Sin acceso al portapapeles — pegue manualmente');
+  }
+}
+
+// ── VERIFICACIÓN ──────────────────────────────────────────────
+async function runVerification() {
+  const hashVal  = document.getElementById('inputHash').value.trim().toLowerCase();
+  const fechaVal = document.getElementById('inputFecha').value;
+  const btn      = document.getElementById('btnVerify');
+  const wrap     = document.getElementById('resultWrap');
+
+  if (!/^[a-f0-9]{64}$/.test(hashVal)) {
+    document.getElementById('inputHash').classList.add('invalid');
+    document.getElementById('hashHint').textContent = 'Ingrese una huella SHA-256 válida (64 caracteres hex)';
+    document.getElementById('hashHint').className = 'form-hint error';
+    showToast('Ingrese una huella SHA-256 válida');
+    return;
+  }
+
+  // Loading state
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Consultando…';
+  wrap.className = 'result-wrap';
+
+  try {
+    const url = VERIFY_ENDPOINT.includes('PENDIENTE')
+      ? null
+      : `${VERIFY_ENDPOINT}?hash=${hashVal}${fechaVal ? '&fecha=' + fechaVal : ''}`;
+
+    if (!url) throw new Error('PENDIENTE');
+
+    const resp = await fetch(url, { method: 'GET', mode: 'cors' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    data.existe ? showResult('found', data) : showResult('not-found', null);
+
+  } catch(err) {
+    if (err.message === 'PENDIENTE') {
+      showResult('pending', { hash: hashVal, fecha: fechaVal });
+    } else {
+      showResult('error', { msg: err.message });
+    }
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = `
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+    </svg>
+    Verificar constancia`;
+}
+
+// ── MOSTRAR RESULTADO ─────────────────────────────────────────
+function showResult(type, data) {
+  const wrap    = document.getElementById('resultWrap');
+  const icon    = document.getElementById('resultIcon');
+  const title   = document.getElementById('resultTitle');
+  const sub     = document.getElementById('resultSub');
+  const meta    = document.getElementById('resultMeta');
+  const legal   = document.getElementById('resultLegal');
+  const actions = document.getElementById('resultActions');
+
+  meta.style.display = 'none';
+  legal.style.display = 'none';
+  actions.innerHTML = '';
+
+  if (type === 'found') {
+    wrap.className = 'result-wrap visible found';
+    icon.innerHTML = svgIcon('check-circle', 'var(--teal)', 36);
+    title.textContent = 'Instrumento verificado';
+    title.style.color = 'var(--teal-light)';
+    sub.textContent = (data.tipo || 'Constancia') + (data.nombre ? ' · ' + data.nombre : '');
+    meta.style.display = '';
+    meta.innerHTML = 'SHA-256: ' + document.getElementById('inputHash').value.trim().substring(0,32) + '…'
+      + (data.fecha_instrumento ? '\nFecha del instrumento: ' + data.fecha_instrumento : '')
+      + (data.numero ? '\nNúmero de instrumento: ' + data.numero : '');
+    legal.style.display = '';
+    actions.innerHTML = `
+      <a href="${FPD_URL}?tipo=COPIA_CERTIFICADA&hash=${document.getElementById('inputHash').value.trim()}" target="_blank" class="btn-action-outline">
+        ${svgIcon('file', 'currentColor', 14)} Solicitar copia certificada
+      </a>`;
+
+  } else if (type === 'not-found') {
+    wrap.className = 'result-wrap visible not-found';
+    icon.innerHTML = svgIcon('x-circle', '#C94040', 36);
+    title.textContent = 'Sin resultados';
+    title.style.color = '#E07070';
+    sub.textContent = 'No existe ningún instrumento registrado con esa huella SHA-256. Verifique que el archivo no haya sido modificado — cualquier cambio produce un hash completamente distinto.';
+    legal.style.display = '';
+
+  } else if (type === 'pending') {
+    wrap.className = 'result-wrap visible error-st';
+    icon.innerHTML = svgIcon('settings', '#C98B20', 36);
+    title.textContent = 'Verificación en configuración';
+    title.style.color = '#EFC060';
+    sub.textContent = 'El servicio de verificación pública está siendo configurado. Para verificar manualmente, contacte a la Correduría.';
+    meta.style.display = '';
+    meta.innerHTML = 'Hash: ' + data.hash.substring(0,32) + '…'
+      + (data.fecha ? '\nFecha: ' + data.fecha : '');
+    actions.innerHTML = `
+      <a href="mailto:aduran@cp13.mx?subject=Verificación%20manual%20instrumento&body=Hash:%20${data.hash}" class="btn-action-outline">
+        ${svgIcon('mail', 'currentColor', 14)} Verificación manual
+      </a>`;
+
+  } else {
+    wrap.className = 'result-wrap visible error-st';
+    icon.innerHTML = svgIcon('alert', '#C98B20', 36);
+    title.textContent = 'Error de conexión';
+    title.style.color = '#EFC060';
+    sub.textContent = 'No fue posible conectar con el servicio de verificación. Intente de nuevo en unos momentos.';
+  }
+
+  // Scroll suave al resultado
+  setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+// ── SVG HELPER ────────────────────────────────────────────────
+function svgIcon(name, color, size) {
+  const paths = {
+    'check-circle': '<circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/>',
+    'x-circle':     '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+    'alert':        '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    'settings':     '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+    'file':         '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+    'mail':         '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>'
+  };
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ''}</svg>`;
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── HERO CANVAS ───────────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; initP(); }
+  function initP() {
+    particles = [];
+    const n = Math.floor((W * H) / 7500);
+    for (let i = 0; i < n; i++) {
+      const t = Math.random() > 0.3;
+      particles.push({
+        x: Math.random()*W, y: Math.random()*H,
+        r: Math.random()*2+0.4,
+        dx: (Math.random()-.5)*.28, dy: (Math.random()-.5)*.2,
+        color: t
+          ? `rgba(${29+(Math.random()*55|0)},${158+(Math.random()*40|0)},${117+(Math.random()*45|0)},${.4+Math.random()*.55})`
+          : `rgba(93,202,165,${.2+Math.random()*.45})`
+      });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    for (const p of particles) {
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = p.color; ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => {
+    if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+  });
+}, 100);
+</script>
+</body>
+</html>

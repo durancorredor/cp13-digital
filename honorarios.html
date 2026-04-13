@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Honorarios CP13.digital — Tarifas de constancias digitales certificadas, cotejos y membresías. Correduría Pública No. 13, Ciudad de México.">
+<title>Honorarios · CP13.digital</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --navy-mid:  #0C447C;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+/* NAVBAR */
+.navbar { background: var(--navy-dark); border-bottom: 1px solid rgba(29,158,117,0.2); padding: 0.75rem 0; position: sticky; top: 0; z-index: 1000; }
+.navbar-brand { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.brand-cp13 { font-weight: 700; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.brand-dot  { font-weight: 700; font-size: 1.4rem; color: var(--teal); }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; position: relative; }
+.nav-link::after { content:''; position:absolute; bottom:0; left:1rem; right:1rem; height:2px; background:var(--teal); transform:scaleX(0); transition:transform 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.nav-link:hover::after { transform: scaleX(1); }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+/* HERO */
+#hero-hon { position: relative; height: clamp(240px, 35vh, 380px); display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--navy); border-bottom: 3px solid var(--teal); }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 1.5rem; }
+.hero-mono { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.75rem; opacity:0; animation: fadeUp 0.7s ease forwards 0.2s; }
+.hero-title { font-size: clamp(1.75rem, 4.5vw, 3rem); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 0.5rem; opacity:0; animation: fadeUp 0.7s ease forwards 0.4s; }
+.hero-title span { color: var(--teal); }
+.hero-sub { font-size: 0.9rem; color: var(--gray-text); font-weight: 300; line-height: 1.6; opacity:0; animation: fadeUp 0.7s ease forwards 0.65s; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+/* SECTIONS */
+.section-navy  { background: var(--navy); padding: 5rem 0; }
+.section-white { background: var(--white); padding: 5rem 0; }
+.section-dark  { background: var(--navy-dark); padding: 5rem 0; }
+.section-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.section-title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+.section-title-dark { color: var(--navy); }
+.section-sub   { font-size: 1rem; color: var(--teal-pale); margin-bottom: 3rem; font-weight: 300; }
+.section-sub-dark { color: #555; }
+
+/* PRECIO CARDS */
+.price-card { background: var(--navy-card); border-radius: 8px; border-top: 4px solid var(--teal); padding: 2rem; height: 100%; transition: transform 0.2s, box-shadow 0.2s; }
+.price-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.price-card-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+.price-card-note { font-family: var(--font-mono); font-size: 0.68rem; color: var(--teal-pale); margin-bottom: 1.25rem; }
+.price-main { font-size: 2.25rem; font-weight: 700; color: var(--teal); line-height: 1; }
+.price-iva { font-size: 0.75rem; color: var(--gray-text); margin-top: 0.2rem; margin-bottom: 1rem; }
+.price-divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 1rem 0; }
+.price-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.82rem; padding: 0.35rem 0; }
+.price-row-label { color: var(--gray-text); }
+.price-row-val { color: var(--white); font-weight: 500; font-family: var(--font-mono); font-size: 0.78rem; }
+.price-free { color: var(--teal-light); font-weight: 700; }
+
+/* MEMBRESÍAS */
+.mem-card { border-radius: 10px; padding: 2rem; height: 100%; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+.mem-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
+.mem-basic { background: var(--navy-card); border: 1.5px solid rgba(29,158,117,0.3); }
+.mem-pro   { background: var(--navy-mid); border: 2px solid var(--teal); }
+.mem-emp   { background: var(--navy-dark); border: 1.5px solid rgba(29,158,117,0.5); }
+.mem-badge { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; padding: 3px 10px; border-radius: 20px; background: rgba(29,158,117,0.15); color: var(--teal-pale); margin-bottom: 0.75rem; }
+.mem-badge-pop { background: var(--teal); color: var(--navy-dark); font-weight: 700; }
+.mem-name { font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+.mem-grace { font-size: 0.75rem; color: var(--teal-pale); margin-bottom: 1.25rem; font-style: italic; }
+.mem-price { font-size: 2.5rem; font-weight: 700; color: var(--teal); line-height: 1; }
+.mem-period { font-size: 0.8rem; color: var(--gray-text); }
+.mem-iva { font-size: 0.72rem; color: var(--gray-text); margin-bottom: 1.5rem; }
+.mem-includes { margin: 1.25rem 0; }
+.mem-include-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.mem-include-item:last-child { border-bottom: none; }
+.mem-check { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; }
+.mem-check svg { width: 16px; height: 16px; stroke: var(--teal); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.mem-savings { background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.25); border-radius: 6px; padding: 0.6rem 0.9rem; margin-top: 1.25rem; }
+.mem-savings-label { font-size: 0.7rem; color: var(--teal-pale); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.mem-savings-val { font-size: 0.95rem; font-weight: 700; color: var(--teal-light); }
+
+/* TABLA TESTIMONIOS */
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl th { font-family: var(--font-mono); font-size: 0.68rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem 1rem; border-bottom: 2px solid rgba(29,158,117,0.3); text-align: left; }
+.tbl td { padding: 0.85rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.85rem; color: rgba(255,255,255,0.85); vertical-align: middle; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: rgba(255,255,255,0.03); }
+.tbl-price { font-family: var(--font-mono); font-weight: 500; color: var(--teal-light); }
+.tbl-free { color: var(--teal); font-weight: 700; }
+.tbl-note { font-size: 0.72rem; color: var(--gray-text); margin-top: 0.2rem; }
+
+/* INFO BOX */
+.info-box { background: rgba(29,158,117,0.07); border: 1px solid rgba(29,158,117,0.2); border-radius: 8px; padding: 1.25rem 1.5rem; }
+.info-box p { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.7; }
+.info-box strong { color: var(--teal-pale); }
+
+/* CTA */
+.cta-section { background: var(--navy-dark); padding: 5rem 0; text-align: center; border-top: 1px solid rgba(29,158,117,0.2); }
+.btn-cta { display: inline-block; background: var(--teal); color: var(--white); font-family: var(--font-main); font-weight: 600; font-size: 1rem; padding: 0.875rem 2.5rem; border-radius: 4px; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+.btn-cta:hover { background: var(--teal-light); color: var(--navy-dark); transform: translateY(-2px); }
+.btn-outline { display: inline-block; background: transparent; color: var(--teal-light); font-family: var(--font-main); font-weight: 500; font-size: 0.9rem; padding: 0.75rem 2rem; border-radius: 4px; text-decoration: none; border: 1.5px solid var(--teal); transition: all 0.2s; margin-left: 1rem; }
+.btn-outline:hover { background: rgba(29,158,117,0.1); color: var(--white); }
+
+/* FOOTER */
+footer { background: var(--navy-dark); border-top: 3px solid var(--teal); padding: 3rem 0 1.5rem; }
+.footer-brand { font-weight: 700; font-size: 1.5rem; }
+.footer-brand span { color: var(--teal); }
+.footer-tagline { font-size: 0.85rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-col-title { font-size: 0.72rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.4rem; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+@media (max-width: 768px) {
+  .btn-outline { margin-left: 0; margin-top: 0.75rem; display: block; text-align: center; }
+}
+
+/* ── CALCULADORA ── */
+.calc-wrap { background: var(--navy-card); border-radius: 12px; padding: 2rem; border: 1px solid rgba(29,158,117,0.25); }
+.calc-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.calc-tab { background: transparent; border: 1.5px solid rgba(29,158,117,0.3); color: var(--gray-text); font-family: var(--font-main); font-size: 0.85rem; font-weight: 500; padding: 0.5rem 1.25rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+.calc-tab.active { background: var(--teal); border-color: var(--teal); color: var(--white); }
+.calc-tab:hover:not(.active) { border-color: var(--teal); color: var(--teal-light); }
+.calc-panel { display: none; }
+.calc-panel.active { display: block; }
+.calc-field { margin-bottom: 1.25rem; }
+.calc-label { font-size: 0.8rem; color: var(--gray-text); margin-bottom: 0.4rem; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.calc-select, .calc-input { width: 100%; background: var(--navy); border: 1px solid rgba(29,158,117,0.3); color: var(--white); font-family: var(--font-main); font-size: 0.9rem; padding: 0.6rem 0.9rem; border-radius: 6px; outline: none; transition: border-color 0.2s; }
+.calc-select:focus, .calc-input:focus { border-color: var(--teal); }
+.calc-select option { background: var(--navy-dark); }
+.calc-input[type=range] { padding: 0.4rem 0; accent-color: var(--teal); cursor: pointer; }
+.calc-range-val { font-family: var(--font-mono); font-size: 0.85rem; color: var(--teal-light); font-weight: 500; }
+.calc-result { background: var(--navy-dark); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; border-left: 4px solid var(--teal); }
+.calc-result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.85rem; }
+.calc-result-row:last-child { border-bottom: none; }
+.calc-result-label { color: var(--gray-text); }
+.calc-result-val { font-family: var(--font-mono); color: var(--white); font-weight: 500; }
+.calc-total { font-size: 1.75rem; font-weight: 700; color: var(--teal); margin-top: 0.75rem; }
+.calc-total-label { font-size: 0.72rem; color: var(--gray-text); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.calc-savings-box { background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.3); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 1rem; }
+.calc-savings-label { font-size: 0.7rem; color: var(--teal-pale); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.calc-savings-val { font-size: 1.1rem; font-weight: 700; color: var(--teal-light); }
+.calc-rec { background: rgba(29,158,117,0.08); border: 1px solid rgba(29,158,117,0.2); border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); line-height: 1.6; }
+.calc-rec strong { color: var(--teal-pale); }
+.calc-warning { background: rgba(239,159,39,0.1); border: 1px solid rgba(239,159,39,0.3); border-radius: 6px; padding: 0.6rem 1rem; margin-top: 0.75rem; font-size: 0.78rem; color: #EF9F27; }
+
+/* ── CONSTANCIAS ── */
+.const-card { background: var(--white); border: 1.5px solid var(--teal); border-radius: 10px; overflow: hidden; height: 100%; }
+.const-card-head { background: var(--teal); padding: 0.9rem 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+.const-card-head-title { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+.const-free { background: var(--white); color: #0F6E56; font-size: 0.7rem; font-weight: 700; padding: 3px 12px; border-radius: 20px; white-space: nowrap; }
+.const-card-body { padding: 1.1rem 1.25rem; }
+.const-card-desc { font-size: 0.82rem; color: #444; line-height: 1.65; margin-bottom: 0.9rem; }
+.const-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.const-chip { font-size: 0.65rem; padding: 3px 9px; border-radius: 20px; background: rgba(29,158,117,0.1); border: 1px solid rgba(29,158,117,0.3); color: #0F6E56; }
+.const-card-foot { border-top: 1px solid #e8f5ef; padding: 0.65rem 1.25rem; font-size: 0.72rem; color: #666; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital#constancias">Constancias</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://honorarios.cp13.digital">Honorarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://fpd.cp13.digital">Solicitar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://alianzas.cp13.digital">Alianzas</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero-hon">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-mono">Tarifas · CP13.digital</div>
+    <div class="hero-title">Honorarios <span>transparentes</span></div>
+    <div class="hero-sub">Precios fijos · Sin sorpresas · + IVA · Fe Pública Mercantil</div>
+  </div>
+</section>
+
+<!-- CONSTANCIAS -->
+<section class="section-white">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label" style="color:var(--teal)">Constancias</div>
+      <h2 class="section-title section-title-dark">Incluidas en todo instrumento</h2>
+      <p class="section-sub section-sub-dark">Se expiden en todos los casos · Sin costo en ambos casos</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-md-6 col-lg-5 reveal reveal-delay-1">
+        <div class="const-card">
+          <div class="const-card-head">
+            <span class="const-card-head-title">Constancia digital</span>
+            <span class="const-free">Sin costo</span>
+          </div>
+          <div class="const-card-body">
+            <div class="const-card-desc">PDF generado en todos los casos al autorizarse el acta. Contiene número de instrumento, fecha, tipo de acta y beneficiario. Incluye código QR de verificación en línea.</div>
+            <div class="const-chips">
+              <span class="const-chip">PDF automático</span>
+              <span class="const-chip">QR verificable</span>
+              <span class="const-chip">SHA-256</span>
+              <span class="const-chip">NOM-151</span>
+            </div>
+          </div>
+          <div class="const-card-foot">Se envía al correo del cliente en todos los casos al momento de la autorización</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-5 reveal reveal-delay-2">
+        <div class="const-card">
+          <div class="const-card-head">
+            <span class="const-card-head-title">Constancia física con fe pública</span>
+            <span class="const-free">Sin costo</span>
+          </div>
+          <div class="const-card-body">
+            <div class="const-card-desc">Documento de una página con fe pública mercantil. Certifica la existencia del instrumento: número, fecha, tipo de acta y beneficiario. Firmado por el Corredor Público.</div>
+            <div class="const-chips">
+              <span class="const-chip">Fe pública mercantil</span>
+              <span class="const-chip">Firma del Corredor</span>
+              <span class="const-chip">Una página</span>
+              <span class="const-chip">A solicitud</span>
+            </div>
+          </div>
+          <div class="const-card-foot">Alternativa al testimonio para uso informativo · No sustituye al testimonio para efectos registrales</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS UNITARIOS -->
+<section class="section-navy">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Instrumentos Públicos</div>
+      <h2 class="section-title">Instrumentos Públicos</h2>
+      <p class="section-sub">Todos los precios en M.N. · Se agrega IVA en cada operación</p>
+    </div>
+    <div class="row g-4">
+
+      <!-- FE DE HECHOS -->
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-1">
+        <div class="price-card">
+          <div class="price-card-title">Fe de hechos</div>
+          <div class="price-card-note">Hasta 1:30 hrs · hasta 35 páginas</div>
+          <div class="price-main">$12,000</div>
+          <div class="price-iva">$13,920 con IVA</div>
+          <hr class="price-divider">
+          <div class="price-row">
+            <span class="price-row-label">Página adicional (c/u)</span>
+            <span class="price-row-val">$80 + IVA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COTEJO DIGITAL -->
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-2">
+        <div class="price-card">
+          <div class="price-card-title">Cotejo digital</div>
+          <div class="price-card-note">Hasta 54 páginas</div>
+          <div class="price-main">$4,500</div>
+          <div class="price-iva">$5,220 con IVA</div>
+          <hr class="price-divider">
+          <div class="price-row">
+            <span class="price-row-label">Página adicional (c/u)</span>
+            <span class="price-row-val">$60 + IVA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TESTIMONIOS -->
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-3">
+        <div class="price-card">
+          <div class="price-card-title">Expedición de testimonio</div>
+          <div class="price-card-note">Mínimo · hasta 30 páginas</div>
+          <div class="price-main">$2,350</div>
+          <div class="price-iva">$2,726 con IVA</div>
+          <hr class="price-divider">
+          <div class="price-row">
+            <span class="price-row-label">Página adicional (c/u)</span>
+            <span class="price-row-val">$65 + IVA</span>
+          </div>
+          <div class="price-row">
+            <span class="price-row-label">CD/DVD (2 discos)</span>
+            <span class="price-row-val">$500 + IVA</span>
+          </div>
+          <div class="price-row">
+            <span class="price-row-label">Constancia con fe pública</span>
+            <span class="price-row-val price-free">Sin costo</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NOTA IVA -->
+    <div class="row g-3 mt-4">
+      <div class="col-12 col-md-6 reveal">
+        <div class="info-box">
+          <p><strong>Más IVA en todas las operaciones.</strong><br>
+          Los honorarios se facturan con IVA conforme a la normativa vigente. Se emite CFDI en cada operación o una factura mensual consolidada para clientes con membresía.</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 reveal reveal-delay-1">
+        <div class="info-box">
+          <p><strong>CD/DVD aplica solo a testimonio físico.</strong><br>
+          El acta digital y la constancia con fe pública no generan cargo adicional por soporte físico. El CD/DVD cubre dos discos: uno para el cliente y uno para el archivo de la Correduría.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MEMBRESÍAS -->
+<section class="section-white">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label" style="color:var(--teal)">Membresías</div>
+      <h2 class="section-title section-title-dark">Acceso recurrente con ahorro garantizado</h2>
+      <p class="section-sub section-sub-dark">Tres meses de gracia al inicio · Sin permanencia forzosa · Factura mensual CFDI</p>
+    </div>
+    <div class="row g-4 align-items-stretch">
+
+      <!-- BÁSICO -->
+      <div class="col-12 col-md-4 reveal reveal-delay-1">
+        <div class="mem-card mem-basic">
+          <div class="mem-badge">Plan básico</div>
+          <div class="mem-name">Básico</div>
+          <div class="mem-grace">3 meses de gracia · sin pago al inicio</div>
+          <div class="mem-price">$12,500</div>
+          <div class="mem-period">/ mes + IVA</div>
+          <div class="mem-iva">$14,500 con IVA</div>
+          <div class="mem-includes">
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              2 fe de hechos mensuales
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              1 cotejo digital mensual
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              Constancias con fe pública sin costo
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              CFDI mensual consolidado
+            </div>
+          </div>
+          <div class="mem-savings">
+            <div class="mem-savings-label">Ahorro vs precio unitario</div>
+            <div class="mem-savings-val">$16,000 / mes · 56% off</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFESIONAL -->
+      <div class="col-12 col-md-4 reveal reveal-delay-2">
+        <div class="mem-card mem-pro">
+          <div class="mem-badge mem-badge-pop">Más popular</div>
+          <div class="mem-name">Profesional</div>
+          <div class="mem-grace">3 meses de gracia · sin pago al inicio</div>
+          <div class="mem-price">$25,500</div>
+          <div class="mem-period">/ mes + IVA</div>
+          <div class="mem-iva">$29,580 con IVA</div>
+          <div class="mem-includes">
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              4 fe de hechos mensuales
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              2 cotejos digitales mensuales
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              Constancias con fe pública sin costo
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              CFDI mensual consolidado
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              Atención prioritaria
+            </div>
+          </div>
+          <div class="mem-savings">
+            <div class="mem-savings-label">Ahorro vs precio unitario</div>
+            <div class="mem-savings-val">$31,500 / mes · 55% off</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMPRESARIAL -->
+      <div class="col-12 col-md-4 reveal reveal-delay-3">
+        <div class="mem-card mem-emp">
+          <div class="mem-badge">Plan empresarial</div>
+          <div class="mem-name">Empresarial</div>
+          <div class="mem-grace">3 meses de gracia · sin pago al inicio</div>
+          <div class="mem-price">$36,000</div>
+          <div class="mem-period">/ mes + IVA</div>
+          <div class="mem-iva">$41,760 con IVA</div>
+          <div class="mem-includes">
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              6 fe de hechos mensuales
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              3 cotejos digitales mensuales
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              Constancias con fe pública sin costo
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              CFDI mensual consolidado
+            </div>
+            <div class="mem-include-item">
+              <div class="mem-check"><svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg></div>
+              Atención prioritaria y gestor dedicado
+            </div>
+          </div>
+          <div class="mem-savings">
+            <div class="mem-savings-label">Ahorro vs precio unitario</div>
+            <div class="mem-savings-val">$49,500 / mes · 58% off</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TABLA RESUMEN -->
+<section class="section-dark">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Resumen</div>
+      <h2 class="section-title">Tabla de honorarios</h2>
+      <p class="section-sub">Todos los precios en M.N. · + IVA</p>
+    </div>
+    <div class="reveal">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th style="width:50%">Concepto</th>
+            <th>Condición</th>
+            <th style="text-align:right">Honorario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color:var(--white)">Fe de hechos</strong><div class="tbl-note">Hasta 1:30 hrs · hasta 35 páginas</div></td>
+            <td>Por acto</td>
+            <td class="tbl-price" style="text-align:right">$12,000</td>
+          </tr>
+          <tr>
+            <td>Página adicional — fe de hechos</td>
+            <td>Por página</td>
+            <td class="tbl-price" style="text-align:right">$80</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--white)">Cotejo digital</strong><div class="tbl-note">Hasta 54 páginas</div></td>
+            <td>Por acto</td>
+            <td class="tbl-price" style="text-align:right">$4,500</td>
+          </tr>
+          <tr>
+            <td>Página adicional — cotejo</td>
+            <td>Por página</td>
+            <td class="tbl-price" style="text-align:right">$60</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--white)">Constancia con fe pública</strong></td>
+            <td>Incluida</td>
+            <td class="tbl-free" style="text-align:right">Sin costo</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--white)">Testimonio</strong><div class="tbl-note">Mínimo · hasta 30 páginas</div></td>
+            <td>Por testimonio</td>
+            <td class="tbl-price" style="text-align:right">$2,350</td>
+          </tr>
+          <tr>
+            <td>Página adicional — testimonio</td>
+            <td>Por página</td>
+            <td class="tbl-price" style="text-align:right">$65</td>
+          </tr>
+          <tr>
+            <td>CD/DVD (2 discos)<div class="tbl-note">Solo testimonio físico</div></td>
+            <td>Por juego</td>
+            <td class="tbl-price" style="text-align:right">$500</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--white)">Membresía Básica</strong><div class="tbl-note">2 fe de hechos + 1 cotejo · 3 meses de gracia</div></td>
+            <td>Mensual</td>
+            <td class="tbl-price" style="text-align:right">$12,500</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--white)">Membresía Profesional</strong><div class="tbl-note">4 fe de hechos + 2 cotejos · 3 meses de gracia</div></td>
+            <td>Mensual</td>
+            <td class="tbl-price" style="text-align:right">$25,500</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--white)">Membresía Empresarial</strong><div class="tbl-note">6 fe de hechos + 3 cotejos · 3 meses de gracia</div></td>
+            <td>Mensual</td>
+            <td class="tbl-price" style="text-align:right">$36,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULADORA -->
+<section class="section-navy">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Herramienta</div>
+      <h2 class="section-title">Calcula tu costo en segundos</h2>
+      <p class="section-sub">Tres calculadoras · Resultado instantáneo · Sin compromiso</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-12 col-lg-6 reveal reveal-delay-1">
+        <div class="calc-wrap">
+          <div class="calc-tabs">
+            <button class="calc-tab active" onclick="showTab('unitario')">Instrumento unitario</button>
+            <button class="calc-tab" onclick="showTab('membresia')">¿Qué membresía me conviene?</button>
+
+          </div>
+
+          <!-- TAB 1: UNITARIO -->
+          <div id="tab-unitario" class="calc-panel active">
+            <div class="calc-field">
+              <div class="calc-label">Tipo de instrumento</div>
+              <select class="calc-select" id="u-tipo" onchange="calcUnitario()">
+                <option value="fe">Fe de hechos</option>
+                <option value="cotejo">Cotejo digital</option>
+                <option value="testimonio">Testimonio</option>
+              </select>
+            </div>
+            <div class="calc-field">
+              <div class="calc-label">Número de páginas — <span class="calc-range-val" id="u-pags-val">10</span></div>
+              <input type="range" class="calc-input" id="u-pags" min="1" max="200" value="10" step="1" oninput="calcUnitario()">
+            </div>
+            <div class="calc-field" id="u-hrs-wrap" style="display:none">
+              <div class="calc-label">Horas de diligencia — <span class="calc-range-val" id="u-hrs-val">1.0</span> hrs</div>
+              <input type="range" class="calc-input" id="u-hrs" min="0.5" max="6" value="1" step="0.5" oninput="calcUnitario()">
+            </div>
+            <div class="calc-field">
+              <div class="calc-label">¿Requiere testimonio físico?</div>
+              <select class="calc-select" id="u-testimonio" onchange="calcUnitario()">
+                <option value="no">No — solo constancia digital (sin costo)</option>
+                <option value="si">Sí — testimonio impreso</option>
+              </select>
+            </div>
+            <div class="calc-field" id="u-num-test-wrap" style="display:none">
+              <div class="calc-label">Número de testimonios — <span class="calc-range-val" id="u-num-test-val">1</span></div>
+              <input type="range" class="calc-input" id="u-num-test" min="1" max="10" value="1" step="1" oninput="calcUnitario()">
+            </div>
+            <div id="u-result" class="calc-result"></div>
+          </div>
+
+          <!-- TAB 2: MEMBRESÍA -->
+          <div id="tab-membresia" class="calc-panel">
+            <div class="calc-field">
+              <div class="calc-label">Fe de hechos al mes — <span class="calc-range-val" id="m-fe-val">2</span></div>
+              <input type="range" class="calc-input" id="m-fe" min="0" max="15" value="2" step="1" oninput="calcMembresia()">
+            </div>
+            <div class="calc-field">
+              <div class="calc-label">Cotejos digitales al mes — <span class="calc-range-val" id="m-co-val">1</span></div>
+              <input type="range" class="calc-input" id="m-co" min="0" max="15" value="1" step="1" oninput="calcMembresia()">
+            </div>
+            <div id="m-result" class="calc-result"></div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 reveal reveal-delay-2">
+        <div class="calc-wrap" style="background:rgba(29,158,117,0.06);border-color:rgba(29,158,117,0.2)">
+          <div class="section-label mb-3">¿Cómo funciona la calculadora?</div>
+          <div style="font-size:0.85rem;color:var(--gray-text);line-height:1.8">
+            <p style="margin-bottom:1rem"><strong style="color:var(--white)">Instrumento unitario</strong> — Calcula el costo exacto según tipo y número de páginas. Si requiere testimonio físico, elige cuántos necesitas — el cálculo incluye el costo de cada uno.</p>
+            <p style="margin-bottom:1rem"><strong style="color:var(--white)">¿Qué membresía me conviene?</strong> — Ingresa cuántos instrumentos necesitas al mes y el sistema te dice si te conviene una membresía y cuál, o si es más económico ir por servicio unitario.</p>
+            
+            <div style="background:rgba(29,158,117,0.1);border-radius:6px;padding:0.9rem 1rem;margin-top:1rem;font-size:0.78rem;color:var(--teal-pale)">
+              Todos los cálculos son orientativos · + IVA en todas las operaciones · Para condiciones de corresponsales visita alianzas.cp13.digital
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container reveal">
+    <div class="section-label mb-3">¿Listo para proteger sus derechos?</div>
+    <h2 class="section-title mb-2">Solicite su constancia o contrate su membresía</h2>
+    <p class="section-sub mb-4">En menos de 24 horas · 100% en línea · Fe pública mercantil</p>
+    <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar ahora →</a>
+    <a href="https://alianzas.cp13.digital" class="btn-outline">Conocer alianzas</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tagline">Sus derechos: Detectar. Documentar. Demostrar.</div>
+        <div class="mt-3" style="font-size:0.8rem;color:var(--gray-text)">
+          Durán Abogados SC<br>
+          Lic. Julio Alejandro Durán Gómez<br>
+          Ciudad de México · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8aebeefff8ebe4cae9fabbb9a4e7f2">[email&#160;protected]</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links">
+          <a href="https://fpd.cp13.digital">Intermediación y certificación digital</a>
+          <a href="https://verificar.cp13.digital">Verificar constancia</a>
+          <a href="https://hash.cp13.digital">Calculadora SHA-256</a>
+          <a href="https://honorarios.cp13.digital">Honorarios</a>
+          <a href="https://alianzas.cp13.digital">Alianzas</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links">
+          <a href="/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="/politica-de-privacidad">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales">Privacidad servicios digitales</a>
+          <a href="/politica-de-cookies">Política de cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy text-center">
+      © 2026 Durán Abogados SC · cp13.digital · Todos los derechos reservados
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function(){
+  const c = document.getElementById('hero-canvas');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, pts=[];
+  function resize(){ W=c.width=c.offsetWidth; H=c.height=c.offsetHeight; init(); }
+  function init(){
+    pts=[];
+    const n = Math.floor((W*H)/8000);
+    for(let i=0;i<n;i++){
+      const t = Math.random()>0.3;
+      pts.push({ x:Math.random()*W, y:Math.random()*H,
+        r:Math.random()*2.2+0.4,
+        dx:(Math.random()-.5)*.3, dy:(Math.random()-.5)*.22,
+        color: t
+          ? `rgba(${29+(Math.random()*50|0)},${158+(Math.random()*40|0)},${117+(Math.random()*40|0)},${.45+Math.random()*.55})`
+          : `rgba(93,202,165,${.25+Math.random()*.45})`
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of pts){
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color; ctx.fill();
+      p.x+=p.dx; p.y+=p.dy;
+      if(p.x<0) p.x=W; if(p.x>W) p.x=0;
+      if(p.y<0) p.y=H; if(p.y>H) p.y=0;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+reveals.forEach(el => observer.observe(el));
+setTimeout(() => {
+  reveals.forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight) el.classList.add('visible');
+  });
+}, 100);
+
+// ── CALCULADORA ──
+const PRECIOS = {
+  fe:         { base: 12000, pags: 35, extra: 80  },
+  cotejo:     { base: 4500,  pags: 54, extra: 60  },
+  testimonio: { base: 2350,  pags: 30, extra: 65  },
+  cdDvd: 500
+};
+const MEMBRESIAS = [
+  { nombre: 'Básico',       precio: 12500, fe: 2, cotejo: 1, desc: 20 },
+  { nombre: 'Profesional',  precio: 25500, fe: 4, cotejo: 2, desc: 30 },
+  { nombre: 'Empresarial',  precio: 36000, fe: 6, cotejo: 3, desc: 40 }
+];
+const IVA = 0.16;
+const fmt = n => '$' + Math.round(n).toLocaleString('es-MX');
+
+function showTab(tab) {
+  document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  if(tab==='unitario') calcUnitario();
+  if(tab==='membresia') calcMembresia();
+  if(tab==='corresponsal') calcCorresponsal();
+}
+
+function calcUnitario() {
+  const tipo = document.getElementById('u-tipo').value;
+  const pags = parseInt(document.getElementById('u-pags').value);
+  const testimonio = document.getElementById('u-testimonio').value;
+  const hrsWrap = document.getElementById('u-hrs-wrap');
+  const hrsInput = document.getElementById('u-hrs');
+  const numTestWrap = document.getElementById('u-num-test-wrap');
+  const numTestInput = document.getElementById('u-num-test');
+  document.getElementById('u-pags-val').textContent = pags;
+  hrsWrap.style.display = tipo === 'fe' ? 'block' : 'none';
+  if(tipo === 'fe') document.getElementById('u-hrs-val').textContent = parseFloat(hrsInput.value).toFixed(1);
+  numTestWrap.style.display = (testimonio === 'si') ? 'block' : 'none';
+  const numTest = parseInt(numTestInput.value) || 1;
+  document.getElementById('u-num-test-val').textContent = numTest;
+  const p = PRECIOS[tipo];
+  let subtotal = p.base;
+  let extrasHtml = '';
+  if(pags > p.pags) {
+    const extras = pags - p.pags;
+    const costoExtra = extras * p.extra;
+    subtotal += costoExtra;
+    extrasHtml = `<div class="calc-result-row"><span class="calc-result-label">${extras} págs. adicionales × ${fmt(p.extra)}</span><span class="calc-result-val">${fmt(costoExtra)}</span></div>`;
+  }
+  let cdCosto = 0;
+  let testHtml = '';
+  if(testimonio === 'si') {
+    cdCosto = PRECIOS.cdDvd * numTest;
+    const costoTestUnit = PRECIOS.testimonio.base + (Math.max(0, pags - PRECIOS.testimonio.pags) * PRECIOS.testimonio.extra);
+    const costoTestTotal = costoTestUnit * numTest;
+    if(tipo !== 'testimonio') {
+      testHtml = `<div class="calc-result-row"><span class="calc-result-label">${numTest} testimonio${numTest>1?'s':''} (${fmt(costoTestUnit)} c/u)</span><span class="calc-result-val">${fmt(costoTestTotal)}</span></div>`;
+      subtotal += costoTestTotal - p.base;
+    } else {
+      subtotal = costoTestUnit * numTest;
+      testHtml = numTest > 1 ? `<div class="calc-result-row"><span class="calc-result-label">${numTest} testimonios × ${fmt(costoTestUnit)}</span><span class="calc-result-val">${fmt(subtotal)}</span></div>` : '';
+    }
+    testHtml += `<div class="calc-result-row"><span class="calc-result-label">CD/DVD × ${numTest}</span><span class="calc-result-val">${fmt(cdCosto)}</span></div>`;
+  }
+  const totalNeto = (tipo === 'testimonio' ? subtotal : subtotal) + cdCosto;
+  const totalIva  = totalNeto * (1 + IVA);
+  document.getElementById('u-result').innerHTML = `
+    <div class="calc-result-row"><span class="calc-result-label">Base (hasta ${p.pags} págs.)</span><span class="calc-result-val">${fmt(p.base)}</span></div>
+    ${extrasHtml}
+    ${testHtml}
+    <div class="calc-result-row"><span class="calc-result-label">Subtotal neto</span><span class="calc-result-val">${fmt(totalNeto)}</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">IVA (16%)</span><span class="calc-result-val">${fmt(totalNeto*IVA)}</span></div>
+    <div class="calc-total-label" style="margin-top:0.75rem">Total con IVA</div>
+    <div class="calc-total">${fmt(totalIva)}</div>
+    <div style="font-size:0.72rem;color:var(--gray-text);margin-top:0.25rem">Constancia digital incluida · sin costo adicional</div>`;
+}
+
+function calcMembresia() {
+  const fe = parseInt(document.getElementById('m-fe').value);
+  const co = parseInt(document.getElementById('m-co').value);
+  document.getElementById('m-fe-val').textContent = fe;
+  document.getElementById('m-co-val').textContent = co;
+  const costoUnitario = (fe * PRECIOS.fe.base) + (co * PRECIOS.cotejo.base);
+  let recomendacion = null;
+  let costoFinal = costoUnitario;
+  let ahorro = 0;
+  for(const mem of MEMBRESIAS) {
+    const feExtra = Math.max(0, fe - mem.fe);
+    const coExtra = Math.max(0, co - mem.cotejo);
+    const costoConMem = mem.precio
+      + (Math.min(fe, mem.fe) * PRECIOS.fe.base * (1 - mem.desc/100))
+      + (Math.min(co, mem.cotejo) * PRECIOS.cotejo.base * (1 - mem.desc/100))
+      + (feExtra * PRECIOS.fe.base * (1 - mem.desc/100))
+      + (coExtra * PRECIOS.cotejo.base * (1 - mem.desc/100));
+    if(costoConMem < costoFinal) {
+      costoFinal = costoConMem;
+      recomendacion = mem;
+      ahorro = costoUnitario - costoConMem;
+    }
+  }
+  let html = `<div class="calc-result-row"><span class="calc-result-label">Costo a precio unitario</span><span class="calc-result-val">${fmt(costoUnitario)}</span></div>`;
+  if(!recomendacion) {
+    html += `<div class="calc-total-label" style="margin-top:0.75rem">Recomendación</div>
+    <div class="calc-total" style="font-size:1.1rem;color:var(--teal-light)">Servicio unitario</div>
+    <div class="calc-rec">Con este volumen te conviene pagar por instrumento. Si tus necesidades crecen, una membresía generará ahorro significativo.</div>`;
+  } else {
+    html += `<div class="calc-result-row"><span class="calc-result-label">Con Membresía ${recomendacion.nombre}</span><span class="calc-result-val">${fmt(costoFinal)}</span></div>
+    <div class="calc-total-label" style="margin-top:0.75rem">Plan recomendado</div>
+    <div class="calc-total" style="font-size:1.4rem">Membresía ${recomendacion.nombre}</div>
+    <div class="calc-savings-box">
+      <div class="calc-savings-label">Ahorro mensual estimado</div>
+      <div class="calc-savings-val">${fmt(ahorro)} · ${Math.round(ahorro/costoUnitario*100)}% de descuento</div>
+    </div>
+    <div class="calc-rec">Incluye <strong>${recomendacion.fe} fe de hechos + ${recomendacion.cotejo} cotejos</strong> con ${recomendacion.desc}% de descuento. Instrumentos adicionales ese mes también con ${recomendacion.desc}% off. 3 meses de gracia al inicio.</div>`;
+  }
+  document.getElementById('m-result').innerHTML = html;
+}
+
+function calcCorresponsal() {
+  const fe = parseInt(document.getElementById('c-fe').value);
+  const co = parseInt(document.getElementById('c-co').value);
+  const gracia = document.getElementById('c-gracia').value;
+  document.getElementById('c-fe-val').textContent = fe;
+  document.getElementById('c-co-val').textContent = co;
+  const ingresoTotal = (fe * PRECIOS.fe.base) + (co * PRECIOS.cotejo.base);
+  const ganancia40 = ingresoTotal * 0.40;
+  const cp13_60    = ingresoTotal * 0.60;
+  const minimoCP13 = PRECIOS.cotejo.base * 0.60;
+  let cuota = 0;
+  if(gracia === 'no' && cp13_60 < minimoCP13) cuota = minimoCP13 - cp13_60;
+  const gananciaFinal = ganancia40 - cuota;
+  let html = `
+    <div class="calc-result-row"><span class="calc-result-label">Volumen generado (${fe} fe + ${co} cotejos)</span><span class="calc-result-val">${fmt(ingresoTotal)}</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Tu ganancia (40%)</span><span class="calc-result-val">${fmt(ganancia40)}</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Parte CP13 (60%)</span><span class="calc-result-val">${fmt(cp13_60)}</span></div>
+    ${cuota > 0 ? `<div class="calc-result-row"><span class="calc-result-label" style="color:#EF9F27">Diferencia hasta mínimo mensual</span><span class="calc-result-val" style="color:#EF9F27">-${fmt(cuota)}</span></div>` : ''}
+    <div class="calc-total-label" style="margin-top:0.75rem">Tu ganancia neta del mes</div>
+    <div class="calc-total" style="color:${gananciaFinal > 0 ? 'var(--teal)' : '#EF9F27'}">${fmt(gananciaFinal)}</div>`;
+  if(ingresoTotal === 0 && gracia === 'no') {
+    html += `<div class="calc-warning">Sin ventas en mes 5+, pagas la cuota mínima de ${fmt(minimoCP13)} + IVA para mantener la relación activa.</div>`;
+  } else if(ingresoTotal > 0) {
+    html += `<div class="calc-savings-box"><div class="calc-savings-label">Ahorro adicional en tus propios instrumentos (40% desc.)</div><div class="calc-savings-val">Hasta ${fmt(ingresoTotal * 0.40)} al mes</div></div>`;
+  }
+  if(cp13_60 >= minimoCP13 || gracia === 'si') {
+    html += `<div class="calc-rec" style="margin-top:0.75rem">✓ ${gracia==='si' ? 'En período de gracia — sin cuota mínima.' : 'Cuota mínima cubierta con tus ventas.'} Condiciones completas se negocian por separado.</div>`;
+  }
+  document.getElementById('c-result').innerHTML = html;
+}
+
+calcUnitario(); calcMembresia();
+</script>
+</body>
+</html>

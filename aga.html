@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Asambleas y Sesiones de Consejo con Fe Pública Mercantil. Correduría Pública N° 13 · Lic. Julio Alejandro Durán Gómez · Ciudad de México.">
+<title>AGA · Fe de Hechos Digital — CP13</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --navy-mid:  #0C447C;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --blue-mid:  #185FA5;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+/* ── NAVBAR ── */
+.navbar {
+  background: var(--navy-dark);
+  border-bottom: 1px solid rgba(29,158,117,0.2);
+  padding: 0.75rem 0;
+  position: sticky; top: 0; z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+.navbar-brand { display: flex; align-items: center; gap: 6px; text-decoration: none; }
+.brand-main { font-weight: 700; font-size: 1.1rem; color: var(--white); }
+.brand-sep  { color: rgba(255,255,255,0.2); font-weight: 300; font-size: 1.2rem; }
+.brand-aga  { font-family: var(--font-mono); font-weight: 500; font-size: 1rem; color: var(--teal); letter-spacing: 0.05em; }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; position: relative; }
+.nav-link::after { content:''; position:absolute; bottom:0; left:1rem; right:1rem; height:2px; background:var(--teal); transform:scaleX(0); transition:transform 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.nav-link:hover::after { transform: scaleX(1); }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+/* ── ACCESO PARTICIPANTES ── */
+#acceso-bar {
+  background: var(--teal);
+  padding: 0.85rem 0;
+  border-bottom: 2px solid rgba(255,255,255,0.15);
+  position: sticky;
+  top: 57px;
+  z-index: 999;
+}
+.acceso-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.acceso-left { flex: 1; min-width: 200px; }
+.acceso-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.acceso-desc {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.82);
+}
+.acceso-btn {
+  background: var(--white);
+  color: var(--teal);
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  font-family: var(--font-main);
+}
+.acceso-btn:hover {
+  background: var(--navy-dark);
+  color: var(--teal-light);
+  border-color: var(--teal-light);
+}
+
+/* Panel desplegable */
+#acceso-panel {
+  background: var(--navy-card);
+  border-bottom: 2px solid rgba(29,158,117,0.3);
+}
+#acceso-panel.hidden { display: none; }
+.acceso-panel-inner {
+  padding: 1.5rem 0;
+  max-width: 600px;
+}
+.acceso-panel-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.acceso-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--gray-text);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0 4px;
+}
+.acceso-close:hover { color: var(--white); }
+.acceso-panel-sub {
+  font-size: 0.82rem;
+  color: var(--gray-text);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.acceso-contacto {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.acceso-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1.25rem;
+  background: rgba(29,158,117,0.12);
+  border: 1.5px solid var(--teal);
+  color: var(--teal-light);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.acceso-contact-btn:hover {
+  background: var(--teal);
+  color: var(--white);
+}
+
+
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  background: var(--navy);
+}
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; max-width: 780px; }
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--teal);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.2s;
+}
+.hero-logo {
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.4s;
+}
+.hero-logo .aga   { color: var(--teal); }
+.hero-logo .punto { color: rgba(255,255,255,0.3); }
+
+.hero-tagline {
+  font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+  font-weight: 300;
+  color: var(--teal-pale);
+  margin: 1.25rem 0 0.5rem;
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.65s;
+}
+.hero-tagline strong { font-weight: 700; color: var(--white); }
+
+.hero-fedatario {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--gray-text);
+  margin-bottom: 2.25rem;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.85s;
+}
+
+.btn-cta {
+  display: inline-block;
+  background: var(--teal);
+  color: var(--white);
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.875rem 2.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 1.05s;
+}
+.btn-cta:hover { background: var(--teal-light); color: var(--navy-dark); transform: translateY(-2px); }
+
+.btn-cta-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--teal-light);
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  border: 1.5px solid rgba(93,202,165,0.5);
+  transition: all 0.2s;
+  margin-left: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 1.05s;
+}
+.btn-cta-outline:hover { border-color: var(--teal); color: var(--white); background: rgba(29,158,117,0.08); }
+
+.hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); opacity: 0; animation: fadeUp 0.8s ease forwards 1.3s; }
+.scroll-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; margin: 4px auto; animation: bounce 1.5s infinite; }
+.scroll-dot:nth-child(2) { animation-delay: 0.2s; }
+.scroll-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bounce { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(4px); } }
+
+/* ── TRUST BAR ── */
+#trust {
+  background: var(--white);
+  padding: 2.5rem 0;
+  border-top: 3px solid var(--navy);
+  border-bottom: 3px solid var(--navy);
+}
+.trust-item { text-align: center; padding: 0.75rem 1rem; flex: 1; min-width: 180px; }
+.trust-icon { width: 30px; height: 30px; margin: 0 auto 0.6rem; }
+.trust-icon svg { width: 30px; height: 30px; stroke: var(--teal); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.trust-label { font-size: 0.78rem; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.35; }
+.trust-divider { width: 1px; background: #e0e0e0; align-self: stretch; margin: 0.5rem 0; flex-shrink: 0; }
+
+/* ── SECCIONES ── */
+.section-navy  { background: var(--navy);      padding: 5rem 0; }
+.section-white { background: var(--white);      padding: 5rem 0; }
+.section-dark  { background: var(--navy-dark);  padding: 5rem 0; }
+
+.section-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.section-title { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+.section-title-dark { color: var(--navy); }
+.section-sub  { font-size: 1rem; color: var(--teal-pale); margin-bottom: 3rem; font-weight: 300; }
+.section-sub-dark { color: #555; }
+
+/* ── QUIÉN / FEDATARIO ── */
+.fedatario-block {
+  background: var(--navy-card);
+  border-radius: 8px;
+  padding: 2rem 2.5rem;
+  border-left: 4px solid var(--teal);
+}
+.fed-label { font-family: var(--font-mono); font-size: 0.68rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.fed-nombre { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+.fed-cargo { font-size: 0.9rem; color: var(--teal-pale); line-height: 1.5; margin-bottom: 1rem; }
+.fed-dir { font-size: 0.8rem; color: var(--gray-text); line-height: 1.6; padding-top: 1rem; border-top: 1px solid rgba(93,202,165,0.15); }
+.fed-dir strong { color: var(--teal-light); }
+
+/* ── TIPOS DE ACTO ── */
+.acto-card {
+  background: var(--navy-card);
+  border-radius: 6px;
+  padding: 1.5rem;
+  border-top: 3px solid var(--teal);
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.acto-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.acto-num { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); margin-bottom: 0.6rem; }
+.acto-name { font-size: 1rem; font-weight: 600; color: var(--white); line-height: 1.35; margin-bottom: 0.5rem; }
+.acto-desc { font-size: 0.8rem; color: var(--gray-text); line-height: 1.5; }
+
+/* ── QUÉ CONSTATA ── */
+.constata-card {
+  background: #EBF3FB;
+  border-radius: 6px;
+  padding: 1.5rem;
+  border-left: 4px solid var(--teal);
+  height: 100%;
+  transition: transform 0.2s;
+}
+.constata-card:hover { transform: translateY(-3px); }
+.constata-num { font-size: 2rem; font-weight: 700; color: var(--teal); line-height: 1; margin-bottom: 0.6rem; }
+.constata-title { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem; }
+.constata-ref { font-family: var(--font-mono); font-size: 0.68rem; color: #6b7280; }
+
+/* ── CÓMO FUNCIONA ── */
+.paso-card {
+  background: var(--navy-card);
+  border-radius: 6px;
+  padding: 1.5rem;
+  height: 100%;
+  position: relative;
+  transition: transform 0.2s;
+}
+.paso-card:hover { transform: translateY(-3px); }
+.paso-num {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 500;
+  color: rgba(93,202,165,0.25);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+.paso-title { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+.paso-desc { font-size: 0.82rem; color: var(--gray-text); line-height: 1.55; }
+.paso-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: rgba(29,158,117,0.12);
+  color: var(--teal-pale);
+  margin-top: 0.6rem;
+  letter-spacing: 0.06em;
+}
+.paso-arrow { color: var(--teal); font-size: 1.25rem; display: flex; align-items: center; justify-content: center; opacity: 0.4; }
+
+/* ── AVISO LEGAL ── */
+.aviso-card {
+  background: rgba(29,158,117,0.06);
+  border: 1px solid rgba(29,158,117,0.2);
+  border-left: 4px solid var(--teal);
+  border-radius: 6px;
+  padding: 1.5rem 2rem;
+}
+.aviso-card p { font-size: 0.875rem; color: var(--teal-pale); line-height: 1.7; margin: 0; }
+.aviso-card strong { color: var(--white); }
+
+/* ── CTA ── */
+#cta {
+  background: var(--navy-dark);
+  padding: 5rem 0;
+  text-align: center;
+  border-top: 1px solid rgba(29,158,117,0.15);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy-dark);
+  border-top: 3px solid var(--teal);
+  padding: 3rem 0 1.5rem;
+}
+.footer-brand { font-weight: 700; font-size: 1.3rem; }
+.footer-brand .teal { color: var(--teal); }
+.footer-tagline { font-size: 0.82rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.25rem; flex-direction: column; }
+.footer-col-title { font-family: var(--font-mono); font-size: 0.7rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.04); }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .btn-cta-outline { margin-left: 0; margin-top: 0.75rem; display: block; text-align: center; }
+  .trust-divider { display: none; }
+  .paso-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-main">CP13</span>
+      <span class="brand-sep">/</span>
+      <span class="brand-aga">AGA</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="#actos">Actos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#constatamos">Qué constatamos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#como">Cómo funciona</a></li>
+        <li class="nav-item"><a class="nav-link" href="#fedatario">El Corredor</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital">CP13.digital</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ ACCESO PARTICIPANTES — MUY VISIBLE ═══ -->
+<div id="acceso-bar">
+  <div class="container">
+    <div class="acceso-inner">
+      <div class="acceso-left">
+        <div class="acceso-label">¿Le enviaron un enlace de verificación?</div>
+        <div class="acceso-desc">Si fue convocado a una asamblea o sesión o reunión comercial, use su enlace personal o ingrese aquí.</div>
+      </div>
+      <a href="#acceso-form" class="acceso-btn" id="acceso-trigger">
+        Acceder a mi sesión →
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL/PANEL DE ACCESO -->
+<div id="acceso-panel" class="hidden">
+  <div class="container">
+    <div class="acceso-panel-inner">
+      <div class="acceso-panel-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acceso a sesión
+        <button class="acceso-close" onclick="cerrarAcceso()">✕</button>
+      </div>
+      <p class="acceso-panel-sub">
+        Si recibió un enlace por correo electrónico, ábralo directamente desde su bandeja.<br>
+        Si no lo encuentra, contáctenos para reenviar su enlace personal.
+      </p>
+      <div class="acceso-contacto">
+        <a href="tel:5585332285" class="acceso-contact-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.47 2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          55 85 33 22 85
+        </a>
+        <a href="mailto:durancorredor@gmail.com" class="acceso-contact-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          durancorredor@gmail.com
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Correduría Pública N° 13 · Ciudad de México</div>
+    <div class="hero-logo">
+      Asambleas, Sesiones de Consejo y reuniones comerciales<br>
+      <span class="aga">con Fe Pública</span>
+    </div>
+    <div class="hero-tagline">
+      Presencia digital del fedatario<strong> · </strong>
+      Verificación Preliminar de Identidad (teléfono y correo electrónico)<strong> · </strong>
+      Acta de Fe de Hechos certificada
+    </div>
+    <div class="hero-fedatario">
+      Lic. Alejandro Durán  · Corredor Público N° 13 · SECo · CDMX
+    </div>
+    <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar diligencia →</a>
+    <a href="#como" class="btn-cta-outline">Cómo funciona</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-dot"></div>
+    <div class="scroll-dot"></div>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ═══ TRUST BAR ═══ -->
+<section id="trust">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-center align-items-center">
+
+      <div class="trust-item col-6 col-md-2">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="trust-label">Fe pública mercantil</div>
+      </div>
+
+      <div class="trust-divider d-none d-md-block"></div>
+
+      <div class="trust-item col-6 col-md-2">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="trust-label">Verificación de tel+efonos y correos electrónicos por OTP + ID</div>
+      </div>
+
+      <div class="trust-divider d-none d-md-block"></div>
+
+      <div class="trust-item col-6 col-md-2">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div class="trust-label">Consentimientos informados digitales</div>
+      </div>
+
+      <div class="trust-divider d-none d-md-block"></div>
+
+      <div class="trust-item col-6 col-md-2">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        </div>
+        <div class="trust-label">Acta de Fe de Hechos + SHA-256 + NOM-151</div>
+      </div>
+
+      <div class="trust-divider d-none d-md-block"></div>
+
+      <div class="trust-item col-6 col-md-2">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="trust-label">Sesión remota · Presencial · Mixta</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TIPOS DE ACTO ═══ -->
+<section id="actos" class="section-navy">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Actos que cubrimos</div>
+      <h2 class="section-title">¿Qué tipo de reunión tiene?</h2>
+      <p class="section-sub">Asambleas, sesiones de órgano de administración y otras reuniones mercantiles</p>
+    </div>
+    <div class="row g-3">
+
+      <div class="col-12 col-md-6 col-lg-3 reveal reveal-delay-1">
+        <div class="acto-card">
+          <div class="acto-num">01</div>
+          <div class="acto-name">Asamblea General Ordinaria</div>
+          <div class="acto-desc">Aprobación de estados financieros, designación de administradores, distribución de utilidades y demás asuntos del orden del día ordinario. Arts. 181–182 LGSM.</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 reveal reveal-delay-2">
+        <div class="acto-card">
+          <div class="acto-num">02</div>
+          <div class="acto-name">Asamblea General Extraordinaria</div>
+          <div class="acto-desc">Modificación de estatutos, fusión, escisión, transformación, disolución, emisión de acciones y demás acuerdos de carácter especial. Arts. 182 Fr. VII–XIV LGSM.</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 reveal reveal-delay-3">
+        <div class="acto-card">
+          <div class="acto-num">03</div>
+          <div class="acto-name">Sesión de Consejo de Administración</div>
+          <div class="acto-desc">Reunión del órgano de administración colegiado para adoptar resoluciones de gestión, aprobar operaciones o ejercer las facultades que le confieren los estatutos. Arts. 143–155 LGSM.</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 reveal reveal-delay-4">
+        <div class="acto-card" style="border-top-color:var(--teal-light)">
+          <div class="acto-num" style="color:var(--teal-light)">04</div>
+          <div class="acto-name">Otras reuniones mercantiles</div>
+          <div class="acto-desc">
+            Juntas de Franquiciantes, franquiciatarios, comisariatos , Comités de vigilancia ·
+            Cualquier reunión de órgano mercantil que se celebre digitalmente y requiera mayor certeza jurídica.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12 reveal">
+        <div class="aviso-card">
+          <p>
+            <strong>Requisito legal para sesiones remotas:</strong> La celebración de asambleas o sesiones
+            de consejo por medios digitales requiere que los estatutos sociales lo permitan
+            expresamente (Art. 155 LGSM). Si su sociedad no cuenta con dicha cláusula,
+            la sesión debe ser presencial o bien formalizar previamente la reforma estatutaria
+            correspondiente. El Corredor Público verificará este requisito antes de aceptar
+            la diligencia.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUÉ CONSTATA EL CORREDOR ═══ -->
+<section id="constatamos" class="section-white">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label" style="color:var(--teal)">Alcance de la diligencia</div>
+      <h2 class="section-title section-title-dark">Qué constata el Corredor Público</h2>
+      <p class="section-sub section-sub-dark">
+        El Corredor actúa como fedatario <em>observador</em>: da fe de los hechos
+        que presencia, sin intervenir en deliberaciones ni votaciones.
+      </p>
+    </div>
+    <div class="row g-3">
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-1">
+        <div class="constata-card">
+          <div class="constata-num">01</div>
+          <div class="constata-title">Identidad digital de los participantes</div>
+          <div class="constata-ref">OTP email + OTP SMS + ID oficial</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-2">
+        <div class="constata-card">
+          <div class="constata-num">02</div>
+          <div class="constata-title">Consentimientos informados de cada participante</div>
+          <div class="constata-ref">Aceptación libre e informada, registrada con SHA-256</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-3">
+        <div class="constata-card">
+          <div class="constata-num">03</div>
+          <div class="constata-title">Inicio y cierre de la sesión</div>
+          <div class="constata-ref">Timestamp certificado por el fedatario</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-1">
+        <div class="constata-card">
+          <div class="constata-num">04</div>
+          <div class="constata-title">Orden del día exhibido</div>
+          <div class="constata-ref">Documento exhibido por los organizadores + SHA-256</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-2">
+        <div class="constata-card">
+          <div class="constata-num">05</div>
+          <div class="constata-title">Quórum observado</div>
+          <div class="constata-ref">Según la lista exhibida por el Secretario</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-3">
+        <div class="constata-card">
+          <div class="constata-num">06</div>
+          <div class="constata-title">Videograbación de la sesión</div>
+          <div class="constata-ref">Por instrucción de los organizadores · URL o archivo</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-1">
+        <div class="constata-card">
+          <div class="constata-num">07</div>
+          <div class="constata-title">Constancia digitaL, eventualmente testimonio físico de la diligencia realiozada </div>
+          <div class="constata-ref">Download de la constancia digital </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-2">
+        <div class="constata-card">
+          <div class="constata-num">08</div>
+          <div class="constata-title">Acta de Fe de Hechos</div>
+          <div class="constata-ref">Instrumento del Corredor Público · Todos los anexos referenciados por hash</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 reveal reveal-delay-3">
+        <div class="constata-card">
+          <div class="constata-num">09</div>
+          <div class="constata-title">Constancia de envío de convocatoria</div>
+          <div class="constata-ref">Opcional · Art. 89 Bis CCom · Intermediario digital</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CÓMO FUNCIONA ═══ -->
+<section id="como" class="section-navy">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Proceso</div>
+      <h2 class="section-title">Cómo funciona</h2>
+      <p class="section-sub">Cinco fases para obtener su Acta de Fe de Hechos</p>
+    </div>
+
+    <div class="row align-items-stretch g-3">
+
+      <div class="col-12 col-md reveal reveal-delay-1">
+        <div class="paso-card">
+          <div class="paso-num">01</div>
+          <div class="paso-title">Solicitud y KYC.- reunión inicial con el Corredor Público</div>
+          <div class="paso-desc">La empresa se da de alta, sube sus documentos y proporciona la lista de participantes a convocar con nombres, corresos electrónicos y teléfonos celulares.</div>
+          <span class="paso-badge">Portal del cliente</span>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-auto paso-arrow d-flex reveal">›</div>
+
+      <div class="col-12 col-md reveal reveal-delay-2">
+        <div class="paso-card">
+          <div class="paso-num">02</div>
+          <div class="paso-title">Verificación de participantes</div>
+          <div class="paso-desc">Cada accionista o consejero recibe un link único, se verifica diversos datos que le son atribuibles debiendo aceptar los consentimientos necesarios y en ocasiones, estampar su e-firma del SAT.</div>
+          <span class="paso-badge">OTP · ID · Consentimientos</span>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-auto paso-arrow d-flex reveal">›</div>
+
+      <div class="col-12 col-md reveal reveal-delay-3">
+        <div class="paso-card">
+          <div class="paso-num">03</div>
+          <div class="paso-title">Asamblea, Sesión o reunión comercial con presencia del Corredor</div>
+          <div class="paso-desc">El fedatario registra inicio, quórum observado, orden del día y videograbación. Cierra con timestamp certificado.</div>
+          <span class="paso-badge">Fedatario observador</span>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-auto paso-arrow d-flex reveal">›</div>
+
+      <div class="col-12 col-md reveal reveal-delay-4">
+        <div class="paso-card">
+          <div class="paso-num">04</div>
+          <div class="paso-title">Entrega de la constancia de la diligencia, eventualmente será entregada el acta acordada</div>
+          <div class="paso-desc">Los organizadores suben el acta redactada con firmas electrónicas avanzadas. El sistema calcula su SHA-256.</div>
+          <span class="paso-badge">FEA · SHA-256</span>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-auto paso-arrow d-flex reveal">›</div>
+
+      <div class="col-12 col-md reveal reveal-delay-4">
+        <div class="paso-card">
+          <div class="paso-num">05</div>
+          <div class="paso-title">Acta de Fe de Hechos</div>
+          <div class="paso-desc">El Corredor genera el instrumento con todos los anexos referenciados por hash. SHA-256 + NOM-151 + Expediente Drive.</div>
+          <span class="paso-badge">CP13_DOCS · NOM-151</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-5 reveal">
+      <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar diligencia →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EL FEDATARIO ═══ -->
+<section id="fedatario" class="section-dark">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Quién certifica</div>
+      <h2 class="section-title">El Corredor Público</h2>
+      <p class="section-sub">Fedatario público e intermediario comercial digital autorizado por la Secretaría de Economía</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9 reveal">
+        <div class="fedatario-block">
+          <div class="fed-label">Correduría Pública 13 de la CDMX</div>
+          <div class="fed-nombre">LIC. ALEJANDRO DURÁN</div>
+          <div class="fed-cargo">
+            Durán Abogados sc <br>
+          </div>
+          <div class="fed-dir">
+            <strong>Domicilio:</strong> Paseo de los Tamarindos 400, Planta Baja, Local 5,
+            Colonia Bosques de las Lomas, Alcaldía Cuajimalpa de Morelos, Ciudad de México.<br>
+            <strong>Tel.:</strong> 55 92 07 13 &nbsp;·&nbsp;
+            <strong>Cel.:</strong> 55 85 33 22 85 &nbsp;·&nbsp;
+            <strong>Correo:</strong> durancorredor@gmail.com &nbsp;·&nbsp;
+            <strong>Web:</strong> cp13.digital
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marco legal -->
+    <div class="row g-3 mt-4">
+      <div class="col-12 col-md-4 reveal reveal-delay-1">
+        <div class="acto-card" style="border-top-color:rgba(93,202,165,0.4)">
+          <div class="acto-num">LFCP · Art. 6 Fr. V</div>
+          <div class="acto-name">Fedatario público mercantil</div>
+          <div class="acto-desc">El Corredor certifica hechos con pleno valor probatorio ante autoridades y terceros.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal reveal-delay-2">
+        <div class="acto-card" style="border-top-color:rgba(93,202,165,0.4)">
+          <div class="acto-num">CCom · Art. 89 Bis</div>
+          <div class="acto-name">Intermediario comercial digital</div>
+          <div class="acto-desc">Facultado para intervenir en el envío, recepción o archivo de mensajes de datos con plena validez jurídica.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal reveal-delay-3">
+        <div class="acto-card" style="border-top-color:rgba(93,202,165,0.4)">
+          <div class="acto-num">Ley General de Sociedades Mercantiles</div>
+          <div class="acto-name">Asambleas y Sesiones remotas o telemáticas</div>
+          <div class="acto-desc">Marco para la celebración de asambleas y sesiones de consejo por medios electrónicos de comunicación.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section id="cta">
+  <div class="container text-center reveal">
+    <div class="section-label mb-3">¿Listo para dar certeza jurídica a su reunión?</div>
+    <h2 class="section-title mb-2">Solicite su diligencia de Fe de Hechos</h2>
+    <p class="section-sub mb-4">Proceso en línea · Participantes verificados · Acta con valor probatorio pleno</p>
+    <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar ahora →</a>
+    <div class="mt-4" style="font-size:0.8rem;color:var(--gray-text)">
+      55 85 33 22 85 &nbsp;·&nbsp; durancorredor@gmail.com
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+
+      <div class="col-12 col-md-5">
+        <div class="footer-brand">CP13<span class="teal">/AGA</span></div>
+        <div class="footer-tagline">Fe de Hechos Digital · Asambleas y Sesiones de Consejo</div>
+        <div class="mt-3" style="font-size:0.78rem;color:var(--gray-text);line-height:1.7">
+          Lic. Julio Alejandro Durán Gómez<br>
+          Correduría Pública N° 13 · CDMX<br>
+          durancorredor@gmail.com
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links">
+          <a href="https://fpd.cp13.digital">Fe Pública Digital</a>
+          <a href="https://hash.cp13.digital">Verificar SHA-256</a>
+          <a href="https://verificar.cp13.digital">Verificar constancia</a>
+          <a href="https://cp13.digital">CP13.digital</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links">
+          <a href="https://www.correduria13.mx/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="https://www.correduria13.mx/politicas-de-privacidad">Política de privacidad</a>
+          <a href="https://www.correduria13.mx/privacidad-servicios-digitales">Privacidad digital</a>
+          <a href="https://www.correduria13.mx/politica-de-cookies">Cookies</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer-copy text-center">
+      © 2026 Correduría Pública N° 13 · cp13.digital/aga · Todos los derechos reservados
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ── ACCESO PANEL ── */
+document.getElementById('acceso-trigger').addEventListener('click', function(e) {
+  e.preventDefault();
+  const panel = document.getElementById('acceso-panel');
+  panel.classList.toggle('hidden');
+  if (!panel.classList.contains('hidden')) {
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+});
+function cerrarAcceso() {
+  document.getElementById('acceso-panel').classList.add('hidden');
+}
+
+
+const canvas = document.getElementById('hero-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width  = canvas.offsetWidth;
+  H = canvas.height = canvas.offsetHeight;
+}
+
+function initParticles() {
+  particles = [];
+  const count = Math.floor((W * H) / 7500);
+  for (let i = 0; i < count; i++) {
+    const isTeal = Math.random() > 0.3;
+    particles.push({
+      x:  Math.random() * W,
+      y:  Math.random() * H,
+      r:  Math.random() * 2.2 + 0.5,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.22,
+      color: isTeal
+        ? `rgba(${29  + (Math.random()*60)|0},${158 + (Math.random()*40)|0},${117 + (Math.random()*50)|0},${0.45+Math.random()*0.55})`
+        : `rgba(93,202,165,${0.2+Math.random()*0.45})`
+    });
+  }
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  for (const p of particles) {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    p.x += p.dx; p.y += p.dy;
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+  }
+  requestAnimationFrame(drawParticles);
+}
+
+window.addEventListener('resize', () => { resize(); initParticles(); });
+resize(); initParticles(); drawParticles();
+
+/* ── SCROLL REVEAL ── */
+const reveals  = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.10 });
+reveals.forEach(el => observer.observe(el));
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>

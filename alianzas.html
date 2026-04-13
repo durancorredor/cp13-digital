@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Red de corresponsales CP13.digital — Modelo 40/60 para abogados y despachos. Agrega fe pública digital a tu práctica.">
+<title>Alianzas estratégicas · cp13.digital</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --navy-mid:  #0C447C;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+/* NAVBAR */
+.navbar { background: var(--navy-dark); border-bottom: 1px solid rgba(29,158,117,0.2); padding: 0.75rem 0; position: sticky; top: 0; z-index: 1000; }
+.navbar-brand { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.brand-cp13 { font-weight: 700; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.brand-dot  { font-weight: 700; font-size: 1.4rem; color: var(--teal); }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; position: relative; }
+.nav-link::after { content:''; position:absolute; bottom:0; left:1rem; right:1rem; height:2px; background:var(--teal); transform:scaleX(0); transition:transform 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.nav-link:hover::after { transform: scaleX(1); }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+/* HERO */
+#hero-tool { position: relative; height: clamp(260px, 38vh, 420px); display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--navy); border-bottom: 3px solid var(--teal); }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 1.5rem; }
+.hero-mono  { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.75rem; opacity:0; animation: fadeUp 0.7s ease forwards 0.2s; }
+.hero-title { font-size: clamp(1.75rem, 4.5vw, 3rem); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 0.5rem; opacity:0; animation: fadeUp 0.7s ease forwards 0.4s; }
+.hero-title span { color: var(--teal); }
+.hero-sub   { font-size: 0.9rem; color: var(--gray-text); font-weight: 300; line-height: 1.6; opacity:0; animation: fadeUp 0.7s ease forwards 0.65s; }
+.hero-sub strong { color: var(--teal-pale); font-weight: 500; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+/* SECTIONS */
+.section-navy  { background: var(--navy); padding: 5rem 0; }
+.section-white { background: var(--white); padding: 5rem 0; }
+.section-dark  { background: var(--navy-dark); padding: 5rem 0; }
+.section-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.section-title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+.section-title-dark { color: var(--navy); }
+.section-sub   { font-size: 1rem; color: var(--teal-pale); margin-bottom: 3rem; font-weight: 300; }
+.section-sub-dark { color: #555; }
+
+/* CARDS */
+.card-navy { background: var(--navy-card); border-radius: 8px; padding: 1.75rem; border-top: 3px solid var(--teal); height: 100%; transition: transform 0.2s, box-shadow 0.2s; }
+.card-navy:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.card-left { background: var(--navy-card); border-radius: 8px; padding: 1.75rem; border-left: 4px solid var(--teal); height: 100%; transition: transform 0.2s, border-color 0.2s; }
+.card-left:hover { transform: translateY(-3px); border-left-color: var(--teal-light); }
+.card-left-title { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.25rem; }
+.card-left-desc  { font-size: 0.82rem; color: var(--gray-text); line-height: 1.6; }
+.card-white { background: #EBF3FB; border-radius: 8px; padding: 1.75rem; border-left: 4px solid var(--teal); height: 100%; }
+.card-white-num   { font-size: 2.2rem; font-weight: 700; color: var(--teal); line-height: 1; margin-bottom: 0.5rem; }
+.card-white-title { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem; }
+.card-white-desc  { font-size: 0.82rem; color: #555; line-height: 1.6; }
+
+/* SPLIT MODEL CARD */
+.split-card { background: var(--navy-card); border-radius: 12px; overflow: hidden; border: 1.5px solid rgba(29,158,117,0.3); }
+.split-half { padding: 2rem; }
+.split-half-teal { background: rgba(29,158,117,0.1); border-right: 1px solid rgba(29,158,117,0.2); }
+.split-pct { font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; color: var(--teal); line-height: 1; }
+.split-label { font-size: 0.8rem; color: var(--gray-text); margin-top: 0.25rem; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.split-items { margin-top: 1rem; }
+.split-items li { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 0.2rem; list-style: none; padding-left: 1rem; position: relative; }
+.split-items li::before { content: '→'; color: var(--teal); position: absolute; left: 0; }
+
+/* INFO BOX */
+.info-box { background: rgba(29,158,117,0.07); border: 1px solid rgba(29,158,117,0.2); border-radius: 8px; padding: 1.25rem 1.5rem; }
+.info-box p { font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.7; }
+.info-box strong { color: var(--teal-pale); }
+
+/* FLOW DIAGRAM */
+.flow-wrap { display: flex; align-items: stretch; gap: 0; justify-content: center; flex-wrap: wrap; margin: 2rem 0; }
+.flow-node { background: var(--navy-card); border: 1.5px solid rgba(29,158,117,0.35); border-radius: 10px; padding: 1.5rem 1.25rem; text-align: center; flex: 1; min-width: 160px; max-width: 220px; transition: transform 0.2s, border-color 0.2s; }
+.flow-node:hover { transform: translateY(-3px); border-color: var(--teal); }
+.flow-node-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(29,158,117,0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; }
+.flow-node-icon svg { width: 22px; height: 22px; stroke: var(--teal); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.flow-node-label { font-size: 0.78rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.flow-node-amount { font-size: 1.4rem; font-weight: 700; color: var(--teal); font-family: var(--font-mono); }
+.flow-node-pct { font-size: 0.7rem; color: var(--gray-text); margin-top: 0.1rem; }
+.flow-arrow { display: flex; align-items: center; justify-content: center; padding: 0 0.5rem; color: var(--teal); font-size: 1.5rem; align-self: center; }
+.flow-highlight { border-color: var(--teal); background: var(--navy-mid); }
+.flow-note { font-size: 0.72rem; font-family: var(--font-mono); color: var(--teal-pale); margin-top: 0.5rem; }
+
+/* CALCULADORA CORRESPONSAL */
+.calc-wrap { background: var(--navy-card); border-radius: 12px; padding: 2rem; border: 1px solid rgba(29,158,117,0.25); }
+.calc-field { margin-bottom: 1.25rem; }
+.calc-label { font-size: 0.8rem; color: var(--gray-text); margin-bottom: 0.4rem; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.calc-select, .calc-input { width: 100%; background: var(--navy); border: 1px solid rgba(29,158,117,0.3); color: var(--white); font-family: var(--font-main); font-size: 0.9rem; padding: 0.6rem 0.9rem; border-radius: 6px; outline: none; transition: border-color 0.2s; }
+.calc-select:focus, .calc-input:focus { border-color: var(--teal); }
+.calc-select option { background: var(--navy-dark); }
+.calc-input[type=range] { padding: 0.4rem 0; accent-color: var(--teal); cursor: pointer; }
+.calc-range-val { font-family: var(--font-mono); font-size: 0.85rem; color: var(--teal-light); font-weight: 500; }
+.calc-result { background: var(--navy-dark); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; border-left: 4px solid var(--teal); }
+.calc-result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.85rem; }
+.calc-result-row:last-child { border-bottom: none; }
+.calc-result-label { color: var(--gray-text); }
+.calc-result-val { font-family: var(--font-mono); color: var(--white); font-weight: 500; }
+.calc-total { font-size: 1.75rem; font-weight: 700; color: var(--teal); margin-top: 0.75rem; }
+.calc-total-label { font-size: 0.72rem; color: var(--gray-text); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.calc-savings-box { background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.3); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 1rem; }
+.calc-savings-label { font-size: 0.7rem; color: var(--teal-pale); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.calc-savings-val { font-size: 1.1rem; font-weight: 700; color: var(--teal-light); }
+.calc-rec { background: rgba(29,158,117,0.08); border: 1px solid rgba(29,158,117,0.2); border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); line-height: 1.6; }
+.calc-rec strong { color: var(--teal-pale); }
+.calc-warning { background: rgba(239,159,39,0.1); border: 1px solid rgba(239,159,39,0.3); border-radius: 6px; padding: 0.6rem 1rem; margin-top: 0.75rem; font-size: 0.78rem; color: #EF9F27; }
+
+/* BUTTONS */
+.btn-cta { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--teal); color: var(--white); font-family: var(--font-main); font-weight: 600; font-size: 1rem; padding: 0.875rem 2.5rem; border-radius: 4px; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+.btn-cta:hover { background: var(--teal-light); color: var(--navy-dark); transform: translateY(-2px); }
+.btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--teal-light); font-family: var(--font-main); font-weight: 500; font-size: 0.9rem; padding: 0.75rem 2rem; border-radius: 4px; text-decoration: none; border: 1.5px solid var(--teal); transition: all 0.2s; margin-left: 1rem; }
+.btn-outline:hover { background: rgba(29,158,117,0.1); color: var(--white); }
+
+/* CTA */
+.cta-section { background: var(--navy-dark); padding: 5rem 0; text-align: center; border-top: 1px solid rgba(29,158,117,0.2); }
+
+/* FOOTER */
+footer { background: var(--navy-dark); border-top: 3px solid var(--teal); padding: 3rem 0 1.5rem; }
+.footer-brand { font-weight: 700; font-size: 1.5rem; }
+.footer-brand span { color: var(--teal); }
+.footer-tagline { font-size: 0.85rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-col-title { font-size: 0.72rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.4rem; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@media (max-width: 768px) {
+  .btn-outline { margin-left: 0; margin-top: 0.75rem; display: inline-flex; }
+  .split-half-teal { border-right: none; border-bottom: 1px solid rgba(29,158,117,0.2); }
+  .flow-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital#constancias">Constancias</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://honorarios.cp13.digital">Honorarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://fpd.cp13.digital">Solicitar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://alianzas.cp13.digital">Alianzas</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="hero-tool">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-mono">Red de corresponsales · cp13.digital</div>
+    <div class="hero-title">Alianzas <span>estratégicas</span></div>
+    <div class="hero-sub">
+      <strong>Para abogados y despachos.</strong><br>
+      Agrega fe pública digital a tu práctica. Sin inversión. Sin infraestructura.
+    </div>
+  </div>
+</section>
+
+<!-- EL MODELO -->
+<section class="section-navy">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">El modelo</div>
+      <h2 class="section-title">Simple. Claro. Rentable.</h2>
+      <p class="section-sub">Tú consigues el cliente y coordinas el caso. Nosotros aportamos el sistema. La utilidad se divide de la siguiente manera.</p>
+    </div>
+    <div class="split-card reveal">
+      <div class="row g-0">
+        <div class="col-12 col-md-6 split-half split-half-teal">
+          <div class="split-pct">40%</div>
+          <div class="split-label">Para ti — el asociado</div>
+          <ul class="split-items mt-3">
+            <li>Traes al cliente</li>
+            <li>Coordinas el caso</li>
+            <li>Puedes financiar a tu cliente si quieres</li>
+            <li>Cobras directamente a tu cliente el precio que determines</li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-6 split-half">
+          <div class="split-pct" style="color:var(--teal-pale)">60%</div>
+          <div class="split-label">Para CP13.digital</div>
+          <ul class="split-items mt-3">
+            <li>Aportamos el sistema y las constancias</li>
+            <li>Generamos el instrumento certificado</li>
+            <li>SHA-256 + NOM-151 + QR en cada acta</li>
+            <li>Constancias antes de 48 hrs · Testimonios antes de 3 días hábiles</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row g-3 mt-4">
+      <div class="col-12 col-md-6 reveal reveal-delay-1">
+        <div class="info-box">
+          <p><strong>Pago por adelantado.</strong><br>
+          El asociado paga a CP13.digital antes de que se genere el instrumento. Si quieres financiar a tu cliente, esa es tu decisión comercial.</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 reveal reveal-delay-2">
+        <div class="info-box">
+          <p><strong>Más IVA.</strong><br>
+          Los honorarios se facturan con IVA conforme a la normativa vigente. Te proporcionamos factura electrónica CFDI en cada operación o una mensual consolidada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLUJO DEL DINERO -->
+<section class="section-dark">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Cómo fluye el dinero</div>
+      <h2 class="section-title">Tú fijas el precio · Nosotros recibimos nuestra parte</h2>
+      <p class="section-sub">El corresponsal cobra al cliente el precio que determine — CP13 solo factura su proporción al corresponsal.</p>
+    </div>
+    <div class="flow-wrap reveal">
+      <div class="flow-node">
+        <div class="flow-node-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="flow-node-label">Cliente final</div>
+        <div class="flow-note">Paga lo que tú determines</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node flow-highlight">
+        <div class="flow-node-icon" style="background:rgba(29,158,117,0.25)">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        </div>
+        <div class="flow-node-label">Corresponsal</div>
+        <div class="flow-node-amount" id="flow-corr">$0</div>
+        <div class="flow-node-pct">Tu ganancia (40%)</div>
+        <div class="flow-note">Cobras la diferencia</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-node-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="flow-node-label">CP13</div>
+        <div class="flow-node-amount" id="flow-cp13">$0</div>
+        <div class="flow-node-pct">Nuestra parte (60%)</div>
+        <div class="flow-note">Fe pública + instrumento</div>
+      </div>
+    </div>
+
+    <!-- SIMULADOR -->
+    <div class="row g-4 mt-2">
+      <div class="col-12 col-lg-6 reveal reveal-delay-1">
+        <div class="calc-wrap">
+          <div class="section-label mb-3">Simulador de ganancias</div>
+          <div class="calc-field">
+            <div class="calc-label">Fe de hechos solicitadas y pagadas — <span class="calc-range-val" id="c-fe-val">0</span></div>
+            <input type="range" class="calc-input" id="c-fe" min="0" max="20" value="0" step="1" oninput="calcCorresponsal()">
+          </div>
+          <div class="calc-field">
+            <div class="calc-label">Cotejos solicitados y pagados — <span class="calc-range-val" id="c-co-val">0</span></div>
+            <input type="range" class="calc-input" id="c-co" min="0" max="20" value="0" step="1" oninput="calcCorresponsal()">
+          </div>
+          <div class="calc-field">
+            <div class="calc-label">¿En período de gracia? (primeros 4 meses)</div>
+            <select class="calc-select" id="c-gracia" onchange="calcCorresponsal()">
+              <option value="si">Sí — sin cuota mínima</option>
+              <option value="no">No — mes 5 en adelante</option>
+            </select>
+          </div>
+          <div id="c-result" class="calc-result"></div>
+          <div style="font-size:0.72rem;color:var(--gray-text);margin-top:1rem;font-family:var(--font-mono)">
+            Cálculo orientativo · Precios de lista · Condiciones reales se negocian por separado
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 reveal reveal-delay-2">
+        <div class="calc-wrap" style="background:rgba(29,158,117,0.06);border-color:rgba(29,158,117,0.2);height:100%">
+          <div class="section-label mb-3">¿Cómo funciona el simulador?</div>
+          <div style="font-size:0.85rem;color:var(--gray-text);line-height:1.8">
+            <p style="margin-bottom:1rem"><strong style="color:var(--white)">Mueve los sliders</strong> para ver cuánto ganarías cada mes según el volumen de instrumentos que generes para tus clientes.</p>
+            <p style="margin-bottom:1rem"><strong style="color:var(--white)">Período de gracia (4 meses)</strong> — Sin cuota mínima. Puedes operar y generar desde el primer día.</p>
+            <p style="margin-bottom:1rem"><strong style="color:var(--white)">Mes 5 en adelante</strong> — Solo necesitas generar al menos un cotejo base mensual para mantener la relación activa. Si superas ese mínimo con tus ventas, no hay cargo adicional.</p>
+            <p><strong style="color:var(--white)">Además de tus ganancias</strong> — Como corresponsal tienes un descuento especial en todos los instrumentos que solicites para tu propio despacho. Las condiciones exactas se negocian contigo de manera individual.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section class="section-white">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label" style="color:var(--teal)">Por qué asociarte</div>
+      <h2 class="section-title section-title-dark">Agrega un servicio de alto valor sin costo fijo</h2>
+      <p class="section-sub section-sub-dark">No necesitas infraestructura ni inversión inicial. Solo clientes.</p>
+    </div>
+    <div class="row g-3">
+      <div class="col-12 col-md-4 reveal reveal-delay-1">
+        <div class="card-white">
+          <div class="card-white-num">01</div>
+          <div class="card-white-title">Sin inversión inicial</div>
+          <div class="card-white-desc">No hay cuota de membresía ni costo de integración. Pagas solo cuando generas una solicitud — y ya cobraste al cliente.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal reveal-delay-2">
+        <div class="card-white">
+          <div class="card-white-num">02</div>
+          <div class="card-white-title">Acceso en línea 24/7</div>
+          <div class="card-white-desc">Ofreces constancias digitales o instrumentos públicos con pleno valor probatorio, firmado por Corredor Público habilitado federalmente.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal reveal-delay-3">
+        <div class="card-white">
+          <div class="card-white-num">03</div>
+          <div class="card-white-title">Proceso 100% digital</div>
+          <div class="card-white-desc">Todo se gestiona en línea a través del portal FPD. Sin traslados, sin filas, sin papeles. Tu cliente recibe su acta en 24 horas.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal reveal-delay-1">
+        <div class="card-white">
+          <div class="card-white-num">04</div>
+          <div class="card-white-title">8 tipos de constancia</div>
+          <div class="card-white-desc">Derechos de autor, marcas, secretos industriales, fecha cierta, cumplimiento normativo, cotejo digital y más.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal reveal-delay-2">
+        <div class="card-white">
+          <div class="card-white-num">05</div>
+          <div class="card-white-title">Tú fijas tu precio</div>
+          <div class="card-white-desc">Cobras a tu cliente lo que determines. Nosotros solo facturamos nuestra parte. Tu margen es tuyo.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 reveal reveal-delay-3">
+        <div class="card-white">
+          <div class="card-white-num">06</div>
+          <div class="card-white-title">Respaldo legal sólido</div>
+          <div class="card-white-desc">Art. 75 Fr. XIII y 89 Bis CCom · Art. 6 LFCP · SHA-256 + NOM-151. Instrumentos con validez en litigios y arbitrajes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section class="section-dark">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Perfil del corresponsal</div>
+      <h2 class="section-title">¿Para quién es esta alianza?</h2>
+      <p class="section-sub">Cualquier profesional del derecho con cartera de clientes activa.</p>
+    </div>
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-4 col-lg-3 reveal reveal-delay-1">
+        <div class="card-left">
+          <div class="card-left-title">Despachos de propiedad intelectual</div>
+          <div class="card-left-desc">Marcas, derechos de autor, secretos industriales — complemento natural a tu práctica registral.</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3 reveal reveal-delay-2">
+        <div class="card-left">
+          <div class="card-left-title">Abogados corporativos</div>
+          <div class="card-left-desc">Cumplimiento normativo, contratos digitales — documentación de alto valor para tus clientes empresariales.</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3 reveal reveal-delay-3">
+        <div class="card-left">
+          <div class="card-left-title">Litigantes</div>
+          <div class="card-left-desc">Fe de hechos, cotejos digitales, certificación de envíos — evidencia robusta para tus expedientes judiciales.</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3 reveal reveal-delay-4">
+        <div class="card-left">
+          <div class="card-left-title">Consultores y agencias</div>
+          <div class="card-left-desc">Agencias creativas, consultoras tech, firmas de compliance — protege el trabajo intelectual de tus clientes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO UNIRSE -->
+<section class="section-navy">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="section-label">Proceso</div>
+      <h2 class="section-title">Cómo convertirte en corresponsal</h2>
+      <p class="section-sub">Cuatro pasos. Sin burocracia.</p>
+    </div>
+    <div class="row align-items-center g-3">
+      <div class="col-12 col-md reveal reveal-delay-1">
+        <div class="card-white"><div class="card-white-num">01</div><div class="card-white-title">Contáctanos</div><div class="card-white-desc">Escríbenos a aduran@cp13.mx o solicita información desde el portal FPD.</div></div>
+      </div>
+      <div class="col-12 col-md-auto reveal" style="color:var(--teal);font-size:1.5rem;text-align:center">→</div>
+      <div class="col-12 col-md reveal reveal-delay-2">
+        <div class="card-white"><div class="card-white-num">02</div><div class="card-white-title">Valora las alternativas y firma el convenio</div><div class="card-white-desc">Un convenio digital sencillo que establece el modelo y las condiciones de operación.</div></div>
+      </div>
+      <div class="col-12 col-md-auto reveal" style="color:var(--teal);font-size:1.5rem;text-align:center">→</div>
+      <div class="col-12 col-md reveal reveal-delay-3">
+        <div class="card-white"><div class="card-white-num">03</div><div class="card-white-title">Accede al portal</div><div class="card-white-desc">Te damos acceso como corresponsal al portal FPD para gestionar solicitudes de tus clientes.</div></div>
+      </div>
+      <div class="col-12 col-md-auto reveal" style="color:var(--teal);font-size:1.5rem;text-align:center">→</div>
+      <div class="col-12 col-md reveal reveal-delay-4">
+        <div class="card-white"><div class="card-white-num">04</div><div class="card-white-title">Empieza a operar</div><div class="card-white-desc">Paga, genera el instrumento, entrega al cliente. Así de simple en cada operación.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container reveal">
+    <div class="section-label mb-3">¿Listo para sumar certeza legal a tu práctica?</div>
+    <h2 class="section-title mb-2">Conviértete en corresponsal</h2>
+    <p class="section-sub mb-4">Sin inversión inicial · 40% de honorarios para ti · Constancias en menos de 48 hrs</p>
+    <a href="mailto:aduran@cp13.mx?subject=Información%20Corresponsalía%20CP13" class="btn-cta">Solicitar información →</a>
+    <a href="https://fpd.cp13.digital" class="btn-outline">Ver el portal FPD</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tagline">Sus derechos: Detectar. Documentar. Demostrar.</div>
+        <div class="mt-3" style="font-size:0.8rem;color:var(--gray-text)">
+          Durán Abogados SC<br>
+          Lic. Julio Alejandro Durán Gómez<br>
+          Ciudad de México · aduran@cp13.mx
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links">
+          <a href="https://fpd.cp13.digital">Intermediación y certificación digital</a>
+          <a href="https://verificar.cp13.digital">Verificar constancia</a>
+          <a href="https://hash.cp13.digital">Calculadora SHA-256</a>
+          <a href="https://honorarios.cp13.digital">Honorarios</a>
+          <a href="https://alianzas.cp13.digital">Alianzas</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links">
+          <a href="/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="/politica-de-privacidad">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales">Privacidad servicios digitales</a>
+          <a href="/politica-de-cookies">Política de cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy text-center">
+      © 2026 Durán Abogados SC · cp13.digital · Todos los derechos reservados
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function(){
+  const c = document.getElementById('hero-canvas');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, pts=[];
+  function resize(){ W=c.width=c.offsetWidth; H=c.height=c.offsetHeight; init(); }
+  function init(){
+    pts=[];
+    const n = Math.floor((W*H)/7000);
+    for(let i=0;i<n;i++){
+      const t = Math.random()>0.3;
+      pts.push({ x:Math.random()*W, y:Math.random()*H,
+        r:Math.random()*2.2+0.4, dx:(Math.random()-.5)*.3, dy:(Math.random()-.5)*.22,
+        color: t
+          ? `rgba(${29+(Math.random()*50|0)},${158+(Math.random()*40|0)},${117+(Math.random()*40|0)},${.45+Math.random()*.55})`
+          : `rgba(93,202,165,${.25+Math.random()*.45})`
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of pts){
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color; ctx.fill();
+      p.x+=p.dx; p.y+=p.dy;
+      if(p.x<0) p.x=W; if(p.x>W) p.x=0;
+      if(p.y<0) p.y=H; if(p.y>H) p.y=0;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+reveals.forEach(el => observer.observe(el));
+setTimeout(() => { reveals.forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); }); }, 100);
+
+// SIMULADOR CORRESPONSAL
+const PRECIOS = {
+  fe:     { base: 12000 },
+  cotejo: { base: 4500  }
+};
+const IVA = 0.16;
+const fmt = n => '$' + Math.round(n).toLocaleString('es-MX');
+const minimoCP13 = PRECIOS.cotejo.base * 0.60; // $2,700
+
+function calcCorresponsal() {
+  const fe = parseInt(document.getElementById('c-fe').value);
+  const co = parseInt(document.getElementById('c-co').value);
+  const gracia = document.getElementById('c-gracia').value;
+  document.getElementById('c-fe-val').textContent = fe;
+  document.getElementById('c-co-val').textContent = co;
+
+  const ingresoTotal = (fe * PRECIOS.fe.base) + (co * PRECIOS.cotejo.base);
+  const ganancia40  = ingresoTotal * 0.40;
+  const cp13_60     = ingresoTotal * 0.60;
+  let cuota = 0;
+  if(gracia === 'no' && cp13_60 < minimoCP13) cuota = minimoCP13 - cp13_60;
+  const gananciaFinal = ganancia40 - cuota;
+
+  // Update flow diagram
+  document.getElementById('flow-corr').textContent = fmt(ganancia40);
+  document.getElementById('flow-cp13').textContent = fmt(cp13_60);
+
+  let html = `
+    <div class="calc-result-row"><span class="calc-result-label">Volumen (${fe} fe + ${co} cotejos)</span><span class="calc-result-val">${fmt(ingresoTotal)}</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Tu ganancia (40%)</span><span class="calc-result-val">${fmt(ganancia40)}</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Parte CP13 (60%)</span><span class="calc-result-val">${fmt(cp13_60)}</span></div>
+    ${cuota > 0 ? `<div class="calc-result-row"><span class="calc-result-label" style="color:#EF9F27">Diferencia hasta mínimo mensual</span><span class="calc-result-val" style="color:#EF9F27">-${fmt(cuota)}</span></div>` : ''}
+    <div class="calc-total-label" style="margin-top:0.75rem">Tu ganancia neta del mes</div>
+    <div class="calc-total" style="color:${gananciaFinal > 0 ? 'var(--teal)' : '#EF9F27'}">${fmt(gananciaFinal)}</div>`;
+
+  if(ingresoTotal === 0 && gracia === 'no') {
+    html += `<div class="calc-warning">Sin operaciones en mes 5+, pagas la cuota mínima de ${fmt(minimoCP13)} + IVA para mantener la relación activa.</div>`;
+  } else if(ingresoTotal > 0) {
+    const anual = gananciaFinal * 12;
+    html += `<div class="calc-savings-box">
+      <div class="calc-savings-label">Proyección anual (12 meses iguales)</div>
+      <div class="calc-savings-val">${fmt(anual)}</div>
+    </div>`;
+  }
+  if(cp13_60 >= minimoCP13 || gracia === 'si') {
+    html += `<div class="calc-rec" style="margin-top:0.75rem">✓ ${gracia==='si' ? 'En período de gracia — sin cuota mínima. Opera y vende desde el día uno.' : 'Cuota mínima cubierta con tus operaciones.'} Más tu descuento personal en instrumentos propios.</div>`;
+  }
+  document.getElementById('c-result').innerHTML = html;
+}
+
+calcCorresponsal();
+</script>
+</body>
+</html>

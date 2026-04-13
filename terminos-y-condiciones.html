@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Términos y condiciones de uso de cp13.digital — Durán Abogados SC, Ciudad de México.">
+<title>Términos y condiciones · cp13.digital</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+.navbar { background: var(--navy-dark); border-bottom: 1px solid rgba(29,158,117,0.2); padding: 0.75rem 0; position: sticky; top: 0; z-index: 1000; }
+.navbar-brand { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.brand-cp13 { font-weight: 700; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.brand-dot  { font-weight: 700; font-size: 1.4rem; color: var(--teal); }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+.page-header { background: var(--navy-dark); border-bottom: 3px solid var(--teal); padding: 2.5rem 0 2rem; }
+.page-header .mono-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.page-header h1 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; }
+.page-header .update-date { font-size: 0.8rem; color: var(--gray-text); margin-top: 0.4rem; font-family: var(--font-mono); }
+
+.legal-wrap { flex: 1; padding: 3rem 0 5rem; }
+.legal-body { max-width: 740px; }
+
+.legal-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--teal-light); margin: 2.25rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid rgba(29,158,117,0.2); }
+.legal-body h2:first-child { margin-top: 0; }
+.legal-body h3 { font-size: 0.95rem; font-weight: 600; color: var(--white); margin: 1.25rem 0 0.4rem; }
+.legal-body p { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.75; margin-bottom: 0.875rem; }
+.legal-body ul { margin: 0.5rem 0 0.875rem 1.25rem; }
+.legal-body ul li { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 0.25rem; }
+.legal-body a { color: var(--teal-light); text-decoration: underline; }
+.legal-body a:hover { color: var(--white); }
+.legal-body .mono { font-family: var(--font-mono); font-size: 0.82rem; }
+.legal-body strong { color: var(--white); font-weight: 600; }
+
+.info-card { background: var(--navy-card); border-radius: 8px; padding: 1.25rem 1.5rem; border-left: 4px solid var(--teal); margin: 1.5rem 0; }
+.info-card p { margin: 0; }
+
+.toc { background: rgba(10,60,110,0.5); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; border: 1px solid rgba(29,158,117,0.15); }
+.toc-title { font-size: 0.75rem; font-family: var(--font-mono); color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+.toc ul { margin: 0; padding-left: 1rem; }
+.toc ul li { font-size: 0.82rem; color: var(--gray-text); margin-bottom: 0.2rem; }
+.toc ul li a { color: var(--gray-text); text-decoration: none; transition: color 0.2s; }
+.toc ul li a:hover { color: var(--teal-light); }
+
+footer { background: var(--navy-dark); border-top: 3px solid var(--teal); padding: 3rem 0 1.5rem; }
+.footer-brand { font-weight: 700; font-size: 1.5rem; }
+.footer-brand span { color: var(--teal); }
+.footer-tagline { font-size: 0.85rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-col-title { font-size: 0.72rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.4rem; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital#constancias">Constancias</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://fpd.cp13.digital">Solicitar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://hash.cp13.digital">SHA-256</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="page-header">
+  <div class="container">
+    <div class="mono-label">Aviso legal · cp13.digital</div>
+    <h1>Términos y condiciones</h1>
+    <div class="update-date">Última actualización: 5 de abril de 2026</div>
+  </div>
+</div>
+<main class="legal-wrap">
+  <div class="container">
+    <div class="legal-body">
+
+<div class="toc">
+  <div class="toc-title">Contenido</div>
+  <ul>
+    <li><a href="#objeto">1. Objeto y ámbito de aplicación</a></li>
+    <li><a href="#responsable">2. Responsable del sitio</a></li>
+    <li><a href="#uso">3. Condiciones de uso</a></li>
+    <li><a href="#servicios">4. Servicios digitales</a></li>
+    <li><a href="#propiedad">5. Propiedad intelectual</a></li>
+    <li><a href="#responsabilidad">6. Limitación de responsabilidad</a></li>
+    <li><a href="#modificaciones">7. Modificaciones</a></li>
+    <li><a href="#ley">8. Ley aplicable y jurisdicción</a></li>
+  </ul>
+</div>
+
+<div class="info-card">
+  <p>Al acceder y utilizar el sitio <strong>cp13.digital</strong> y sus subdominios, usted acepta quedar vinculado por los presentes Términos y Condiciones. Si no está de acuerdo con alguno de ellos, le solicitamos abstenerse de utilizar el sitio.</p>
+</div>
+
+<h2 id="objeto">1. Objeto y ámbito de aplicación</h2>
+<p>Los presentes Términos y Condiciones regulan el acceso y uso del sitio web <strong>cp13.digital</strong> y sus subdominios asociados (fpd.cp13.digital, hash.cp13.digital, verificar.cp13.digital, cid.cp13.digital, entre otros), así como los servicios de Intermediación y certificación digital ofrecidos a través de dicha plataforma.</p>
+<p>El sitio es operado por Durán Abogados SC, a cargo de Lic. Alejandro DuránGómez.</p>
+
+<h2 id="responsable">2. Responsable del sitio</h2>
+<p><strong>Nombre:</strong> Lic. Alejandro Durán<br>
+<strong>Domicilio:</strong> Ciudad de México, México<br>
+<strong>Correo de contacto:</strong> <a href="/cdn-cgi/l/email-protection#cdaca9b8bfaca38daebdfcfee3a0b5"><span class="__cf_email__" data-cfemail="ff9e9b8a8d9e91bf9c8fceccd19287">[email&#160;protected]</span></a><br>
+<strong>Teléfonos:</strong> 55 5525 0913 · 55 5592 0713<br>
+<strong>Dominio:</strong> cp13.digital</p>
+
+<h2 id="uso">3. Condiciones de uso</h2>
+<p>El usuario se compromete a utilizar el sitio y sus servicios de conformidad con la ley, la moral y el orden público, y en particular a:</p>
+<ul>
+  <li>Proporcionar información veraz, completa y actualizada al registrarse o solicitar servicios.</li>
+  <li>No utilizar el sitio para fines ilícitos, fraudulentos o que perjudiquen derechos de terceros.</li>
+  <li>No intentar acceder a sistemas, bases de datos o áreas restringidas sin autorización.</li>
+  <li>No reproducir, distribuir ni modificar los contenidos del sitio sin autorización expresa.</li>
+</ul>
+
+<h2 id="servicios">4. Servicios digitales</h2>
+<p>Los servicios de Intermediación y certificación digital disponibles en este sitio comprenden la solicitud, generación y entrega de constancias mercantiles digitales certificadas por medios digitales y/o por Corredor Público, en los términos del artículo 6 de la LFCP y los artículos 89 Bis y 75 fracción XIII del Código de Comercio.</p>
+<p>La prestación efectiva de los servicios queda sujeta a la identificación del usuario, el pago de los honorarios correspondientes conforme a la normativa aplicable. La solicitud en línea no implica por sí misma la generación del instrumento.</p>
+<h3>Calculadora SHA-256</h3>
+<p>La herramienta disponible en <span class="mono">hash.cp13.digital</span> realiza el cálculo de la huella digital (SHA-256) de archivos íntegramente en el dispositivo del usuario. Ningún archivo se transmite a los servidores de la Correduría. Esta herramienta se ofrece como servicio de apoyo sin garantía de resultado en procedimientos jurisdiccionales.</p>
+
+<h2 id="propiedad">5. Propiedad intelectual</h2>
+<p>Los contenidos del sitio — incluyendo textos, diseño, logotipos, código fuente, iconografía y estructura — son propiedad de Durán Abogados SC o de sus licenciantes, y se encuentran protegidos por la Ley Federal del Derecho de Autor y demás normativa aplicable.</p>
+<p>Se autoriza la consulta y uso personal del sitio. Queda prohibida cualquier reproducción, distribución o explotación comercial sin autorización escrita previa.</p>
+
+<h2 id="responsabilidad">6. Limitación de responsabilidad</h2>
+<p>Durán Abogados SC no será responsable por daños derivados de interrupciones del servicio, errores técnicos, accesos no autorizados por terceros, o uso indebido de las herramientas públicas del sitio.</p>
+
+<h2 id="modificaciones">7. Modificaciones</h2>
+<p>Estos Términos podrán ser modificados en cualquier momento. Los cambios serán efectivos desde su publicación en el sitio. El uso continuado de los servicios implica la aceptación de los Términos vigentes.</p>
+
+<h2 id="ley">8. Ley aplicable y jurisdicción</h2>
+<p>Los presentes Términos se rigen por las leyes de los Estados Unidos Mexicanos. Para cualquier controversia derivada de su interpretación o aplicación, las partes se someten a la jurisdicción de los tribunales competentes de la Ciudad de México, previa la intervención de una persona Mediadora Privada Certificada autorizada por dicho Tribunal.</p>
+
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tagline">Sus derechos: Detectar. Documentar. Demostrar.</div>
+        <div class="mt-3" style="font-size:0.8rem;color:var(--gray-text)">
+          Durán Abogados SC<br>
+          Lic. Alejandro Durán<br>
+          Ciudad de México · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3455504146555a74574405071a594c">[email&#160;protected]</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links flex-column">
+          <a href="https://fpd.cp13.digital">Intermediación y certificación digital</a>
+          <a href="https://verificar.cp13.digital">Verificar constancia</a>
+          <a href="https://hash.cp13.digital">Calculadora SHA-256</a>
+          <a href="https://honorarios.cp13.digital">Honorarios</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links flex-column">
+          <a href="/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="/politica-de-privacidad">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales">Privacidad servicios digitales</a>
+          <a href

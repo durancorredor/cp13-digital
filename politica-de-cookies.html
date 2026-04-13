@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Política de uso de cookies en cp13.digital — Durán Abogados SC, Ciudad de México.">
+<title>Política de cookies · cp13.digital</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #042C53;
+  --navy-dark: #021E3A;
+  --navy-card: #0A3C6E;
+  --teal:      #1D9E75;
+  --teal-light:#5DCAA5;
+  --teal-pale: #9FE1CB;
+  --white:     #FFFFFF;
+  --gray-text: #A0B8C8;
+  --font-main: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background: var(--navy); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+.navbar { background: var(--navy-dark); border-bottom: 1px solid rgba(29,158,117,0.2); padding: 0.75rem 0; position: sticky; top: 0; z-index: 1000; }
+.navbar-brand { display: flex; align-items: center; gap: 2px; text-decoration: none; }
+.brand-cp13 { font-weight: 700; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.brand-dot  { font-weight: 700; font-size: 1.4rem; color: var(--teal); }
+.nav-link { color: rgba(255,255,255,0.75) !important; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.2s; }
+.nav-link:hover { color: var(--teal-light) !important; }
+.navbar-toggler { border-color: rgba(93,202,165,0.4); }
+.navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2893,202,165,0.9%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+.page-header { background: var(--navy-dark); border-bottom: 3px solid var(--teal); padding: 2.5rem 0 2rem; }
+.page-header .mono-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.page-header h1 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; }
+.page-header .update-date { font-size: 0.8rem; color: var(--gray-text); margin-top: 0.4rem; font-family: var(--font-mono); }
+
+.legal-wrap { flex: 1; padding: 3rem 0 5rem; }
+.legal-body { max-width: 740px; }
+
+.legal-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--teal-light); margin: 2.25rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid rgba(29,158,117,0.2); }
+.legal-body h2:first-child { margin-top: 0; }
+.legal-body h3 { font-size: 0.95rem; font-weight: 600; color: var(--white); margin: 1.25rem 0 0.4rem; }
+.legal-body p { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.75; margin-bottom: 0.875rem; }
+.legal-body ul { margin: 0.5rem 0 0.875rem 1.25rem; }
+.legal-body ul li { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 0.25rem; }
+.legal-body a { color: var(--teal-light); text-decoration: underline; }
+.legal-body a:hover { color: var(--white); }
+.legal-body .mono { font-family: var(--font-mono); font-size: 0.82rem; }
+.legal-body strong { color: var(--white); font-weight: 600; }
+
+.info-card { background: var(--navy-card); border-radius: 8px; padding: 1.25rem 1.5rem; border-left: 4px solid var(--teal); margin: 1.5rem 0; }
+.info-card p { margin: 0; }
+
+.toc { background: rgba(10,60,110,0.5); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; border: 1px solid rgba(29,158,117,0.15); }
+.toc-title { font-size: 0.75rem; font-family: var(--font-mono); color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+.toc ul { margin: 0; padding-left: 1rem; }
+.toc ul li { font-size: 0.82rem; color: var(--gray-text); margin-bottom: 0.2rem; }
+.toc ul li a { color: var(--gray-text); text-decoration: none; transition: color 0.2s; }
+.toc ul li a:hover { color: var(--teal-light); }
+
+footer { background: var(--navy-dark); border-top: 3px solid var(--teal); padding: 3rem 0 1.5rem; }
+.footer-brand { font-weight: 700; font-size: 1.5rem; }
+.footer-brand span { color: var(--teal); }
+.footer-tagline { font-size: 0.85rem; color: var(--gray-text); margin-top: 0.25rem; font-style: italic; }
+.footer-col-title { font-size: 0.72rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.footer-links a { color: var(--gray-text); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.4rem; }
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy { font-size: 0.72rem; color: rgba(160,184,200,0.4); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="https://cp13.digital">
+      <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="https://cp13.digital#constancias">Constancias</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://fpd.cp13.digital">Solicitar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://hash.cp13.digital">SHA-256</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="page-header">
+  <div class="container">
+    <div class="mono-label">Cookies · cp13.digital</div>
+    <h1>Política de cookies</h1>
+    <div class="update-date">Última actualización: 5 de abril de 2026</div>
+  </div>
+</div>
+<main class="legal-wrap">
+  <div class="container">
+    <div class="legal-body">
+
+<div class="info-card">
+  <p>La presente Política explica qué son las cookies, cuáles utilizamos en <strong>cp13.digital</strong> y cómo puede gestionarlas. Al continuar navegando en el sitio, usted acepta el uso de cookies en los términos aquí descritos.</p>
+</div>
+
+<h2 id="que-son">¿Qué son las cookies?</h2>
+<p>Las cookies son pequeños archivos de texto que un sitio web deposita en el navegador del usuario al visitarlo. Permiten que el sitio recuerde información sobre su visita para mejorar la experiencia de uso. Las cookies no contienen virus ni pueden acceder a información de su dispositivo.</p>
+
+<h2 id="tipos">Cookies que utilizamos</h2>
+
+<h3>Cookies estrictamente necesarias</h3>
+<p>Son indispensables para el funcionamiento básico del sitio y los servicios digitales. Sin ellas, funcionalidades esenciales como el inicio de sesión en FPD o el mantenimiento de su solicitud en curso no estarían disponibles. No requieren su consentimiento.</p>
+<ul>
+  <li><strong>Sesión de usuario FPD</strong> — Mantiene su sesión activa durante el trámite</li>
+  <li><strong>Estado del formulario</strong> — Conserva el avance de su solicitud</li>
+  <li><strong>Preferencias de idioma</strong> — Recuerda su configuración regional</li>
+</ul>
+
+<h3>Cookies de rendimiento y análisis</h3>
+<p>Nos ayudan a entender cómo los usuarios interactúan con el sitio — qué páginas se visitan más, dónde se producen errores — para mejorar la plataforma. La información es estadística y no identifica a usuarios individuales.</p>
+<ul>
+  <li>Datos de navegación agregados y anonimizados</li>
+  <li>Páginas visitadas y tiempo de permanencia</li>
+  <li>Errores técnicos registrados</li>
+</ul>
+
+<h3>Cookies de funcionalidad</h3>
+<p>Recuerdan sus preferencias para personalizar su experiencia:</p>
+<ul>
+  <li>Tipo de constancia seleccionado previamente</li>
+  <li>Datos de contacto completados en formularios (para no tener que repetirlos)</li>
+</ul>
+
+<h2 id="no-usamos">Lo que no hacemos con las cookies</h2>
+<ul>
+  <li>No utilizamos cookies de publicidad comportamental</li>
+  <li>No compartimos datos de cookies con redes publicitarias</li>
+  <li>No rastreamos su actividad fuera de los dominios de cp13.digital</li>
+</ul>
+<p>cp13.digital es un espacio libre de publicidad. La Durán Abogados SC no recibe remuneración de anunciantes ni permite que terceros inserten cookies publicitarias en este sitio.</p>
+
+<h2 id="hash-cookie">Calculadora SHA-256</h2>
+<p>La herramienta disponible en <span class="mono">hash.cp13.digital</span> no utiliza cookies. El historial de hashes calculados existe únicamente en la memoria temporal del navegador durante la sesión y nunca se persiste en el dispositivo ni en servidores externos.</p>
+
+<h2 id="gestion">Cómo gestionar las cookies</h2>
+<p>Puede configurar su navegador para rechazar todas las cookies, aceptar solo las de sitios de confianza o eliminar las existentes. A continuación encontrará las instrucciones para los principales navegadores:</p>
+<ul>
+  <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+  <li><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+  <li><a href="https://support.apple.com/es-mx/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
+  <li><a href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-las-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener">Microsoft Edge</a></li>
+</ul>
+<p>Tenga en cuenta que rechazar ciertas cookies puede afectar el funcionamiento de algunos servicios, como el inicio de sesión en FPD.</p>
+
+<h2 id="actualizacion">Actualizaciones de esta política</h2>
+<p>Esta Política de Cookies puede actualizarse para reflejar cambios en los servicios o en la normativa aplicable. Le notificaremos cualquier cambio relevante a través del sitio.</p>
+
+<h2 id="contacto-c">Contacto</h2>
+<p>Para preguntas sobre el uso de cookies: <a href="/cdn-cgi/l/email-protection#1475706166757a54776425273a796c"><span class="__cf_email__" data-cfemail="49282d3c3b2827092a39787a672431">[email&#160;protected]</span></a></p>
+
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">CP13<span>.digital</span></div>
+        <div class="footer-tagline">Sus derechos: Detectar. Documentar. Demostrar.</div>
+        <div class="mt-3" style="font-size:0.8rem;color:var(--gray-text)">
+          Durán Abogados SC<br>
+          Lic. Alejandro Durán<br>
+          Ciudad de México · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afcecbdaddcec1efccdf9e9c81c2d7"> aduran@cp13.digital</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Servicios</div>
+        <div class="footer-links flex-column">
+          <a href="https://fpd.cp13.digital">Intermediación y certificación digital</a>
+          <a href="https://verificar.cp13.digital">Verificar constancia</a>
+          <a href="https://hash.cp13.digital">Calculadora SHA-256</a>
+          <a href="https://honorarios.cp13.digital">Honorarios</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links flex-column">
+          <a href="/terminos-y-condiciones">Términos y condiciones</a>
+          <a href="/politica-de-privacidad">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales">Privacidad servicios digitales</a>
+          <a href="/politica-de-cookies">Política de cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy text-cent
