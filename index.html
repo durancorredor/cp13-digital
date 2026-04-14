@@ -112,7 +112,7 @@ body { font-family: var(--font-main); background: var(--navy); color: var(--whit
 .how-arrow { color: var(--teal); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; }
 
 /* ── ECOSISTEMA ── */
-.eco-card { background: var(--navy-card); border-radius: 6px; padding: 1.25rem; border-top: 3px solid var(--teal); height: 100%; transition: transform 0.2s, background 0.2s; }
+.eco-card { background: var(--navy-card); border-radius: 6px; padding: 1.25rem; border-top: 3px solid var(--teal); height: 100%; transition: transform 0.2s, background 0.2s; cursor: pointer; }
 .eco-card:hover { transform: translateY(-3px); background: var(--navy-mid); }
 .eco-url { font-family: var(--font-mono); font-size: 0.65rem; color: var(--teal); margin-bottom: 0.5rem; }
 .eco-name { font-size: 0.9rem; font-weight: 600; color: var(--white); }
@@ -154,7 +154,7 @@ footer { background: var(--navy-dark); border-top: 3px solid var(--teal); paddin
 <!-- ═══ NAVBAR ═══ -->
 <nav class="navbar navbar-expand-lg">
   <div class="container">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
       <span class="brand-cp13">CP13</span><span class="brand-dot">.digital</span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -163,10 +163,11 @@ footer { background: var(--navy-dark); border-top: 3px solid var(--teal); paddin
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav ms-auto gap-1">
         <li class="nav-item"><a class="nav-link" href="#constancias">Constancias</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://honorarios.cp13.digital">Honorarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="/honorarios.html">Honorarios</a></li>
         <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
         <li class="nav-item"><a class="nav-link" href="https://verificar.cp13.digital">Verificar</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://alianzas.cp13.digital">Alianzas</a></li>
+        <li class="nav-item"><a class="nav-link" href="/alianzas.html">Alianzas</a></li>
+        <li class="nav-item"><a class="nav-link" href="/pi.html">Prop. Intelectual</a></li>
       </ul>
     </div>
   </div>
@@ -182,7 +183,7 @@ footer { background: var(--navy-dark); border-top: 3px solid var(--teal); paddin
     </div>
     <div class="hero-sub">Durán Abogados SC — Ciudad de México</div>
     <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar constancia digital →</a>
-    <a href="https://hash.cp13.digital" class="btn-cta-outline">Verificar hash</a>
+    <a href="/hash.html" class="btn-cta-outline">Verificar hash</a>
   </div>
   <div class="hero-scroll">
     <div class="scroll-dot"></div>
@@ -346,69 +347,87 @@ footer { background: var(--navy-dark); border-top: 3px solid var(--teal); paddin
     </div>
     <div class="row g-3">
       <div class="col-6 col-md-4 col-lg reveal reveal-delay-1">
-        <div class="eco-card">
-          <div class="eco-url">fpd.cp13.digital</div>
-          <div class="eco-name">Intermediación y certificación digital</div>
-          <span class="eco-badge">Activo</span>
-        </div>
+        <a href="https://fpd.cp13.digital" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">fpd.cp13.digital</div>
+            <div class="eco-name">Intermediación y certificación digital</div>
+            <span class="eco-badge">Activo</span>
+          </div>
+        </a>
       </div>
       <div class="col-6 col-md-4 col-lg reveal reveal-delay-2">
-        <div class="eco-card">
-          <div class="eco-url">verificar.cp13.digital</div>
-          <div class="eco-name">Verificación pública</div>
-          <span class="eco-badge">Activo</span>
-        </div>
+        <a href="https://verificar.cp13.digital" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">verificar.cp13.digital</div>
+            <div class="eco-name">Verificación pública</div>
+            <span class="eco-badge">Activo</span>
+          </div>
+        </a>
       </div>
       <div class="col-6 col-md-4 col-lg reveal reveal-delay-3">
-        <div class="eco-card">
-          <div class="eco-url">hash.cp13.digital</div>
-          <div class="eco-name">Calculadora SHA-256</div>
-          <span class="eco-badge">Activo</span>
-        </div>
+        <a href="/hash.html" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">cp13.digital/hash</div>
+            <div class="eco-name">Calculadora SHA-256</div>
+            <span class="eco-badge">Activo</span>
+          </div>
+        </a>
       </div>
       <div class="col-6 col-md-4 col-lg reveal reveal-delay-4">
-        <div class="eco-card">
-          <div class="eco-url">cid.cp13.digital</div>
-          <div class="eco-name">Consentimiento Informado</div>
-          <span class="eco-badge">Activo</span>
-        </div>
+        <a href="https://cid.cp13.digital" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">cid.cp13.digital</div>
+            <div class="eco-name">Consentimiento Informado</div>
+            <span class="eco-badge">Activo</span>
+          </div>
+        </a>
       </div>
       <div class="col-6 col-md-4 col-lg reveal reveal-delay-1">
-        <div class="eco-card">
-          <div class="eco-url">clientes.cp13.digital</div>
-          <div class="eco-name">Portal de clientes</div>
-          <span class="eco-badge">Activo</span>
-        </div>
+        <a href="/clientes.html" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">cp13.digital/clientes</div>
+            <div class="eco-name">Portal de clientes</div>
+            <span class="eco-badge">Activo</span>
+          </div>
+        </a>
       </div>
     </div>
     <div class="row g-3 mt-1 justify-content-center">
       <div class="col-6 col-md-4 col-lg-3 reveal reveal-delay-1">
-        <div class="eco-card">
-          <div class="eco-url">docs.cp13.digital</div>
-          <div class="eco-name">Documentación</div>
-          <span class="eco-badge eco-badge-warn">En construcción</span>
-        </div>
+        <a href="/docs.html" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">cp13.digital/docs</div>
+            <div class="eco-name">Documentación</div>
+            <span class="eco-badge eco-badge-warn">En construcción</span>
+          </div>
+        </a>
       </div>
       <div class="col-6 col-md-4 col-lg-3 reveal reveal-delay-2">
-        <div class="eco-card">
-          <div class="eco-url">alianzas.cp13.digital</div>
-          <div class="eco-name">Red de corresponsales</div>
-          <span class="eco-badge eco-badge-warn">En construcción</span>
-        </div>
+        <a href="/alianzas.html" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">cp13.digital/alianzas</div>
+            <div class="eco-name">Red de corresponsales</div>
+            <span class="eco-badge eco-badge-warn">En construcción</span>
+          </div>
+        </a>
       </div>
       <div class="col-6 col-md-4 col-lg-3 reveal reveal-delay-3">
-        <div class="eco-card">
-          <div class="eco-url">honorarios.cp13.digital</div>
-          <div class="eco-name">Honorarios y pagos</div>
-          <span class="eco-badge eco-badge-warn">En construcción</span>
-        </div>
+        <a href="/honorarios.html" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">cp13.digital/honorarios</div>
+            <div class="eco-name">Honorarios y pagos</div>
+            <span class="eco-badge eco-badge-warn">En construcción</span>
+          </div>
+        </a>
       </div>
       <div class="col-6 col-md-4 col-lg-3 reveal reveal-delay-4">
-        <div class="eco-card">
-          <div class="eco-url">visitantes.cp13.digital</div>
-          <div class="eco-name">Registro de visitantes</div>
-          <span class="eco-badge eco-badge-warn">En construcción</span>
-        </div>
+        <a href="/pi.html" style="text-decoration:none">
+          <div class="eco-card">
+            <div class="eco-url">cp13.digital/pi</div>
+            <div class="eco-name">Propiedad Intelectual</div>
+            <span class="eco-badge eco-badge-warn">En construcción</span>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -419,7 +438,7 @@ footer { background: var(--navy-dark); border-top: 3px solid var(--teal); paddin
   <div class="container text-center reveal">
     <div class="section-label mb-3">¿Listo para proteger sus derechos?</div>
     <h2 class="section-title mb-2">Solicite su constancia digital certificada</h2>
-    <p class="section-sub mb-4">En menos de 24 horas · 100% en línea · Fe pública mercantil</p>
+    <p class="section-sub mb-4">En menos de 24 horas · 100% en línea</p>
     <a href="https://fpd.cp13.digital" class="btn-cta">Solicitar ahora →</a>
   </div>
 </section>
@@ -442,18 +461,19 @@ footer { background: var(--navy-dark); border-top: 3px solid var(--teal); paddin
         <div class="footer-links flex-column">
           <a href="https://fpd.cp13.digital">Intermediación y certificación digital</a>
           <a href="https://verificar.cp13.digital">Verificar constancia</a>
-          <a href="https://hash.cp13.digital">Calculadora SHA-256</a>
-          <a href="https://honorarios.cp13.digital">Honorarios</a>
-          <a href="https://alianzas.cp13.digital">Alianzas</a>
+          <a href="/hash.html">Calculadora SHA-256</a>
+          <a href="/honorarios.html">Honorarios</a>
+          <a href="/alianzas.html">Alianzas</a>
+          <a href="/pi.html">Propiedad Intelectual</a>
         </div>
       </div>
       <div class="col-6 col-md-4">
         <div style="font-size:0.75rem;color:var(--teal);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem">Legal</div>
         <div class="footer-links flex-column">
-          <a href="/terminos-y-condiciones">Términos y condiciones</a>
-          <a href="/politica-de-privacidad">Política de privacidad</a>
-          <a href="/privacidad-servicios-digitales">Privacidad servicios digitales</a>
-          <a href="/politica-de-cookies">Política de cookies</a>
+          <a href="/terminos-y-condiciones.html">Términos y condiciones</a>
+          <a href="/politica-de-privacidad.html">Política de privacidad</a>
+          <a href="/privacidad-servicios-digitales.html">Privacidad servicios digitales</a>
+          <a href="/politica-de-cookies.html">Política de cookies</a>
         </div>
       </div>
     </div>
